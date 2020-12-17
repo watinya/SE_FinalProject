@@ -13,18 +13,18 @@ public class Student extends Member{
 
 	private String inYear ;
 	private ArrayList<Subject> subjects = new ArrayList<Subject>();
-	//«Ø¥ß±b¸¹°ò¥»Äİ©Ê
+	//å»ºç«‹å¸³è™ŸåŸºæœ¬å±¬æ€§
 	public Student(String id, char[] password, String name) {
-		//¬ö¿ı·í«e¨Ï¥ÎªÌ:±b¸¹,±K½X,¨Ï¥ÎªÌ¦WºÙ
+		//ç´€éŒ„ç•¶å‰ä½¿ç”¨è€…:å¸³è™Ÿ,å¯†ç¢¼,ä½¿ç”¨è€…åç¨±
 		super(id,new String(password),name);
-		//«Ø¥ß¿ï­×½Òµ{
+		//å»ºç«‹é¸ä¿®èª²ç¨‹
 		try {
-			createCourse("data\\students\\"+ id +"\\¿ï­×½Òµ{.txt");	
+			createCourse("data\\students\\"+ id +"\\é¸ä¿®èª²ç¨‹.txt");	
 		}catch(IOException e) {
-			System.out.println("«Ø¥ß¿ï­×½Òµ{ Error");
+			System.out.println("å»ºç«‹é¸ä¿®èª²ç¨‹ Error");
 		}	
 	}
-	//«Ø¥ß¿ï­×½Òµ{
+	//å»ºç«‹é¸ä¿®èª²ç¨‹
 	private void createCourse(String dataLoaction) throws IOException {
 			File f = new File(dataLoaction);
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");
@@ -35,24 +35,24 @@ public class Student extends Member{
 			}
 			reader.close();
 	}
-	//¬d¬İ©Ò¦³¦¨ÁZ
+	//æŸ¥çœ‹æ‰€æœ‰æˆç¸¾
 	public void getScore() {
 		String content = "";
 		for(int i=0; i<subjects.size(); i++) {
 			content = content.concat(getScore(subjects.get(i).getYear(),subjects.get(i).getName()) +"\n");
 		}
-		JOptionPane.showMessageDialog(null, content, "½Òµ{¦¨ÁZ", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, content, "èª²ç¨‹æˆç¸¾", JOptionPane.PLAIN_MESSAGE);
 	}
-	//§ä¥X¨C¬ì¦¨ÁZ
+	//æ‰¾å‡ºæ¯ç§‘æˆç¸¾
 	private String getScore(String year, String subject) {
 		for(int i=0; i<subjects.size(); i++) {
 			if(subjects.get(i).getYear().equals(year) &&
 			   subjects.get(i).getName().equals(subject)) {
 				for(int j=0; j<subjects.get(i).getSubjectStudents().size(); j++) {
 					if(subjects.get(i).getSubjectStudents().get(j).getId().equals(super.id)){
-						String content = String.format("%s%5s%3s",subject,"¦¨ÁZ:",subjects.get(i).getSubjectStudents().get(j).getScore());
+						String content = String.format("%s%5s%3s",subject,"æˆç¸¾:",subjects.get(i).getSubjectStudents().get(j).getScore());
 						return content;
-						//JOptionPane.showMessageDialog(null, content, "½Òµ{¦¨ÁZ", JOptionPane.PLAIN_MESSAGE);
+						//JOptionPane.showMessageDialog(null, content, "èª²ç¨‹æˆç¸¾", JOptionPane.PLAIN_MESSAGE);
 					}
 				}
 			}

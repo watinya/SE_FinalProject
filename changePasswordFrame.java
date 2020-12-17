@@ -1,84 +1,90 @@
 import java.awt.*;
 import javax.swing.*;
+
+import Member.Member;
+
 import java.awt.event.*;
+import java.io.IOException;
 
 public class changePasswordFrame extends JFrame implements ActionListener {
-	private JButton Jbtn_Confirm = new JButton("½T»{§ó§ï");
-	private JButton Jbtn_Cancel = new JButton("¨ú®ø");
-	private JLabel Jlb_oldPW = new JLabel("ÂÂ±K½X¡G");
-    private JLabel Jlb_newPW = new JLabel("·s±K½X¡G");
-    private JLabel Jlb_confirmNewPW = new JLabel("½T»{·s±K½X¡G");
+	private JButton Jbtn_Confirm = new JButton("ç¢ºèªæ›´æ”¹");
+	private JButton Jbtn_Cancel = new JButton("å–æ¶ˆ");
+	private JLabel Jlb_oldPW = new JLabel("èˆŠå¯†ç¢¼ï¼š");
+    private JLabel Jlb_newPW = new JLabel("æ–°å¯†ç¢¼ï¼š");
+    private JLabel Jlb_confirmNewPW = new JLabel("ç¢ºèªæ–°å¯†ç¢¼ï¼š");
     private JPasswordField joldPw = new JPasswordField(20);
     private JPasswordField jnewPW = new JPasswordField(20);
-    private JPasswordField jconfirmNewPW = new JPasswordField(20);
-   
-    public changePasswordFrame()
+    private JPasswordField jcheckedPW = new JPasswordField(20);
+    private Member user;
+    
+    public changePasswordFrame(Member user)
     {
-        super("°ª¿P¤j½Òµ{¥­¥x §ó§ï±K½X");
+        super("é«˜ç‡•å¤§èª²ç¨‹å¹³å° æ›´æ”¹å¯†ç¢¼");
+        this.user = user;
         Container c = getContentPane();
         c.setLayout(null);
         
-        //³]©wJlb_ID¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šJlb_IDå¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jlb_oldPW.setLocation(313,105);
         Jlb_oldPW.setSize(120,47);
-        Jlb_oldPW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        Jlb_oldPW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         c.add(Jlb_oldPW);
         
-        //³]©wÂÂ±K½X¿é¤J®Ø¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šèˆŠå¯†ç¢¼è¼¸å…¥æ¡†å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         joldPw.setLocation(436,116);
         joldPw.setSize(220,40);
-        joldPw.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,16));
-        joldPw.setEchoChar('¡´');
-        //jpw.setToolTipText("±K½Xªø«×8­Ó¦r¤¸");
+        joldPw.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,16));
+        joldPw.setEchoChar('â—');
+        //jpw.setToolTipText("å¯†ç¢¼é•·åº¦8å€‹å­—å…ƒ");
         c.add(joldPw);
         
-        //³]©wJlb_newPW¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šJlb_newPWå¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jlb_newPW.setLocation(313,165);
         Jlb_newPW.setSize(120,47);
-        Jlb_newPW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        Jlb_newPW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         c.add(Jlb_newPW);
         
-        //³]©w·s±K½X¿é¤J®Ø¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šæ–°å¯†ç¢¼è¼¸å…¥æ¡†å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         jnewPW.setLocation(436,169);
         jnewPW.setSize(220,40);
-        jnewPW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,16));
-        jnewPW.setEchoChar('¡´');
-        //jpw.setToolTipText("±K½Xªø«×8­Ó¦r¤¸");
+        jnewPW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,16));
+        jnewPW.setEchoChar('â—');
+        //jpw.setToolTipText("å¯†ç¢¼é•·åº¦8å€‹å­—å…ƒ");
         c.add(jnewPW);
         
-        //³]©wJlb_confirmNewPW¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šJlb_confirmNewPWå¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jlb_confirmNewPW.setLocation(254,225);
         Jlb_confirmNewPW.setSize(185,47);
-        Jlb_confirmNewPW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        Jlb_confirmNewPW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         c.add(Jlb_confirmNewPW);
         
-        //³]©w½T»{·s±K½X¿é¤J®Ø¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
-        jconfirmNewPW.setLocation(436,229);
-        jconfirmNewPW.setSize(220,40);
-        jconfirmNewPW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,16));
-        jconfirmNewPW.setEchoChar('¡´');
-        //jpw.setToolTipText("±K½Xªø«×8­Ó¦r¤¸");
-        c.add(jconfirmNewPW);
+        //è¨­å®šç¢ºèªæ–°å¯†ç¢¼è¼¸å…¥æ¡†å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
+        jcheckedPW.setLocation(436,229);
+        jcheckedPW.setSize(220,40);
+        jcheckedPW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,16));
+        jcheckedPW.setEchoChar('â—');
+        //jpw.setToolTipText("å¯†ç¢¼é•·åº¦8å€‹å­—å…ƒ");
+        c.add(jcheckedPW);
         
-        //³]©w½T»{§ó§ï«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šç¢ºèªæ›´æ”¹æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Confirm.setLocation(354,290);
         Jbtn_Confirm.setSize(137,58);
-        Jbtn_Confirm.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_Confirm.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_Confirm.addActionListener(this);
         c.add(Jbtn_Confirm);
         
-        //³]©w½T»{§ó§ï«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šç¢ºèªæ›´æ”¹æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Cancel.setLocation(505,290);
         Jbtn_Cancel.setSize(137,58);
-        Jbtn_Cancel.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_Cancel.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_Cancel.addActionListener(this);
         c.add(Jbtn_Cancel);
         
-        //³]©wµøµ¡
+        //è¨­å®šè¦–çª—
         setSize(1000, 600);
-        setLocationRelativeTo(null);//µøµ¡¸m¤¤
+        setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
         //setLocation(300,200);
-        setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+        setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
         setVisible(true);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -86,9 +92,23 @@ public class changePasswordFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Jbtn_Confirm) {
+        	String oldPw = new String(joldPw.getPassword());
+        	String newPw = new String(jnewPW.getPassword());
+			String checkedPw = new String(jcheckedPW.getPassword());
+			if (oldPw.equals(user.password) && newPw.equals(checkedPw)) {
+				try {
+					Member.changePassword(user.id, oldPw, newPw);
+					user.password = newPw;
+				} catch (IOException e1) {e1.printStackTrace();}
+				JOptionPane.showMessageDialog(new JFrame(), "å¯†ç¢¼è®Šæ›´æˆåŠŸ", "è®Šæ›´å¯†ç¢¼", JOptionPane.INFORMATION_MESSAGE);
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(new JFrame(), "å¯†ç¢¼ä¸ç¬¦ï¼Œè«‹é‡æ–°è¼¸å…¥", "è®Šæ›´å¯†ç¢¼", JOptionPane.ERROR_MESSAGE);
+				joldPw.setText("");
+				jnewPW.setText("");
+				jcheckedPW.setText("");
+			}
         	
-        	JOptionPane.showMessageDialog(null, "±K½X¤w§ó§ï");
-        	this.dispose();
         }
         else if(e.getSource() == Jbtn_Cancel){
         	this.dispose();

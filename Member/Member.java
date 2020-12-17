@@ -19,60 +19,53 @@ public class Member {
 	public String password;
 	public String name;
 
-	public Member() {
-	}
-
 	public Member(String id, String password, String name) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
 	}
-	//§ó§ï±K½X
-	public void changePassword(char[] newPassword) {
-		try {
-			//§äÀÉ®×¸ô®|
-			switch (id.length()) {
-			case 9:
-				setNewPassword("data\\studentAccount.txt", new String(newPassword));
-				break;
-			case 5:
-				setNewPassword("data\\teacherAccount.txt", new String(newPassword));
-				break;
-			case 4:
-				setNewPassword("data\\administratorAccount.txt", new String(newPassword));
-				break;
-			default:
-				JOptionPane.showMessageDialog(null, "IDªø«×¤£¥¿½T");
-			}
-		} catch (IOException e) {
-			System.out.println("changePassword Error");
+	//æ›´æ”¹å¯†ç¢¼method
+	public static void changePassword(String account, String oldPassword, String newPassword) throws IOException {
+		String file;
+		//æ‰¾æª”æ¡ˆè·¯å¾‘
+		switch (account.length()) {
+		case 9:
+			file = "data/studentAccount.txt";
+			break;
+		case 5:
+			file = "data/teacherAccount.txt";
+			break;
+		case 4:
+			file = "data/manageAccount.txt";
+			break;
+		default:
+			file = "";
 		}
-	}
-	private void setNewPassword(String dataLocation, String newPassword) throws IOException {
-		File f = new File(dataLocation);
-		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
-		BufferedReader reader = new BufferedReader(read);
-		String line, user, fileContent = "";
-		//´M§ä±b¸¹¸ê®Æ
-		while ((line = reader.readLine()) != null) {
-			user = line.split(" ")[0];
-			if (user.equals(id)) {
-				fileContent = fileContent.concat(id + " " + newPassword + " " + name +"\n");
-			}else {
-				fileContent = fileContent.concat(line + "\n");
-			}
-		}
-		reader.close();
+		FileInputStream fr = new FileInputStream(file);
+		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
+		String writeText="";
+		while (br.ready()) {
+			String temp = br.readLine();
+			String[] info = temp.split(" ");
 
-		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
-		BufferedWriter writer = new BufferedWriter(write);
-		//¼g¤J§ó·s±K½X¸ê®Æ
-		writer.write(fileContent);
-		writer.close();
+			if (info[0].equals(account) && info[1].equals(oldPassword)) {
+				temp = "";
+				info[1] = newPassword;
+				for(int i = 0; i < info.length; i++) 
+					temp += info[i] + " ";
+			}	
+			writeText += temp+"\n";
+		}
+		br.close();
+		FileOutputStream writerStream = new FileOutputStream(file);    
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
+		writer.write(writeText);
+		writer.close(); 
 	}
-	//¦C¥X½Òµ{¦P¾Ç
+	
+	//åˆ—å‡ºèª²ç¨‹åŒå­¸
 	public void outputClassmate(String year, String subjectName)  {
-		//«ØÀÉ®×¸ô®|
+		//å»ºæª”æ¡ˆè·¯å¾‘
 		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
 		try {
 			outputClassmate(dataLocation);
@@ -85,18 +78,19 @@ public class Member {
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(read);
 		String line,id,name,fileContent = "";
-		//¸õ¹L²Ä¤@¦æ
+		//è·³éŽç¬¬ä¸€è¡Œ
 		reader.readLine();
-		//§ì¥X¨C­Ó¾Ç¥Í¾Ç¸¹»P¦W¦r
+		//æŠ“å‡ºæ¯å€‹å­¸ç”Ÿå­¸è™Ÿèˆ‡åå­—
 		while((line = reader.readLine()) != null) {
 			id = line.split(" ")[0];
 			name = line.split(" ")[1];
 			fileContent = fileContent.concat(id +"  "+ name +"\n");
 		}
 		reader.close();
-		JOptionPane.showMessageDialog(null, fileContent, "¿ï½Ò¦W³æ", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(null, fileContent, "é¸èª²åå–®", JOptionPane.PLAIN_MESSAGE);
 	}
-	//¦C¥X¾Ç´Á½Òµ{²M³æ
+	
+	//åˆ—å‡ºå­¸æœŸèª²ç¨‹æ¸…å–®
 	public void outputCourseList(String year) {
 		String dataLocation = "data\\course\\" + year;
 		try {
@@ -108,7 +102,7 @@ public class Member {
 	private void createCourseList(String dataLocation) throws IOException {
 		File f = new File(dataLocation);
 		File[] fileList = f.listFiles();
-		//Åª¨ú¨C­Ó½Òµ{²Ä¤@¦æ¤º®e
+		//è®€å–æ¯å€‹èª²ç¨‹ç¬¬ä¸€è¡Œå…§å®¹
 		String[][] fileContent = new String[fileList.length][5];
 		for(int i=0; i<fileList.length; i++) {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(fileList[i]), "utf-8");
@@ -116,7 +110,7 @@ public class Member {
 			String[] line = reader.readLine().split(" ");
 			fileContent[i] = line;
 		}
-		//µøµ¡Åã¥Ü
+		//è¦–çª—é¡¯ç¤º
 		new CourseList(fileContent);
 	}
 	

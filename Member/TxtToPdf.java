@@ -1,97 +1,34 @@
 package Member;
 
-import java.awt.Rectangle;
-import java.io.BufferedReader;
-import java.io.File;
+import java.awt.Font;
+import java.io.*;
+
+import java.security.DigestException;
+
+import javax.swing.text.Document;
 
 public class TxtToPdf {
-	File f1 = new File( request.getRealPath("") + "/tom.pdf" );
-
-	// «Ø¥ß PDF Document ª«¥ó
-	Document document = null;
-	int vPageWidth = (int)(Math.round(Double.parseDouble(request.getParameter("pagewidth")) * 72));
-	int vPageHeight = (int)(Math.round(Double.parseDouble(request.getParameter("pageheight")) * 72));
-
-	if( request.getParameter("pagewidth") != null && request.getParameter("pageheight") != null )
-	{
-	   // ³]©w Page ½d³ò
-	   Rectangle pdfPage = new Rectangle( vPageWidth
-	                                    , vPageHeight
-	                                    );
-	   
-	   // «Ø¥ß PDF Document ª«¥ó, ¥B¯È±i³]©w¥H page ª«¥ó¬°¥D
-	   document = new Document( pdfPage, 10, 10, 10, 10 );
-	}
-	else
-	   document = new Document();
-
-	try
-	{
-	    // ±N PDF Document ª«¥ó¿é¥X¨ìÀÉ®×
-	    PdfWriter.getInstance(document, new FileOutputStream( request.getRealPath("") + "/tom.pdf"));
-	    
-	    // ¶}±Ò PDF ÀÉ®×
-	    document.open();
-	    
-	    // ¦æ¶Z¤j¤p
-	    float   vLineSize = 10;
-	    
-	    // ¦r«¬: ²Ó©úÅé
-	    BaseFont bf = BaseFont.createFont( request.getRealPath("") + "/mingliu.ttc,0"
-	                                     , BaseFont.IDENTITY_H
-	                                     , BaseFont.EMBEDDED
-	                                     );
-	    
-	    // ³]©w¦r«¬¤j¤p (¤ñ¦æ¶Z¤p¤@ÂI)
-	    Font font = new Font( bf, vLineSize - 1, Font.NORMAL );
-	    
-	    // Åª¨ú TEXT ÀÉ®× (³]©w½s½X¬° UTF-8)
-	    try
-	    {
-	      String  str;
-	   boolean vPushName = false;
-	      
-	      // Åª¨ú¨Ó·½ÀÉ®×
-	      BufferedReader br = new BufferedReader( new InputStreamReader( new java.net.URL(vURL).openStream()
-	                                                                   , "UTF-8"
-	                                                                   )
-	                                            );
-	      
-	      while( (str = br.readLine()) != null )
-	      {
-	         // Åª¨ì´«­¶²Å¸¹, ¦Û°Ê´«­¶
-	         if( str.indexOf("\f") > -1 )
-	         {
-	            document.newPage();
-	            document.add( new Paragraph( vLineSize, str.substring(1), font ) );
-	         }
-	         else
-	         {
-	            // Ã¸»s¸ê®Æ
-	            document.add( new Paragraph( vLineSize, str, font ) );
-	            
-	            // ªÅ¥Õ¦C
-	            if( str.length() == 0 )
-	              document.add( new Paragraph( vLineSize, "\n", font ) );
-	         }
-	      }
-	      
-	      // ÄÀ©ñ¸ê·½
-	      br.close();
-	    }
-	    catch( Exception e )
-	    {
-	      out.println( e.toString() );
-	    }
-	    
-	    // Åã¥Ü PDF ºô­¶
-	    response.sendRedirect( "tom.pdf" );
-	}
-	catch(Exception pdfErr)
-	{
-	   out.println( "¿é¥X PDF ¿ù»~ !!" );
-	}
-
-	// Ãö³¬ PDF ÀÉ®×
-	document.close();
+    private static final String FONT = "C:\\Windows\\Fonts\\simhei.ttf";
+    public static void text2pdf(String text, String pdf) throws DocumentException, IOException {
+        Document document = new Document();
+        OutputStream os = new FileOutputStream(new File(pdf));
+        PdfWriter.getInstance(document, os);
+        document.open();
+        //æ–¹æ³•ä¸€ï¼šä½¿ç”¨Windowsç³»çµ±å­—åž‹(TrueType)
+        BaseFont baseFont = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+        Font font = new Font(baseFont);
+        InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(text)), "GBK");
+        BufferedReader bufferedReader = new BufferedReader(isr);
+String str = "";
+        while ((str = bufferedReader.readLine()) != null) {
+            document.add(new Paragraph(str, font));
+        }
+        document.close();
+    }
+    public static void main(String[] args) throws Exception {
+        String PDFTIMEDIR = "F:/pdf/";
+        String text = PDFTIMEDIR + "1.txt";
+        String pdf = PDFTIMEDIR + "1.txt.pdf";
+        text2pdf(text, pdf);
+    }
 }
