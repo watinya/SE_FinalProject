@@ -15,11 +15,11 @@ public class Subject {
 	private String type;
 	private String techer;
 	private ArrayList<SubjectStudents> subjectStudents = new ArrayList<SubjectStudents>();
-	//«Ø½Òµ{¾Ç¥Í
+	//å»ºèª²ç¨‹å­¸ç”Ÿ
 	public Subject(String year, String subjectName) {
 		this.year = year;
 		name = subjectName;
-		//«ØÀÉ®×¸ô®|
+		//å»ºæª”æ¡ˆè·¯å¾‘
 		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
 		try {
 			createData(dataLocation);
@@ -32,16 +32,16 @@ public class Subject {
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(read);
 		String line,id,name,score;
-		//Åª²Ä¤@¦æ
+		//è®€ç¬¬ä¸€è¡Œ
 		line = reader.readLine();
-		this.number = line.split(" ")[0];//½Òµ{½s¸¹
-		this.credit = line.split(" ")[2];//¾Ç¤À
-		this.type = line.split(" ")[3];//½Òµ{Ãş«¬ 
-		//§ì¥X¨C­Ó¾Ç¥Í:¾Ç¸¹,¦W¦r,¤À¼Æ
+		this.number = line.split(" ")[0];//èª²ç¨‹ç·¨è™Ÿ
+		this.credit = line.split(" ")[2];//å­¸åˆ†
+		this.type = line.split(" ")[3];//èª²ç¨‹é¡å‹ 
+		//æŠ“å‡ºæ¯å€‹å­¸ç”Ÿ:å­¸è™Ÿ,åå­—,åˆ†æ•¸
 		while((line = reader.readLine()) != null) {
-			id = line.split(" ")[0];//¾Ç¸¹
-			name = line.split(" ")[1];//¦WºÙ
-			score = line.split(" ")[2];//¤À¼Æ
+			id = line.split(" ")[0];//å­¸è™Ÿ
+			name = line.split(" ")[1];//åç¨±
+			score = line.split(" ")[2];//åˆ†æ•¸
 			subjectStudents.add(new SubjectStudents(id,name,score));
 		}
 		reader.close();

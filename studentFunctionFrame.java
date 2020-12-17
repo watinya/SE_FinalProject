@@ -1,68 +1,75 @@
 import java.awt.*;
 import javax.swing.*;
 
+import Member.Member;
 import Member.Student;
 
 import java.awt.event.*;
 
 public class studentFunctionFrame extends JFrame implements ActionListener {
-	private JButton Jbtn_Course = new JButton("¶}½Ò¬d¸ß");
-    private JButton Jbtn_Score = new JButton("¦¨ÁZ¬d¸ß");
-    private JButton Jbtn_printTranscript = new JButton("¦C¦L¦¨ÁZ³æ");
-    private JButton Jbtn_ChangePW = new JButton("­×§ï±K½X");
+	private JButton Jbtn_Course = new JButton("é–‹èª²æŸ¥è©¢");
+    private JButton Jbtn_Score = new JButton("æˆç¸¾æŸ¥è©¢");
+    private JButton Jbtn_printTranscript = new JButton("åˆ—å°æˆç¸¾å–®");
+    private JButton Jbtn_ChangePW = new JButton("ä¿®æ”¹å¯†ç¢¼");
     private Student user;
+    
     public studentFunctionFrame(Student user)
     {
-        super("°ª¿P¤j½Òµ{¥­¥x ¾Ç¥Í¥\¯à");
+        super("é«˜ç‡•å¤§èª²ç¨‹å¹³å° å­¸ç”ŸåŠŸèƒ½");
         this.user = user;
         Container c = getContentPane();
         c.setLayout(null);
                  
-        //³]©w¶}½Ò¬d¸ß(²M³æ¡B¤º®e¡B¾Ç¥Í²M³æ)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šé–‹èª²æŸ¥è©¢(æ¸…å–®ã€å…§å®¹ã€å­¸ç”Ÿæ¸…å–®)æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Course.setLocation(64,148);
         Jbtn_Course.setSize(218,127);
-        Jbtn_Course.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_Course.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_Course.addActionListener(this);
         c.add(Jbtn_Course);
        
-        //³]©w¦¨ÁZ¬d¸ß«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šæˆç¸¾æŸ¥è©¢æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Score.setLocation(346,148);
         Jbtn_Score.setSize(218,127);
-        Jbtn_Score.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_Score.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_Score.addActionListener(this);
         c.add(Jbtn_Score);
         
-        //³]©w¦C¦L¦¨ÁZ³æ«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šåˆ—å°æˆç¸¾å–®æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_printTranscript.setLocation(628,148);
         Jbtn_printTranscript.setSize(218,127);
-        Jbtn_printTranscript.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_printTranscript.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_printTranscript.addActionListener(this);
         c.add(Jbtn_printTranscript);
         
-        //³]©w­×§ï±K½X«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šä¿®æ”¹å¯†ç¢¼æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_ChangePW.setLocation(910,148);
         Jbtn_ChangePW.setSize(218,127);
-        Jbtn_ChangePW.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_ChangePW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_ChangePW.addActionListener(this);
         c.add(Jbtn_ChangePW);
        
-        //³]©wµøµ¡
+        //è¨­å®šè¦–çª—
         setSize(1200, 800);
-        setLocationRelativeTo(null);//µøµ¡¸m¤¤
+        setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
         //setLocation(300,200);
-        setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+        setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Jbtn_ChangePW) {
-        	
-			new changePasswordFrame();
+        if(e.getSource() == Jbtn_Course) {
+        	new searchCourseFrame();
         }
         else if(e.getSource() == Jbtn_Score){
         	user.getScore();
+        }
+        else if(e.getSource() == Jbtn_printTranscript) {
+        	
+        }
+        else if(e.getSource() == Jbtn_ChangePW) {
+			new changePasswordFrame(user);
         }
     }
 }

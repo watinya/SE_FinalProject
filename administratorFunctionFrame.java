@@ -3,14 +3,14 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class administratorFunctionFrame extends JFrame implements ActionListener {
-	private JButton Jbtn_Course = new JButton("¶}½Ò¬d¸ß");
-	private JButton Jbtn_accountManage = new JButton("±b¤áºŞ²z");
-	private JButton Jbtn_studentManage = new JButton("¾Ç¥Í¸ê°TºŞ²z");
-	private JButton Jbtn_courseManage = new JButton("½Òµ{¸ê°TºŞ²z");
-    private JButton Jbtn_electiveCourseMange = new JButton("¾Ç¥Í¿ï­×½Òµ{ºŞ²z");
-    private JButton Jbtn_electiveCourseScore = new JButton("¿ï­×½Òµ{¦¨ÁZºŞ²z");
-    private JButton Jbtn_generateTranscripts = new JButton("²£¥Í¦¨ÁZ³æ");
-    private JButton Jbtn_ChangePW = new JButton("­×§ï±K½X");
+	private JButton Jbtn_Course = new JButton("é–‹èª²æŸ¥è©¢");
+	private JButton Jbtn_accountManage = new JButton("å¸³æˆ¶ç®¡ç†");
+	private JButton Jbtn_studentManage = new JButton("å­¸ç”Ÿè³‡è¨Šç®¡ç†");
+	private JButton Jbtn_courseManage = new JButton("èª²ç¨‹è³‡è¨Šç®¡ç†");
+    private JButton Jbtn_electiveCourseMange = new JButton("å­¸ç”Ÿé¸ä¿®èª²ç¨‹ç®¡ç†");
+    private JButton Jbtn_electiveCourseScore = new JButton("é¸ä¿®èª²ç¨‹æˆç¸¾ç®¡ç†");
+    private JButton Jbtn_generateTranscripts = new JButton("ç”¢ç”Ÿæˆç¸¾å–®");
+    private JButton Jbtn_ChangePW = new JButton("ä¿®æ”¹å¯†ç¢¼");
     
     /*test
     public administratorFunctionFrame(String id, char[] pw, String name) {
@@ -21,71 +21,71 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
     
     public administratorFunctionFrame()
     {
-        super("°ª¿P¤j½Òµ{¥­¥x ºŞ²z­û¥\¯à");
+        super("é«˜ç‡•å¤§èª²ç¨‹å¹³å° ç®¡ç†å“¡åŠŸèƒ½");
         Container c = getContentPane();
         c.setLayout(null);
                  
-        //³]©w¶}½Ò¬d¸ß(²M³æ¡B¤º®e¡B¾Ç¥Í²M³æ)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šé–‹èª²æŸ¥è©¢(æ¸…å–®ã€å…§å®¹ã€å­¸ç”Ÿæ¸…å–®)æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Course.setLocation(909,150);
         Jbtn_Course.setSize(218,127);
-        Jbtn_Course.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_Course.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_Course.addActionListener(this);
         c.add(Jbtn_Course);
        
-        //³]©w±b¸¹ºŞ²z(·s¼W¡B§R°£¡B­×§ï)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šå¸³è™Ÿç®¡ç†(æ–°å¢ã€åˆªé™¤ã€ä¿®æ”¹)æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_accountManage.setLocation(63,150);
         Jbtn_accountManage.setSize(218,127);
-        Jbtn_accountManage.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_accountManage.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_accountManage.addActionListener(this);
         c.add(Jbtn_accountManage);
         
-        //³]©w¾Ç¥Í¸ê°T(©m¦W¡B¾Ç¸¹¡B¤J¾Ç¦~¤À)ºŞ²z«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šå­¸ç”Ÿè³‡è¨Š(å§“åã€å­¸è™Ÿã€å…¥å­¸å¹´åˆ†)ç®¡ç†æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_studentManage.setLocation(345,150);
         Jbtn_studentManage.setSize(218,127);
-        Jbtn_studentManage.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_studentManage.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_studentManage.addActionListener(this);
         c.add(Jbtn_studentManage);
         
-        //³]©w½Òµ{¸ê°TºŞ²z«ö¶s(¥N½X¡B¦WºÙ¡B¾Ç¤À¡B±Ğ±Â¡BÃş«¬)¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šèª²ç¨‹è³‡è¨Šç®¡ç†æŒ‰éˆ•(ä»£ç¢¼ã€åç¨±ã€å­¸åˆ†ã€æ•™æˆã€é¡å‹)å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_courseManage.setLocation(627,150);
         Jbtn_courseManage.setSize(218,127);
-        Jbtn_courseManage.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_courseManage.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_courseManage.addActionListener(this);
         c.add(Jbtn_courseManage);
         
-        //³]©w¾Ç¥Í¿ï­×½Òµ{ºŞ²z(·s¼W¡B§R°£¡B­×§ï)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šå­¸ç”Ÿé¸ä¿®èª²ç¨‹ç®¡ç†(æ–°å¢ã€åˆªé™¤ã€ä¿®æ”¹)æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_electiveCourseMange.setLocation(345,329);
         Jbtn_electiveCourseMange.setSize(218,127);
-        Jbtn_electiveCourseMange.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_electiveCourseMange.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_electiveCourseMange.addActionListener(this);
         c.add(Jbtn_electiveCourseMange);
         
-        //³]©w¿ï­×½Òµ{¦¨ÁZºŞ²z(¿é¤J¡B§ó·s)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šé¸ä¿®èª²ç¨‹æˆç¸¾ç®¡ç†(è¼¸å…¥ã€æ›´æ–°)æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_electiveCourseScore.setLocation(63,329);
         Jbtn_electiveCourseScore.setSize(218,127);
-        Jbtn_electiveCourseScore.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_electiveCourseScore.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_electiveCourseScore.addActionListener(this);
         c.add(Jbtn_electiveCourseScore);
         
-        //³]©w²£¥Í¦¨ÁZ³æ«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šç”¢ç”Ÿæˆç¸¾å–®æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_generateTranscripts.setLocation(627,329);
         Jbtn_generateTranscripts.setSize(218,127);
-        Jbtn_generateTranscripts.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_generateTranscripts.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_generateTranscripts.addActionListener(this);
         c.add(Jbtn_generateTranscripts);
         
-        //³]©w­×§ï±K½X«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šä¿®æ”¹å¯†ç¢¼æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_ChangePW.setLocation(909,329);
         Jbtn_ChangePW.setSize(218,127);
-        Jbtn_ChangePW.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        Jbtn_ChangePW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         Jbtn_ChangePW.addActionListener(this);
         c.add(Jbtn_ChangePW);
        
-        //³]©wµøµ¡
+        //è¨­å®šè¦–çª—
         setSize(1200, 800);
-        setLocationRelativeTo(null);//µøµ¡¸m¤¤
+        setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
         //setLocation(300,200);
-        setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+        setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -93,8 +93,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Jbtn_ChangePW) {
-        	
-			new changePasswordFrame();
+			//new changePasswordFrame(user);
         }
     }
 }

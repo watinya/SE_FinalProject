@@ -1,61 +1,39 @@
+package Member;
+
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
-public class teacherFunctionFrame extends JFrame implements ActionListener {
-	private JButton Jbtn_Course = new JButton("¶}½Ò¬d¸ß");
-    private JButton Jbtn_Score = new JButton("¿é¤J¦¨ÁZ");
-    private JButton Jbtn_generateScore = new JButton("²£¥Í±Â½Ò½Òµ{¦¨ÁZ");
-    private JButton Jbtn_ChangePW = new JButton("­×§ï±K½X");
-   
-    public teacherFunctionFrame()
-    {
-        super("°ª¿P¤j½Òµ{¥­¥x ±Ğ±Â¥\¯à");
-        Container c = getContentPane();
-        c.setLayout(null);
-                 
-        //³]©w¶}½Ò¬d¸ß(²M³æ¡B¤º®e¡B¾Ç¥Í²M³æ)«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
-        Jbtn_Course.setLocation(63,148);
-        Jbtn_Course.setSize(218,127);
-        Jbtn_Course.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
-        Jbtn_Course.addActionListener(this);
-        c.add(Jbtn_Course);
-       
-        //³]©w¦¨ÁZºŞ²z«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
-        Jbtn_Score.setLocation(627,148);
-        Jbtn_Score.setSize(218,127);
-        Jbtn_Score.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
-        Jbtn_Score.addActionListener(this);
-        c.add(Jbtn_Score);
-        
-        //³]©w²£¥Í±Â½Ò½Òµ{¦¨ÁZ«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
-        Jbtn_generateScore.setLocation(345,148);
-        Jbtn_generateScore.setSize(218,127);
-        Jbtn_generateScore.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
-        Jbtn_generateScore.addActionListener(this);
-        c.add(Jbtn_generateScore);
-        
-        //³]©w­×§ï±K½X«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
-        Jbtn_ChangePW.setLocation(910,148);
-        Jbtn_ChangePW.setSize(218,127);
-        Jbtn_ChangePW.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
-        Jbtn_ChangePW.addActionListener(this);
-        c.add(Jbtn_ChangePW);
-       
-        //³]©wµøµ¡
-        setSize(1200, 800);
-        setLocationRelativeTo(null);//µøµ¡¸m¤¤
-        //setLocation(300,200);
-        setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+public class CourseList {
+	JTable jt;
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Jbtn_ChangePW) {
-        	
-			new changePasswordFrame();
-        }
-    }
+	public CourseList(String[][] fileContent) {
+		JFrame frame = new JFrame("èª²è¡¨");
+		Container c = frame.getContentPane();
+		
+		//å»ºç«‹è¡¨æ ¼
+		String[] columns = { "é–‹èª²ä»£è™Ÿ", "èª²ç¨‹åç¨±", "å­¸åˆ†æ•¸", "ç§‘ç›®å‹æ…‹", "æˆèª²æ•™å¸«"};
+		jt = new JTable(fileContent, columns);
+		jt.setPreferredScrollableViewportSize(new Dimension(400,300));
+	    TableColumn column=jt.getColumnModel().getColumn(0);
+	    //è¡¨æ ¼å¯¬åº¦
+	    column.setPreferredWidth(80);
+	    column=jt.getColumnModel().getColumn(1);
+	    column.setPreferredWidth(200);
+	    column=jt.getColumnModel().getColumn(2);
+	    column.setPreferredWidth(65);
+	    column=jt.getColumnModel().getColumn(3);
+	    column.setPreferredWidth(80);
+	    column=jt.getColumnModel().getColumn(4);
+	    column.setPreferredWidth(80);
+		c.add(new JScrollPane(jt), BorderLayout.CENTER);
+
+
+		frame.setSize(1000, 800);
+		frame.setLocationRelativeTo(null);// è¦–çª—ç½®ä¸­
+		frame.setResizable(false);// è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 }

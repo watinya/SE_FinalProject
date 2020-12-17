@@ -11,20 +11,20 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Teacher extends Member{
-	//©Ò¦³«ü¾É½Òµ{
+	//æ‰€æœ‰æŒ‡å°èª²ç¨‹
 	public ArrayList<Subject> subjects = new ArrayList<Subject>();
-	//«Ø¥ß±b¸¹°ò¥»Äİ©Ê
+	//å»ºç«‹å¸³è™ŸåŸºæœ¬å±¬æ€§
 	public Teacher(String id, char[] password, String name){
-		//¬ö¿ı·í«e¨Ï¥ÎªÌ:±b¸¹,±K½X,¨Ï¥ÎªÌ¦WºÙ
+		//ç´€éŒ„ç•¶å‰ä½¿ç”¨è€…:å¸³è™Ÿ,å¯†ç¢¼,ä½¿ç”¨è€…åç¨±
 		super(id,new String(password),name);
-		//«Ø¥ß«ü¾É½Òµ{
+		//å»ºç«‹æŒ‡å°èª²ç¨‹
 		try {
-		createCourse("data\\teachers\\"+ name +"\\«ü¾É½Òµ{.txt");	
+		createCourse("data\\teachers\\"+ name +"\\æŒ‡å°èª²ç¨‹.txt");	
 		}catch(IOException e) {
-			System.out.println("«Ø¥ß«ü¾É½Òµ{ Error");
+			System.out.println("å»ºç«‹æŒ‡å°èª²ç¨‹ Error");
 		}	
 	}
-	//«Ø¥ß«ü¾É½Òµ{
+	//å»ºç«‹æŒ‡å°èª²ç¨‹
 	private void createCourse(String dataLoaction) throws IOException {
 			File f = new File(dataLoaction);
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");
@@ -35,18 +35,18 @@ public class Teacher extends Member{
 			}
 			reader.close();
 	}
-	//¿é¤J¾Ç¥Í¦¨ÁZ
+	//è¼¸å…¥å­¸ç”Ÿæˆç¸¾
 	public void setScore(String subject,String studentId, String score){
 		try {
 			File f = new File("data\\course\\"+findSubject(subject).getYear()+"\\"+ subject +".txt");
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");
 			BufferedReader reader = new BufferedReader(reade);
 			String line,id,fileContent = "";
-			//²Ä¤@¦æ¤£°Ê§@
+			//ç¬¬ä¸€è¡Œä¸å‹•ä½œ
 			fileContent = fileContent.concat(reader.readLine() + "\n");
 			while((line = reader.readLine()) != null) {
 				id = line.split(" ")[0];
-				//¼g¤J¦¨ÁZ
+				//å¯«å…¥æˆç¸¾
 				if(id.equals(studentId)) {
 					fileContent = fileContent.concat(id +" "+ line.split(" ")[1] +" "+ score +"\n");
 				}else {
@@ -54,13 +54,13 @@ public class Teacher extends Member{
 				}
 			}
 			reader.close();
-			//¼g¤J§ó·s¸ê®Æ
+			//å¯«å…¥æ›´æ–°è³‡æ–™
 			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
 			BufferedWriter writer = new BufferedWriter(write);
 			writer.write(fileContent);
 			writer.close();
 		}catch(IOException e) {
-			System.out.println("¿é¤J¾Ç¥Í¦¨ÁZ Error");
+			System.out.println("è¼¸å…¥å­¸ç”Ÿæˆç¸¾ Error");
 		}
 	}
 	private Subject findSubject(String subject) {

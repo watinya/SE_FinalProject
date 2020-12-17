@@ -1,5 +1,5 @@
 package Member;
-//¦s©ñ½Òµ{¾Ç¥Í:¾Ç¸¹,¦WºÙ,¤À¼Æ
+//å­˜æ”¾èª²ç¨‹å­¸ç”Ÿ:å­¸è™Ÿ,åç¨±,åˆ†æ•¸
 public class SubjectStudents {
 	private String id;
 	private String name;

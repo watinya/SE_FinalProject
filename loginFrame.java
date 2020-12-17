@@ -1,7 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 
+import Member.Member;
 import Member.Student;
+import Member.Teacher;
 
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -10,56 +12,57 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class loginFrame extends JFrame implements ActionListener{
-	private JLabel Jlb_ID = new JLabel("±b¸¹¡G");
-    private JLabel Jlb_PW = new JLabel("±K½X¡G");
+	private JLabel Jlb_ID = new JLabel("å¸³è™Ÿï¼š");
+    private JLabel Jlb_PW = new JLabel("å¯†ç¢¼ï¼š");
     private JPasswordField jpw = new JPasswordField(20);
     private JTextField jid = new JTextField(20);
-    private JButton Jbtn_Login = new JButton("µn¤J");
+    private JButton Jbtn_Login = new JButton("ç™»å…¥");
     private String name;
+    
     public loginFrame()
     {
-        super("°ª¿P¤j½Òµ{¥­¥x µn¤J");
+        super("é«˜ç‡•å¤§èª²ç¨‹å¹³å° ç™»å…¥");
         Container c = getContentPane();
         c.setLayout(null);
        
-        //³]©wJlb_ID¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šJlb_IDå¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jlb_ID.setLocation(433,125);
         Jlb_ID.setSize(100,47);
-        Jlb_ID.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        Jlb_ID.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         c.add(Jlb_ID);
        
-        //³]©w±b¸¹¿é¤J®Ø¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šå¸³è™Ÿè¼¸å…¥æ¡†å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         jid.setLocation(532,130);
         jid.setSize(220,40);
-        jid.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,24));
+        jid.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,24));
         c.add(jid);
        
-        //³]©wJlb_PW¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šJlb_PWå¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jlb_PW.setLocation(433,176);
         Jlb_PW.setSize(100,47);
-        Jlb_PW.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        Jlb_PW.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         c.add(Jlb_PW);
        
-        //³]©w±K½X¿é¤J®Ø¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šå¯†ç¢¼è¼¸å…¥æ¡†å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         jpw.setLocation(532,180);
         jpw.setSize(220,40);
-        jpw.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,16));
-        jpw.setEchoChar('¡´');
-        //jpw.setToolTipText("±K½Xªø«×8­Ó¦r¤¸");
+        jpw.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,16));
+        jpw.setEchoChar('â—');
+        //jpw.setToolTipText("å¯†ç¢¼é•·åº¦8å€‹å­—å…ƒ");
         c.add(jpw);
         
-        //³]©wµn¤J«ö¶s¤j¤p¦ì¸m¤ÎÅã¥Ü¦r«¬
+        //è¨­å®šç™»å…¥æŒ‰éˆ•å¤§å°ä½ç½®åŠé¡¯ç¤ºå­—å‹
         Jbtn_Login.setLocation(513,236);
         Jbtn_Login.setSize(142,47);
-        Jbtn_Login.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 22));
+        Jbtn_Login.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 22));
         Jbtn_Login.addActionListener(this);
         c.add(Jbtn_Login);
        
-        //³]©wµøµ¡
+        //è¨­å®šè¦–çª—
         setSize(1200, 800);
-        setLocationRelativeTo(null);//µøµ¡¸m¤¤
+        setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
         //setLocation(300,200);
-        setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+        setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -83,7 +86,7 @@ public class loginFrame extends JFrame implements ActionListener{
 				}
 			}
 			if(!isLoginSuccess) {
-	        	JOptionPane.showMessageDialog(null, "±b¸¹©Î±K½X¿ù»~");
+	        	JOptionPane.showMessageDialog(null, "å¸³è™Ÿæˆ–å¯†ç¢¼éŒ¯èª¤");
 	        	jid.setText("");
 				jpw.setText("");
 	        }
@@ -113,7 +116,8 @@ public class loginFrame extends JFrame implements ActionListener{
 				case 5:
 					if(checkData("data\\teacherAccount.txt")) {
 						this.dispose();
-						new teacherFunctionFrame();
+						Teacher user = new Teacher(jid.getText(), jpw.getPassword(), name);
+						new teacherFunctionFrame(user);
 					}
 					break;
 				case 4:
@@ -123,7 +127,7 @@ public class loginFrame extends JFrame implements ActionListener{
 					}
 					break;
 				default:
-					JOptionPane.showMessageDialog(null, "±b¸¹©Î±K½X¿ù»~");
+					JOptionPane.showMessageDialog(null, "å¸³è™Ÿæˆ–å¯†ç¢¼éŒ¯èª¤");
 					jid.setText("");
 					jpw.setText("");
 					break;
