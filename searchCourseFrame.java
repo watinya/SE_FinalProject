@@ -1,9 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.ListBtnEditor;
+import Member.ListBtnMouseListener;
 import Member.ListBtnRender;
 import Member.Member;
 
@@ -57,7 +59,14 @@ public class searchCourseFrame extends JFrame implements ActionListener {
 			}// 表格不允許被編輯
 	    };
 	    JTable courseTable = new JTable(tableM) ;
-	    courseTable.setFont(new Font("微軟正黑體", Font.PLAIN, 24));
+	    courseTable.addMouseListener(new ListBtnMouseListener(courseTable));
+	    //表格標題大小
+	    JTableHeader head = courseTable.getTableHeader();
+	    head.setFont(new Font("微軟正黑體", Font.BOLD, 26));
+	    head.setPreferredSize(new Dimension(head.getWidth(), 32));
+	    //表格大小
+	    courseTable.setFont(new Font("微軟正黑體", Font.PLAIN, 20));
+	    courseTable.setRowHeight(28);
 	    
 	    courseTable.getColumnModel().getColumn(5).setCellRenderer(new ListBtnRender());
 		courseTable.getColumnModel().getColumn(5).setCellEditor(new ListBtnEditor());
@@ -67,9 +76,9 @@ public class searchCourseFrame extends JFrame implements ActionListener {
 		for (int i = 0; i < columns.length; i++) {
 			column = courseTable.getColumnModel().getColumn(i);
 			if (i == 1) {
-				column.setPreferredWidth(300); //second column is bigger
+				column.setPreferredWidth(200); //second column is bigger
 			} else {
-				column.setPreferredWidth(20);
+				column.setPreferredWidth(100);
 			}
 		}
 		coursePane.setLocation(14, 72);

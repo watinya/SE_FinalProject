@@ -1,15 +1,14 @@
 package Member;
 import java.awt.Component;
 
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public class ListBtnRender implements TableCellRenderer {
-	private JButton button;
+	private ListBtn button;
 
 	public ListBtnRender() {
-		button = new JButton("查看");
+		button = new ListBtn("查看");
 	}
 
 	@Override

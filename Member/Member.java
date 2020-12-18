@@ -1,21 +1,12 @@
 package Member;
 
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.Button;
-import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -27,7 +18,6 @@ public class Member {
 	public String id;
 	public String password;
 	public String name;
-	static String year;
 
 	public Member(String id, String password, String name) {
 		this.id = id;
@@ -104,12 +94,12 @@ public class Member {
 	static public void outputCourseList(String year, DefaultTableModel tableM) {
 		String dataLocation = "data\\course\\" + year;
 		try {
-			createCourseList(dataLocation, tableM);
+			createCourseList(dataLocation, tableM, year);
 		}catch(IOException e) {
 			System.out.println("outputCourseList Error");
 		}
 	}
-	static private void createCourseList(String dataLocation, DefaultTableModel tableM) throws IOException {
+	static private void createCourseList(String dataLocation, DefaultTableModel tableM, String year) throws IOException {
 		File f = new File(dataLocation);
 		File[] fileList = f.listFiles();
 		cleanTable(tableM);
@@ -123,6 +113,13 @@ public class Member {
 			Object[] temp = {line[0], line[1], line[2], line[3], line[4], btn};
 			tableM.addRow(temp);
 		}
+		
+		btn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				String subject = (String) tableM.getValueAt(ListBtnMouseListener.getRow(), 1);
+				outputClassmate(year, subject);
+			}
+		});
 	}
 	
 	// 清空表單method
