@@ -92,8 +92,11 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == Jbtn_ChangePW) {
-			//new changePasswordFrame(user);
+    	if(e.getSource() == Jbtn_Course) {
+    		new searchCourseFrame();
+    	}
+    	else if(e.getSource() == Jbtn_ChangePW) {
+			new changePasswordFrame(user);
         }
     }
 }

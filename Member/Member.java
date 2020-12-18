@@ -1,12 +1,21 @@
 package Member;
 
+import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import java.io.File;
 import java.io.IOException;
+import java.awt.Button;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -18,6 +27,7 @@ public class Member {
 	public String id;
 	public String password;
 	public String name;
+	static String year;
 
 	public Member(String id, String password, String name) {
 		this.id = id;
@@ -64,7 +74,7 @@ public class Member {
 	}
 	
 	//列出課程同學
-	public void outputClassmate(String year, String subjectName)  {
+	public static void outputClassmate(String year, String subjectName)  {
 		//建檔案路徑
 		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
 		try {
@@ -73,7 +83,7 @@ public class Member {
 			System.out.println("outputClassmate Error");
 		}	
 	}
-	private void outputClassmate(String dataLocation) throws IOException {
+	private static void outputClassmate(String dataLocation) throws IOException {
 		File f = new File(dataLocation);
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(read);
@@ -91,27 +101,34 @@ public class Member {
 	}
 	
 	//列出學期課程清單
-	public void outputCourseList(String year) {
+	static public void outputCourseList(String year, DefaultTableModel tableM) {
 		String dataLocation = "data\\course\\" + year;
 		try {
-			createCourseList(dataLocation);
+			createCourseList(dataLocation, tableM);
 		}catch(IOException e) {
 			System.out.println("outputCourseList Error");
 		}
 	}
-	private void createCourseList(String dataLocation) throws IOException {
+	static private void createCourseList(String dataLocation, DefaultTableModel tableM) throws IOException {
 		File f = new File(dataLocation);
 		File[] fileList = f.listFiles();
+		cleanTable(tableM);
+		ListBtn btn = new ListBtn();
 		//讀取每個課程第一行內容
-		String[][] fileContent = new String[fileList.length][5];
 		for(int i=0; i<fileList.length; i++) {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(fileList[i]), "utf-8");
 			BufferedReader reader = new BufferedReader(read);
 			String[] line = reader.readLine().split(" ");
-			fileContent[i] = line;
+			
+			Object[] temp = {line[0], line[1], line[2], line[3], line[4], btn};
+			tableM.addRow(temp);
 		}
-		//視窗顯示
-		new CourseList(fileContent);
+	}
+	
+	// 清空表單method
+	static void cleanTable(DefaultTableModel table) {
+		while (table.getRowCount() > 0)
+			table.removeRow(0);
 	}
 	
 }// end class
