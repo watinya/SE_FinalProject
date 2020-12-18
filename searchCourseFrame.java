@@ -5,6 +5,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.ListBtnEditor;
+import Member.ListBtnMouseListener;
 import Member.ListBtnRender;
 import Member.Member;
 
@@ -58,6 +59,7 @@ public class searchCourseFrame extends JFrame implements ActionListener {
 			}// 表格不允許被編輯
 	    };
 	    JTable courseTable = new JTable(tableM) ;
+	    courseTable.addMouseListener(new ListBtnMouseListener(courseTable));
 	    //表格標題大小
 	    JTableHeader head = courseTable.getTableHeader();
 	    head.setFont(new Font("微軟正黑體", Font.BOLD, 26));
