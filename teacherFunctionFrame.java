@@ -27,14 +27,14 @@ public class teacherFunctionFrame extends JFrame implements ActionListener {
         c.add(Jbtn_Course);
        
         //設定成績管理按鈕大小位置及顯示字型
-        Jbtn_Score.setLocation(627,148);
+        Jbtn_Score.setLocation(345,148);
         Jbtn_Score.setSize(218,127);
         Jbtn_Score.setFont(new Font("微軟正黑體",Font.BOLD,22));
         Jbtn_Score.addActionListener(this);
         c.add(Jbtn_Score);
         
         //設定產生授課課程成績按鈕大小位置及顯示字型
-        Jbtn_generateScore.setLocation(345,148);
+        Jbtn_generateScore.setLocation(627,148);
         Jbtn_generateScore.setSize(218,127);
         Jbtn_generateScore.setFont(new Font("微軟正黑體",Font.BOLD,22));
         Jbtn_generateScore.addActionListener(this);
@@ -62,7 +62,7 @@ public class teacherFunctionFrame extends JFrame implements ActionListener {
         	new searchCourseFrame();
         }
         else if(e.getSource() == Jbtn_Score) {
-        	
+        	new writeScoreFrame(user);
         }
         else if(e.getSource() == Jbtn_generateScore) {
         	

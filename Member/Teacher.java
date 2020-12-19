@@ -19,7 +19,7 @@ public class Teacher extends Member{
 		super(id,new String(password),name);
 		//建立指導課程
 		try {
-		createCourse("data\\teachers\\"+ name +"\\指導課程.txt");	
+		createCourse("data\\teachers\\"+ id +"\\指導課程.txt");	
 		}catch(IOException e) {
 			System.out.println("建立指導課程 Error");
 		}	
@@ -36,7 +36,7 @@ public class Teacher extends Member{
 			reader.close();
 	}
 	//輸入學生成績
-	public void setScore(String subject,String studentId, String score){
+	public void setScore(String subject, String studentId, String score){
 		try {
 			File f = new File("data\\course\\"+findSubject(subject).getYear()+"\\"+ subject +".txt");
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");

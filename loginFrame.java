@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
+import Member.Member;
 import Member.Student;
 import Member.Teacher;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class loginFrame extends JFrame implements ActionListener{
     private JLabel Jlb_title = new JLabel("高燕大課程平台");
-    private JLabel Jlb_ID = new JLabel("帳號：");
+	private JLabel Jlb_ID = new JLabel("帳號：");
     private JLabel Jlb_PW = new JLabel("密碼：");
     private JPasswordField jpw = new JPasswordField(20);
     private JTextField jid = new JTextField(20);
@@ -24,33 +25,33 @@ public class loginFrame extends JFrame implements ActionListener{
         super("高燕大課程平台 登入");
         Container c = getContentPane();
         c.setLayout(null);
-       
+
         //設定Jlb_title大小位置及顯示字型
         Jlb_title.setLocation(406,13);
         Jlb_title.setSize(395,106);
         Jlb_title.setFont(new Font("微軟正黑體", Font.BOLD, 54));
         c.add(Jlb_title);
-
+       
         //設定Jlb_ID大小位置及顯示字型
-        Jlb_ID.setLocation(433,132);
+        Jlb_ID.setLocation(433,125);
         Jlb_ID.setSize(100,47);
         Jlb_ID.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_ID);
        
         //設定帳號輸入框大小位置及顯示字型
-        jid.setLocation(532,137);
+        jid.setLocation(532,130);
         jid.setSize(220,40);
         jid.setFont(new Font("微軟正黑體", Font.BOLD,24));
         c.add(jid);
        
         //設定Jlb_PW大小位置及顯示字型
-        Jlb_PW.setLocation(433,183);
+        Jlb_PW.setLocation(433,176);
         Jlb_PW.setSize(100,47);
         Jlb_PW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_PW);
        
         //設定密碼輸入框大小位置及顯示字型
-        jpw.setLocation(532,187);
+        jpw.setLocation(532,180);
         jpw.setSize(220,40);
         jpw.setFont(new Font("微軟正黑體", Font.BOLD,16));
         jpw.setEchoChar('●');
@@ -58,7 +59,7 @@ public class loginFrame extends JFrame implements ActionListener{
         c.add(jpw);
         
         //設定登入按鈕大小位置及顯示字型
-        Jbtn_Login.setLocation(513,243);
+        Jbtn_Login.setLocation(513,236);
         Jbtn_Login.setSize(142,47);
         Jbtn_Login.setFont(new Font("微軟正黑體", Font.BOLD, 22));
         Jbtn_Login.addActionListener(this);
@@ -86,7 +87,7 @@ public class loginFrame extends JFrame implements ActionListener{
 			while ((line = br.readLine()) != null) {
 				user = line.split(" ")[0];
 				pass = line.split(" ")[1];
-				name = line.split(" ")[2];
+				this.name = line.split(" ")[2];
 				if (user.equals(ID) && pass.equals(ps)) {
 					isLoginSuccess = true;
 				}
@@ -113,21 +114,21 @@ public class loginFrame extends JFrame implements ActionListener{
         	
 	        switch(jid.getText().length()) {
 				case 9:
-					if(checkData("data\\studentAccount.txt")) {
+					if(checkData("data\\account\\studentAccount.txt")) {
 						this.dispose();
 						Student user = new Student(jid.getText(), jpw.getPassword(), name);
 						new studentFunctionFrame(user);
 					}
 					break;
 				case 5:
-					if(checkData("data\\teacherAccount.txt")) {
+					if(checkData("data\\account\\teacherAccount.txt")) {
 						this.dispose();
 						Teacher user = new Teacher(jid.getText(), jpw.getPassword(), name);
 						new teacherFunctionFrame(user);
 					}
 					break;
 				case 4:
-					if(checkData("data\\administratorAccount.txt")) {
+					if(checkData("data\\account\\administratorAccount.txt")) {
 						this.dispose();
 						new administratorFunctionFrame();
 					}
