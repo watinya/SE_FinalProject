@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class loginFrame extends JFrame implements ActionListener{
+    private JLabel Jlb_title = new JLabel("高燕大課程平台");
 	private JLabel Jlb_ID = new JLabel("帳號：");
     private JLabel Jlb_PW = new JLabel("密碼：");
     private JPasswordField jpw = new JPasswordField(20);
@@ -24,6 +25,12 @@ public class loginFrame extends JFrame implements ActionListener{
         super("高燕大課程平台 登入");
         Container c = getContentPane();
         c.setLayout(null);
+
+        //設定Jlb_title大小位置及顯示字型
+        Jlb_title.setLocation(406,13);
+        Jlb_title.setSize(395,106);
+        Jlb_title.setFont(new Font("微軟正黑體", Font.BOLD, 54));
+        c.add(Jlb_title);
        
         //設定Jlb_ID大小位置及顯示字型
         Jlb_ID.setLocation(433,125);
