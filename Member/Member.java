@@ -30,13 +30,13 @@ public class Member {
 		//找檔案路徑
 		switch (account.length()) {
 		case 9:
-			file = "data/studentAccount.txt";
+			file = "data\\account\\studentAccount.txt";
 			break;
 		case 5:
-			file = "data/teacherAccount.txt";
+			file = "data\\account\\teacherAccount.txt";
 			break;
 		case 4:
-			file = "data/manageAccount.txt";
+			file = "data\\account\\manageAccount.txt";
 			break;
 		default:
 			file = "";
