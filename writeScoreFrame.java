@@ -43,7 +43,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         c.setLayout(null);
                 
         //設定學期標籤大小位置及顯示字型
-        Jlb_semester.setLocation(135,13);
+        Jlb_semester.setLocation(28,13);
         Jlb_semester.setSize(77,40);
         Jlb_semester.setFont(new Font("微軟正黑體", Font.BOLD, 24));
         c.add(Jlb_semester);
@@ -60,7 +60,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     	for(int i = 0; i < directoriesSemester.length; i++) {
     		jcb_semester.addItem(directoriesSemester[i]);
     	}
-    	jcb_semester.setLocation(209, 19);
+    	jcb_semester.setLocation(102, 19);
     	jcb_semester.setSize(134, 31);
     	jcb_semester.setFont(new Font("微軟正黑體",Font.BOLD,22));
     	jcb_semester.addItemListener(new ItemListener() {
@@ -90,14 +90,14 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     	c.add(jcb_semester);
         
         //設定課程標籤大小位置及顯示字型
-        Jlb_course.setLocation(357,13);
+        Jlb_course.setLocation(250,13);
         Jlb_course.setSize(77,38);
         Jlb_course.setFont(new Font("微軟正黑體", Font.BOLD, 24));
         c.add(Jlb_course);
         
         //設定課程下拉式選單大小位置及顯示字型
         jcb_course = new JComboBox<String>();
-        jcb_course.setBounds(431, 19, 242, 31);
+        jcb_course.setBounds(324, 19, 242, 31);
         jcb_course.setFont(new Font("微軟正黑體",Font.BOLD,22));
         jcb_course.addItemListener(new ItemListener() {
     		@Override
@@ -136,16 +136,16 @@ public class writeScoreFrame extends JFrame implements ActionListener {
 			column.setPreferredWidth(100);
 		}
 		coursePane.setLocation(14, 66);
-		coursePane.setSize(766, 831);
+		coursePane.setSize(566, 631);
 		c.add(coursePane);
 		
-		Jbtn_confirm.setBounds(321, 910, 127, 42);
+		Jbtn_confirm.setBounds(216, 710, 127, 42);
 		getContentPane().add(Jbtn_confirm);
 		Jbtn_confirm.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		Jbtn_confirm.addActionListener(this);
 		
         //設定視窗
-        setSize(800, 1000);
+        setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
         //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
