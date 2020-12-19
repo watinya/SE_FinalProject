@@ -1,9 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
 
-import Member.Member;
+
 import Member.Student;
 import Member.Teacher;
+import Member.Administrator;
 
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -129,8 +130,9 @@ public class loginFrame extends JFrame implements ActionListener{
 					break;
 				case 4:
 					if(checkData("data\\account\\administratorAccount.txt")) {
-						this.dispose();
-						new administratorFunctionFrame();
+                        this.dispose();
+                        Administrator user = new Administrator(jid.getText(), jpw.getPassword(), name);
+						new administratorFunctionFrame(user);
 					}
 					break;
 				default:

@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
+import Member.Administrator;
+
 public class administratorFunctionFrame extends JFrame implements ActionListener {
 	private JButton Jbtn_Course = new JButton("開課查詢");
 	private JButton Jbtn_accountManage = new JButton("帳戶管理");
@@ -11,18 +13,13 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
     private JButton Jbtn_electiveCourseScore = new JButton("選修課程成績管理");
     private JButton Jbtn_generateTranscripts = new JButton("產生成績單");
     private JButton Jbtn_ChangePW = new JButton("修改密碼");
+    private Administrator user;
     
-    /*test
-    public administratorFunctionFrame(String id, char[] pw, String name) {
-    	currentUser user = new currentUser(id,pw,name);
-    	new administratorFunctionFrame();
-    }
-    */
-    
-    public administratorFunctionFrame()
+    public administratorFunctionFrame(Administrator user)
     {
         super("高燕大課程平台 管理員功能");
         Container c = getContentPane();
+        this.user = user;
         c.setLayout(null);
                  
         //設定開課查詢(清單、內容、學生清單)按鈕大小位置及顯示字型

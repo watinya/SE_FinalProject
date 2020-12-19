@@ -26,7 +26,7 @@ public class changePasswordFrame extends JFrame implements ActionListener {
         
         //設定Jlb_ID大小位置及顯示字型
         Jlb_oldPW.setLocation(313,105);
-        Jlb_oldPW.setSize(120,47);
+        Jlb_oldPW.setSize(123,47);
         Jlb_oldPW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_oldPW);
         
@@ -40,7 +40,7 @@ public class changePasswordFrame extends JFrame implements ActionListener {
         
         //設定Jlb_newPW大小位置及顯示字型
         Jlb_newPW.setLocation(313,165);
-        Jlb_newPW.setSize(120,47);
+        Jlb_newPW.setSize(123,47);
         Jlb_newPW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_newPW);
         
