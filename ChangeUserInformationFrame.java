@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,7 +9,7 @@ public class ChangeUserInformationFrame implements ActionListener {
 	Administrator user;
 	String userInformation;
 	JFrame f;
-	//«Å§i¿é¤JÄæ
+	//å®£å‘Šè¼¸å…¥æ¬„
     JTextField newId = new JTextField(20);
     JTextField newPw = new JTextField(20);
     JTextField newName = new JTextField(20);
@@ -20,97 +18,97 @@ public class ChangeUserInformationFrame implements ActionListener {
 	public ChangeUserInformationFrame(Administrator user, String userInformation) {
 		this.user = user;
 		this.userInformation = userInformation;
-		//³]©w®Ø¬[
+		//è¨­å®šæ¡†æ¶
 		//JFrame.setDefaultLookAndFeelDecorated(true);
 		//JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("­×§ï¥Î¤á¸ê°T");
+		f = new JFrame("ä¿®æ”¹ç”¨æˆ¶è³‡è¨Š");
 		f.setSize(1000, 600);
-		f.setLocationRelativeTo(null);//µøµ¡¸m¤¤
-		f.setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+		f.setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
+		f.setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
 		Container cp = f.getContentPane();
 		cp.setLayout(null);
 		
-		//«Ø¥ß¼ĞÅÒ
-		//¼ĞÅÒ ±b¸¹
-		JLabel lb = new JLabel("±b¸¹: ");
+		//å»ºç«‹æ¨™ç±¤
+		//æ¨™ç±¤ å¸³è™Ÿ
+		JLabel lb = new JLabel("å¸³è™Ÿ: ");
 		lb.setLocation(343,105);
 		lb.setSize(120,47);
-		lb.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+		lb.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
 		cp.add(lb);
-		//¼ĞÅÒ ±K½X
-		lb = new JLabel("±K½X: ");
+		//æ¨™ç±¤ å¯†ç¢¼
+		lb = new JLabel("å¯†ç¢¼: ");
 		lb.setLocation(343,165);
         lb.setSize(120,47);
-        lb.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        lb.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         cp.add(lb);
-        //¼ĞÅÒ ¨Ï¥ÎªÌ¦WºÙ
-        lb = new JLabel("¨Ï¥ÎªÌ¦WºÙ: ");
+        //æ¨™ç±¤ ä½¿ç”¨è€…åç¨±
+        lb = new JLabel("ä½¿ç”¨è€…åç¨±: ");
         lb.setLocation(255,225);
         lb.setSize(185,47);
-        lb.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD,30));
+        lb.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD,30));
         cp.add(lb);
-        //¼ĞÅÒ Ãş«¬
-        lb = new JLabel("Ãş«¬: ");
+        //æ¨™ç±¤ é¡å‹
+        lb = new JLabel("é¡å‹: ");
 		lb.setLocation(343,285);
         lb.setSize(120,47);
-        lb.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+        lb.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
         cp.add(lb);
         
-        //«Ø¥ß¿é¤JÄæ
-        //¿é¤JÄæ newId
+        //å»ºç«‹è¼¸å…¥æ¬„
+        //è¼¸å…¥æ¬„ newId
         newId.setLocation(436,114);
 		newId.setSize(220,35);
-		newId.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 16));
+		newId.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 16));
 		newId.setText(userInformation.split(" ")[0]);
 		cp.add(newId);
-		//¿é¤JÄæ newPw 
+		//è¼¸å…¥æ¬„ newPw 
 		newPw.setLocation(436,174);
 		newPw.setSize(220,35);
-		newPw.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 16));
+		newPw.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 16));
 		newPw.setText(userInformation.split(" ")[1]);
 		cp.add(newPw);
-		//¿é¤JÄæ newName
+		//è¼¸å…¥æ¬„ newName
 		newName.setLocation(436,234);
 		newName.setSize(220,35);
-		newName.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 16));
+		newName.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 16));
 		newName.setText(userInformation.split(" ")[2]);
 		cp.add(newName);
-		//¿é¤JÄæ newType
+		//è¼¸å…¥æ¬„ newType
 		newType.setLocation(436,294);
 		newType.setSize(220,35);
-		newType.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 16));
+		newType.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 16));
 		newType.setText(userInformation.split(" ")[3]);
 		cp.add(newType);
 		
-		//«Ø¥ß«ö¶s
-		JButton change = new JButton("ÅÜ§ó");
-		JButton reset = new JButton("­«¸m");
-		//«ö¶s ÅÜ§ó
+		//å»ºç«‹æŒ‰éˆ•
+		JButton change = new JButton("è®Šæ›´");
+		JButton reset = new JButton("é‡ç½®");
+		//æŒ‰éˆ• è®Šæ›´
 		change.setLocation(354,350);
 		change.setSize(137,58);
-		change.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+		change.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
 		change.addActionListener(this);
         cp.add(change);
-        //«ö¶s ­«¸m
+        //æŒ‰éˆ• é‡ç½®
         reset.setLocation(505,350);
         reset.setSize(137,58);
-        reset.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        reset.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         reset.addActionListener(this);
         cp.add(reset);
 		
-		//±Ò°Ê
+		//å•Ÿå‹•
 		f.setVisible(true);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if(cmd.equals("ÅÜ§ó")) {
+		if(cmd.equals("è®Šæ›´")) {
 			//user.addUser(newId.getText(), newPw.getText(), newName.getText(), newType.getText());
 			user.changeUserInformation(userInformation.split(" ")[0], newId.getText(), newPw.getText(), newName.getText(), newType.getText());
-			JOptionPane.showMessageDialog(null, "ÅÜ§ó§¹¦¨");
+			JOptionPane.showMessageDialog(null, "è®Šæ›´å®Œæˆ");
 			f.dispose();
 		}
-		if(cmd.equals("­«¸m")) {
+		if(cmd.equals("é‡ç½®")) {
 			new ChangeUserInformationFrame(user, userInformation);
 			f.dispose();
 		}

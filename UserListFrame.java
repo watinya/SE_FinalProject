@@ -1,5 +1,3 @@
-
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -15,18 +13,18 @@ public class UserListFrame implements ActionListener{
 	
 	public UserListFrame(Administrator user) {
 		this.user = user;
-		//³]©w®Ø¬[
+		//è¨­å®šæ¡†æ¶
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("¥Î¤á²M³æ");
+		f = new JFrame("ç”¨æˆ¶æ¸…å–®");
 		f.setSize(500,400);
 		f.setLocationRelativeTo(null);
 		Container cp = f.getContentPane();
 		
-		//«Ø¥ßªí®æ¤º®e
-		String[] columns = {"±b¸¹","±K½X","¦WºÙ","¨Ï¥ÎªÌÃş«¬"};
+		//å»ºç«‹è¡¨æ ¼å…§å®¹
+		String[] columns = {"å¸³è™Ÿ","å¯†ç¢¼","åç¨±","ä½¿ç”¨è€…é¡å‹"};
 		jt = new JTable(user.getUserList(),columns);
-		//ªí®æ¼e«×
+		//è¡¨æ ¼å¯¬åº¦
 		TableColumn column=jt.getColumnModel().getColumn(0);
 	    column.setPreferredWidth(80);
 	    column=jt.getColumnModel().getColumn(1);
@@ -37,18 +35,18 @@ public class UserListFrame implements ActionListener{
 	    column.setPreferredWidth(50);
 		cp.add(new JScrollPane(jt), BorderLayout.CENTER);
 		
-		//¼W¥[«ö¶s
+		//å¢åŠ æŒ‰éˆ•
 		JPanel panel = new JPanel(new GridLayout(4,1));
-		JButton btn = new JButton("­«·s¾ã²z");
+		JButton btn = new JButton("é‡æ–°æ•´ç†");
 		btn.addActionListener(this);
 		panel.add(btn);
-		btn = new JButton("·s¼W±b¤á");
+		btn = new JButton("æ–°å¢å¸³æˆ¶");
 		btn.addActionListener(this);
 		panel.add(btn);
-		btn = new JButton("­×§ï±b¤á");
+		btn = new JButton("ä¿®æ”¹å¸³æˆ¶");
 		btn.addActionListener(this);
 		panel.add(btn);
-		btn = new JButton("§R°£±b¤á");
+		btn = new JButton("åˆªé™¤å¸³æˆ¶");
 		btn.addActionListener(this);
 		panel.add(btn);
 		cp.add(panel,BorderLayout.SOUTH);
@@ -57,17 +55,17 @@ public class UserListFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if(cmd.equals("­«·s¾ã²z")) {
+		if(cmd.equals("é‡æ–°æ•´ç†")) {
 			f.dispose();
 			new UserListFrame(user);
 		}
-		if(cmd.equals("·s¼W±b¤á")) {
+		if(cmd.equals("æ–°å¢å¸³æˆ¶")) {
 			new AddUserFrame(user);
 		}
-		if(cmd.equals("­×§ï±b¤á")) {
+		if(cmd.equals("ä¿®æ”¹å¸³æˆ¶")) {
 			new SetChangeUserIdFrame(user);
 		}
-		if(cmd.equals("§R°£±b¤á")) {
+		if(cmd.equals("åˆªé™¤å¸³æˆ¶")) {
 			new SetRemoveUserIdFrame(user);
 		}
 	}

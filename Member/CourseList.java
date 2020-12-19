@@ -9,15 +9,15 @@ public class CourseList {
 	JTable jt;
 
 	public CourseList(String[][] fileContent) {
-		JFrame frame = new JFrame("½Òªí");
+		JFrame frame = new JFrame("èª²è¡¨");
 		Container c = frame.getContentPane();
 		
-		//«Ø¥ßªí®æ
-		String[] columns = { "¶}½Ò¥N¸¹", "½Òµ{¦WºÙ", "¾Ç¤À¼Æ", "¬ì¥Ø«¬ºA", "±Â½Ò±Ğ®v"};
+		//å»ºç«‹è¡¨æ ¼
+		String[] columns = { "é–‹èª²ä»£è™Ÿ", "èª²ç¨‹åç¨±", "å­¸åˆ†æ•¸", "ç§‘ç›®å‹æ…‹", "æˆèª²æ•™å¸«"};
 		jt = new JTable(fileContent, columns);
 		jt.setPreferredScrollableViewportSize(new Dimension(400,300));
 	    TableColumn column=jt.getColumnModel().getColumn(0);
-	    //ªí®æ¼e«×
+	    //è¡¨æ ¼å¯¬åº¦
 	    column.setPreferredWidth(80);
 	    column=jt.getColumnModel().getColumn(1);
 	    column.setPreferredWidth(200);
@@ -31,8 +31,8 @@ public class CourseList {
 
 
 		frame.setSize(400, 300);
-		frame.setLocationRelativeTo(null);// µøµ¡¸m¤¤
-		frame.setResizable(false);// µøµ¡©ñ¤j«ö¶sµL®Ä
+		frame.setLocationRelativeTo(null);// è¦–çª—ç½®ä¸­
+		frame.setResizable(false);// è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

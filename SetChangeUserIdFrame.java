@@ -1,6 +1,3 @@
-
-
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,59 +8,59 @@ import Member.Administrator;
 public class SetChangeUserIdFrame implements ActionListener {
 	Administrator user;
 	JFrame f;
-	//«Å§i¿é¤JÄæ
+	//å®£å‘Šè¼¸å…¥æ¬„
     JTextField userId = new JTextField(20);
 
 	public SetChangeUserIdFrame(Administrator user) {
 		this.user = user;
-		//³]©w®Ø¬[
+		//è¨­å®šæ¡†æ¶
 		//JFrame.setDefaultLookAndFeelDecorated(true);
 		//JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("¿é¤J­×§ï±b¸¹");
+		f = new JFrame("è¼¸å…¥ä¿®æ”¹å¸³è™Ÿ");
 		f.setSize(450, 250);
-		f.setLocationRelativeTo(null);//µøµ¡¸m¤¤
-		f.setResizable(false);//µøµ¡©ñ¤j«ö¶sµL®Ä
+		f.setLocationRelativeTo(null);//è¦–çª—ç½®ä¸­
+		f.setResizable(false);//è¦–çª—æ”¾å¤§æŒ‰éˆ•ç„¡æ•ˆ
 		Container cp = f.getContentPane();
 		cp.setLayout(null);
 		
-		//«Ø¥ß¼ĞÅÒ
-		//¼ĞÅÒ ­×§ï±b¸¹
-		JLabel lb = new JLabel("­×§ï±b¸¹: ");
+		//å»ºç«‹æ¨™ç±¤
+		//æ¨™ç±¤ ä¿®æ”¹å¸³è™Ÿ
+		JLabel lb = new JLabel("ä¿®æ”¹å¸³è™Ÿ: ");
 		lb.setLocation(25,40);
 		lb.setSize(140,47);
-		lb.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 30));
+		lb.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 30));
 		cp.add(lb);
         
-        //«Ø¥ß¿é¤JÄæ
-        //¿é¤JÄæ userId
+        //å»ºç«‹è¼¸å…¥æ¬„
+        //è¼¸å…¥æ¬„ userId
         userId.setLocation(175,50);
         userId.setSize(220,35);
-        userId.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 16));
+        userId.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”", Font.BOLD, 16));
 		cp.add(userId);
 		
-		//«Ø¥ß«ö¶s
-		JButton check = new JButton("½T»{");
-		JButton reset = new JButton("­«¸m");
-		//«ö¶s ½T»{
+		//å»ºç«‹æŒ‰éˆ•
+		JButton check = new JButton("ç¢ºèª");
+		JButton reset = new JButton("é‡ç½®");
+		//æŒ‰éˆ• ç¢ºèª
 		check.setLocation(60,120);
 		check.setSize(137,58);
-		check.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+		check.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
 		check.addActionListener(this);
         cp.add(check);
-        //«ö¶s ­«¸m
+        //æŒ‰éˆ• é‡ç½®
         reset.setLocation(230,120);
         reset.setSize(137,58);
-        reset.setFont(new Font("·L³n¥¿¶ÂÅé",Font.BOLD,22));
+        reset.setFont(new Font("å¾®è»Ÿæ­£é»‘é«”",Font.BOLD,22));
         reset.addActionListener(this);
         cp.add(reset);
 		
-		//±Ò°Ê
+		//å•Ÿå‹•
 		f.setVisible(true);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
-		if(cmd.equals("½T»{")) {
+		if(cmd.equals("ç¢ºèª")) {
 			String userInformation = user.getUserInformation(userId.getText());
 			if(userInformation == null) {
 				new SetChangeUserIdFrame(user);
@@ -73,7 +70,7 @@ public class SetChangeUserIdFrame implements ActionListener {
 				f.dispose();
 			}
 		}
-		if(cmd.equals("­«¸m")) {
+		if(cmd.equals("é‡ç½®")) {
 			new SetChangeUserIdFrame(user);
 			f.dispose();
 		}

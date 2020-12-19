@@ -4,25 +4,25 @@ import javax.swing.JOptionPane;
 import java.io.*;
 
 public class Administrator extends Member {
-	//«Ø¥ß°ò¥»Äİ©Ê
+	//å»ºç«‹åŸºæœ¬å±¬æ€§
 	public Administrator(String id, char[] password, String name) {
 		super(id,new String(password),name);
 	}
-	//¨ú±o¨Ï¥ÎªÌ²M³æ
+	//å–å¾—ä½¿ç”¨è€…æ¸…å–®
 	public String[][] getUserList() {
 		String[][] data = new String[100][100];
 		try {
-		//«Ø¥ßÀÉ®×§¨¦ì¸m
+		//å»ºç«‹æª”æ¡ˆå¤¾ä½ç½®
 		File f = new File("data\\account");
 		File[] fileList = f.listFiles();
 		
-		//¨Ì§Ç¶}±ÒÀÉ®×§¨¤ºªº¸ê®Æ
-		int count = 0;//¥Î¤á­p¼Æ
+		//ä¾åºé–‹å•Ÿæª”æ¡ˆå¤¾å…§çš„è³‡æ–™
+		int count = 0;//ç”¨æˆ¶è¨ˆæ•¸
 		for(int i=0; i<fileList.length; i++) {
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(fileList[i]),"utf-8");
 			BufferedReader reader = new BufferedReader(reade);
 			String line;
-			//¨Ì§Ç¬ö¿ı¥Î¤á
+			//ä¾åºç´€éŒ„ç”¨æˆ¶
 			while((line = reader.readLine()) != null) {
 				data[count][0] = line.split(" ")[0];
 				data[count][1] = line.split(" ")[1];
@@ -33,16 +33,16 @@ public class Administrator extends Member {
 			reader.close();
 		}
 		}catch(IOException e) {
-			System.out.println("¨ú±o¨Ï¥ÎªÌ²M³æ Error");
+			System.out.println("å–å¾—ä½¿ç”¨è€…æ¸…å–® Error");
 		}
 		return data;
 	}
-	//·s¼W¨Ï¥ÎªÌ
+	//æ–°å¢ä½¿ç”¨è€…
 	public void addUser(String id,String password, String name, String type) {
-		//«Ø¥ß·s¥Î¤á¸ê®Æ¦r¦ê
+		//å»ºç«‹æ–°ç”¨æˆ¶è³‡æ–™å­—ä¸²
 		String newUser = id +" "+ password +" "+ name +" "+ type ;
 		try {
-			//¿ï¾ÜÀÉ®×¸ô®|
+			//é¸æ“‡æª”æ¡ˆè·¯å¾‘
 			switch (id.length()){
 			case 9:
 				addUser("data\\account\\studentAccount.txt", newUser, id);
@@ -54,52 +54,52 @@ public class Administrator extends Member {
 				addUser("data\\account\\administratorAccount.txt", newUser, id);
 				break;
 			default:
-				JOptionPane.showMessageDialog(null, "±b¸¹ªø«×¤£¥¿½T");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿé•·åº¦ä¸æ­£ç¢º");
 			}
 		}catch(IOException e) {
-			System.out.println("·s¼W¨Ï¥ÎªÌ Error");
+			System.out.println("æ–°å¢ä½¿ç”¨è€… Error");
 		}
 	}
-	//°õ¦æ·s¼W¥Î¤á
+	//åŸ·è¡Œæ–°å¢ç”¨æˆ¶
 	private void addUser(String dataLocation, String newUser, String id) throws IOException {
 		File f = new File(dataLocation);
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f),"utf-8");    
 		BufferedReader reader = new BufferedReader(read); 
 		String line,user,fileContent = "";
 		boolean check = true;
-		//ÀË¬dID¬O§_­«½Æ
+		//æª¢æŸ¥IDæ˜¯å¦é‡è¤‡
 		while ((line = reader.readLine()) != null) {
 			user = line.split(" ")[0];
-			//¨Ï¥ÎªÌ¤w¦b¤å¥ó¦W³æ¤º¸õ¥Xwhile¨Ã¥B¤£°µ¹ï¤å¥ó°Ê§@
+			//ä½¿ç”¨è€…å·²åœ¨æ–‡ä»¶åå–®å…§è·³å‡ºwhileä¸¦ä¸”ä¸åšå°æ–‡ä»¶å‹•ä½œ
 			if(id.equals(user)) {
-				JOptionPane.showMessageDialog(null, "±b¸¹¤w³Q¨Ï¥Î");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿå·²è¢«ä½¿ç”¨");
 				check = false;
 				break;
 			}
 			fileContent = fileContent.concat(line + "\n");
 		}
 		reader.close();
-		//¨S­«½Æ¥[¤J·s¥Î¤á
+		//æ²’é‡è¤‡åŠ å…¥æ–°ç”¨æˆ¶
 		if(check) {
 			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f),"utf-8");
 			BufferedWriter writer=new BufferedWriter(write);
 			writer.write(fileContent + newUser);
 			writer.close();
-			JOptionPane.showMessageDialog(null, "·s¼W¦¨¥\");
+			JOptionPane.showMessageDialog(null, "æ–°å¢æˆåŠŸ");
 		}
 		/*
 		RandomAccessFile file = new RandomAccessFile(dataLocation, "rw");
-		//¼g¤J¤å¥ó³Ì«á¤@¦æ
+		//å¯«å…¥æ–‡ä»¶æœ€å¾Œä¸€è¡Œ
 		file.seek(file.length());
 		file.write(newUser.getBytes());
 		file.close();
 		*/
 	}
 	
-	//§R°£¨Ï¥ÎªÌ
+	//åˆªé™¤ä½¿ç”¨è€…
 	public void removeUser(String id) {
 		try {
-			//¿ï¾ÜÀÉ®×¸ô®|
+			//é¸æ“‡æª”æ¡ˆè·¯å¾‘
 			switch (id.length()){
 			case 9:
 				removeUser("data\\account\\studentAccount.txt",id);
@@ -111,40 +111,40 @@ public class Administrator extends Member {
 				removeUser("data\\account\\administratorAccount.txt",id);
 				break;
 			default:
-				JOptionPane.showMessageDialog(null, "±b¸¹ªø«×¤£¥¿½T");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿé•·åº¦ä¸æ­£ç¢º");
 			}
 		}catch(IOException e) {
-			System.out.println("·s¼W¨Ï¥ÎªÌ Error");
+			System.out.println("æ–°å¢ä½¿ç”¨è€… Error");
 		}
 	}
-	//°õ¦æ§R°£¥Î¤á
+	//åŸ·è¡Œåˆªé™¤ç”¨æˆ¶
 	private void removeUser(String dataLocation, String id) throws IOException {
 		File f = new File(dataLocation);
 		InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(reade);
 		String line,fileContent = "";
-		//§ä¥X¥Î¤á
+		//æ‰¾å‡ºç”¨æˆ¶
 		while((line = reader.readLine()) != null) {
 			if(line.split(" ")[0].equals(id)){
-				//¸õ¹L­n§R¥Î¤á¤£°µ¬ö¿ı
+				//è·³éè¦åˆªç”¨æˆ¶ä¸åšç´€éŒ„
 			}else {
-				//¨ä¾l¬ö¿ı
+				//å…¶é¤˜ç´€éŒ„
 				fileContent = fileContent.concat(line+"\n");
 			}
 		}
 		reader.close();
-		//­«·s¼g¤J·s¬ö¿ı
+		//é‡æ–°å¯«å…¥æ–°ç´€éŒ„
 		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
 		BufferedWriter writer = new BufferedWriter(write);
 		writer.write(fileContent);
 		writer.close();
 	}
 
-	//¨ú±o¥Î¤á¸ê®Æ
+	//å–å¾—ç”¨æˆ¶è³‡æ–™
 	public String getUserInformation(String id) {
 		String dataLocation = null;
 		try {
-			//¿ï¾ÜÀÉ®×¸ô®|
+			//é¸æ“‡æª”æ¡ˆè·¯å¾‘
 			switch (id.length()){
 			case 9:
 				dataLocation = "data\\account\\studentAccount.txt";
@@ -156,10 +156,10 @@ public class Administrator extends Member {
 				dataLocation = "data\\account\\administratorAccount.txt";
 				break;
 			default:
-				JOptionPane.showMessageDialog(null, "±b¸¹ªø«×¤£¥¿½T");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿé•·åº¦ä¸æ­£ç¢º");
 			}
 			if(dataLocation != null) {
-				//§ä¥X¥Î¤á¸ê®Æ
+				//æ‰¾å‡ºç”¨æˆ¶è³‡æ–™
 				File f = new File(dataLocation);
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
 				BufferedReader reader = new BufferedReader(reade);
@@ -169,18 +169,18 @@ public class Administrator extends Member {
 						return line;
 					}
 				}
-				JOptionPane.showMessageDialog(null, "±b¸¹¤£¦s¦b");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿä¸å­˜åœ¨");
 			}
 		}catch(IOException e) {
-			System.out.println("¨ú±o±ıÅÜ§ó¥Î¤á¸ê®Æ   Error");
+			System.out.println("å–å¾—æ¬²è®Šæ›´ç”¨æˆ¶è³‡æ–™   Error");
 		}
 		return null;
 	}
-	//ÅÜ§ó¥Î¤á¸ê®Æ
+	//è®Šæ›´ç”¨æˆ¶è³‡æ–™
 	public void changeUserInformation(String id, String newId, String newPassword, String newName, String newType) {
 		try {
 			String newData = newId +" "+ newPassword +" "+ newName +" "+ newType;
-			//¿ï¾ÜÀÉ®×¸ô®|
+			//é¸æ“‡æª”æ¡ˆè·¯å¾‘
 			switch (id.length()){
 			case 9:
 				changeUserInformation("data\\account\\studentAccount.txt", id, newData);
@@ -192,37 +192,37 @@ public class Administrator extends Member {
 				changeUserInformation("data\\account\\administratorAccount.txt", id, newData);
 				break;
 			default:
-				JOptionPane.showMessageDialog(null, "±b¸¹ªø«×¤£¥¿½T");
+				JOptionPane.showMessageDialog(null, "å¸³è™Ÿé•·åº¦ä¸æ­£ç¢º");
 			}
 		}catch(IOException e) {
-			System.out.println("·s¼W¨Ï¥ÎªÌ Error");
+			System.out.println("æ–°å¢ä½¿ç”¨è€… Error");
 		}
 	}
-	//°õ¦æ¥Î¤á¸ê®ÆÅÜ§ó
+	//åŸ·è¡Œç”¨æˆ¶è³‡æ–™è®Šæ›´
 	private void changeUserInformation(String dataLocation, String id, String newData) throws IOException {
 		File f = new File(dataLocation);
 		InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(reade);
 		String line,fileContent = "";
-		//§ä¥X­nÅÜ§óªº¥Î¤á¸ê®Æ
+		//æ‰¾å‡ºè¦è®Šæ›´çš„ç”¨æˆ¶è³‡æ–™
 		while((line = reader.readLine()) != null) {
 			if(line.split(" ")[0].equals(id)){
-				//¬ö¿ı§ó·s¸ê®Æ
+				//ç´€éŒ„æ›´æ–°è³‡æ–™
 				fileContent = fileContent.concat(newData+"\n");
 			}else {
-				//¬ö¿ı¨ä¥L¥Î¤á
+				//ç´€éŒ„å…¶ä»–ç”¨æˆ¶
 				fileContent = fileContent.concat(line+"\n");
 			}
 		}
 		reader.close();
-		//­«·s¼g¤J§ó·s«áªº¸ê®Æ
+		//é‡æ–°å¯«å…¥æ›´æ–°å¾Œçš„è³‡æ–™
 		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
 		BufferedWriter writer = new BufferedWriter(write);
 		writer.write(fileContent);
 		writer.close();
 	}
 	
-	//¨ú±o¾Ç¥Í¸ê°T
+	//å–å¾—å­¸ç”Ÿè³‡è¨Š
 	public String[][] getStudentsInformation() {
 		try {
 			String[][] data = null;
@@ -230,13 +230,13 @@ public class Administrator extends Member {
 			File[] listFile = f.listFiles();
 			//System.out.println(listFile[0]);
 			for(int i=0; i<listFile.length; i++) {
-				f = new File(listFile[0]+"\\¾Ç¥Í¸ê°T.txt");
+				f = new File(listFile[0]+"\\å­¸ç”Ÿè³‡è¨Š.txt");
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
 				BufferedReader reader = new BufferedReader(reade);
 				
 			}
 		}catch(IOException e) {
-			System.out.println("¨ú±o¾Ç¥Í¸ê°T Error");
+			System.out.println("å–å¾—å­¸ç”Ÿè³‡è¨Š Error");
 		}
 		
 		
