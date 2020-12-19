@@ -267,14 +267,30 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     }
 	
 
-    @Override
+	@Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Jbtn_confirm) {
         	try {
+				judge:{
+				for(int i = 0; i < tableM.getColumnCount(); i++){
+					String score = (String) tableM.getValueAt(i, 2);
+					if(!Numornot(score)){
+						JOptionPane.showMessageDialog(new JFrame(), "成績有誤", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+						break judge;
+					}
+				}
 				writeScore(tableM);
 				JOptionPane.showMessageDialog(new JFrame(), "成績已變更", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+				}
 			} catch (IOException e1) {e1.printStackTrace();}
         }
+	}
+	//判斷輸入成績是否為數字
+	public boolean Numornot(String msg){
+        try{
+            Integer.parseInt(msg);
+			return true;
+		}catch(Exception e){return false;}
     }
     
     //寫入成績
