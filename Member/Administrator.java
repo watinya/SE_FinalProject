@@ -45,13 +45,25 @@ public class Administrator extends Member {
 			//選擇檔案路徑
 			switch (id.length()){
 			case 9:
-				addUser("data\\account\\studentAccount.txt", newUser, id);
+				if(type.equals("學生")) {
+					addUser("data\\account\\studentAccount.txt", newUser, id);
+					break;
+				}
+				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
 				break;
 			case 5:
-				addUser("data\\account\\teacherAccount.txt", newUser, id);
+				if(type.equals("教授")) {
+					addUser("data\\account\\teacherAccount.txt", newUser, id);
+					break;
+				}
+				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
 				break;
 			case 4:
-				addUser("data\\account\\administratorAccount.txt", newUser, id);
+				if(type.equals("管理員")) {
+					addUser("data\\account\\administratorAccount.txt", newUser, id);
+					break;
+				}
+				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "帳號長度不正確");
@@ -177,26 +189,40 @@ public class Administrator extends Member {
 		return null;
 	}
 	//變更用戶資料
-	public void changeUserInformation(String id, String newId, String newPassword, String newName, String newType) {
+	public boolean changeUserInformation(String id, String newId, String newPassword, String newName, String newType) {
 		try {
 			String newData = newId +" "+ newPassword +" "+ newName +" "+ newType;
 			//選擇檔案路徑
-			switch (id.length()){
+			switch (newId.length()){
 			case 9:
+				if(!newType.equals("學生")) {
+					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					break;
+				}
 				changeUserInformation("data\\account\\studentAccount.txt", id, newData);
-				break;
+				return true;
 			case 5:
+				if(!newType.equals("教授")) {
+					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					break;
+				}
 				changeUserInformation("data\\account\\teacherAccount.txt", id, newData);
-				break;
+				return true;
 			case 4:
+				if(!newType.equals("管理員")) {
+					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					break;
+				}
 				changeUserInformation("data\\account\\administratorAccount.txt", id, newData);
-				break;
+				return true;
 			default:
 				JOptionPane.showMessageDialog(null, "帳號長度不正確");
+				return false;
 			}
 		}catch(IOException e) {
-			System.out.println("新增使用者 Error");
+			System.out.println("變更使用者資料 Error");
 		}
+		return false;
 	}
 	//執行用戶資料變更
 	private void changeUserInformation(String dataLocation, String id, String newData) throws IOException {
@@ -220,6 +246,7 @@ public class Administrator extends Member {
 		BufferedWriter writer = new BufferedWriter(write);
 		writer.write(fileContent);
 		writer.close();
+		JOptionPane.showMessageDialog(null, "變更完成");
 	}
 	
 	//取得學生資訊
