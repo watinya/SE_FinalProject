@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Teacher extends Member{
 	//所有指導課程
 	public ArrayList<Subject> subjects = new ArrayList<Subject>();
@@ -68,6 +70,75 @@ public class Teacher extends Member{
 			if(subject.equals(subjects.get(i).getName())){
 				return subjects.get(i);
 			}
+		}
+		return null;
+	}
+	
+	//檢查課程路徑是否存在
+	private boolean checkSubjectExist(String year, String subject) {
+		File f = new File("data\\course");
+		//檢查學年是否存在
+		File[] listFile = f.listFiles();
+		f =  new File("data\\course\\"+ year);
+		for(int i=0; i<listFile.length ;i++) {
+			if(listFile[i].equals(f)) {
+				//檢查學年內課程是否存在
+				listFile = f.listFiles();
+				f =  new File("data\\course\\"+ year+ "\\"+ subject + ".txt");
+				for(int j=0; j<listFile.length; j++) {
+					if(listFile[j].equals(f)) {
+						//課程存在
+						return true;
+					}
+				}
+			}
+		}
+		//課程不存在
+		return false;
+	}
+	//取的課程資訊
+	public String getSubjectInformation(String year, String subject) {
+		if(checkSubjectExist(year, subject)) {
+			try {
+				File f = new File("data\\course\\"+ year + "\\"+ subject + ".txt");
+				InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"UTF-8");
+				BufferedReader reader = new BufferedReader(reade);
+				//跳過第一行課程敘述
+				String data = reader.readLine();
+				reader.close();
+				return data;
+			}catch(IOException e){
+				System.out.println("產生課程學生成績清單Error");
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "查無此課程");
+		}
+		return null;
+	}
+	//取得課程學生成績清單
+	public String[][] getSubjectScoresList(String year, String subject){
+		if(checkSubjectExist(year, subject)) {
+			try {
+				String[][] data = new String[99][3];
+				File f = new File("data\\course\\"+ year + "\\"+ subject + ".txt");
+				InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"UTF-8");
+				BufferedReader reader = new BufferedReader(reade);
+				//跳過第一行課程敘述
+				reader.readLine();
+				String line;
+				//讀課程內每個學生
+				int countStudents = 0;
+				while((line = reader.readLine()) != null) {
+					//每一條學生
+					data[countStudents] = line.split(" ");
+				}
+				reader.close();
+				return data;
+			}catch(IOException e){
+				System.out.println("產生課程學生成績清單Error");
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "查無此課程");
 		}
 		return null;
 	}
