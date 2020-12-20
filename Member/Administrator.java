@@ -490,7 +490,7 @@ public class Administrator extends Member {
 				writer.write(subjectInformation);
 				writer.close();
 				//完成提示
-				JOptionPane.showMessageDialog(null, "新增完成");
+				//JOptionPane.showMessageDialog(null, "新增完成");
 			}catch(IOException e) {
 				System.out.println("新增課程資訊Error");
 			}
@@ -627,4 +627,7 @@ public class Administrator extends Member {
 			JOptionPane.showMessageDialog(null, "修改課程對象不存在");
 		}
 	}
+	//--------------------------------------------------------------------------------
+	//新增 學生各學期的選修課程
+
 }// end class
