@@ -195,21 +195,21 @@ public class Administrator extends Member {
 			switch (newId.length()){
 			case 9:
 				if(!newType.equals("學生")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\studentAccount.txt", id, newData);
 				return true;
 			case 5:
 				if(!newType.equals("教授")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\teacherAccount.txt", id, newData);
 				return true;
 			case 4:
 				if(!newType.equals("管理員")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\administratorAccount.txt", id, newData);

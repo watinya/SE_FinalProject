@@ -13,7 +13,7 @@ public class ChangeUserInformationFrame implements ActionListener {
     JTextField newId = new JTextField(9);
     JTextField newPw = new JTextField(20);
     JTextField newName = new JTextField(20);
-    JComboBox<String> newType;
+    JTextField type = new JTextField();
     
 	public ChangeUserInformationFrame(Administrator user, String userInformation) {
 		this.user = user;
@@ -73,13 +73,25 @@ public class ChangeUserInformationFrame implements ActionListener {
 		newName.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		newName.setText(userInformation.split(" ")[2]);
 		cp.add(newName);
-		//選擇欄 newType
-		String[] type = {"學生", "教授", "管理員"};
-		newType = new JComboBox<String>(type);
-		newType.setLocation(380, 294);
-		newType.setSize(220, 35);
-		newType.setFont(new Font("微軟正黑體", Font.BOLD, 20));
-		cp.add(newType);
+		//輸入欄 newType
+		String id = userInformation.split(" ")[0];
+		switch(id.length()) {
+		case 9:
+			type.setText("學生");
+			break;
+		case 5:
+			type.setText("教授");
+			break;
+		case 4:
+			type.setText("管理員");
+			break;
+		}
+		type.setLocation(380, 294);
+		type.setSize(220, 35);
+		type.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		type.setEditable(false);
+		type.setToolTipText("類型不可更改");
+		cp.add(type);
 		
 		//建立按鈕
 		JButton change = new JButton("變更");
@@ -105,8 +117,7 @@ public class ChangeUserInformationFrame implements ActionListener {
 		String cmd = e.getActionCommand();
 		if(cmd.equals("變更")) {
 			//user.addUser(newId.getText(), newPw.getText(), newName.getText(), newType.getText());
-			String type = (String) newType.getSelectedItem();
-			if(user.changeUserInformation(userInformation.split(" ")[0], newId.getText(), newPw.getText(), newName.getText(), type))
+			if(user.changeUserInformation(userInformation.split(" ")[0], newId.getText(), newPw.getText(), newName.getText(), type.getText()))
 				f.dispose();
 		}
 		if(cmd.equals("重置")) {
