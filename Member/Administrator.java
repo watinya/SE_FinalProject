@@ -258,7 +258,7 @@ public class Administrator extends Member {
 			// 建立每個文件位置
 			File[] listFile = f.listFiles();
 			// 讀取每個學生資訊
-			String[][] studentsInformationData = new String[listFile.length][4];
+			String[][] studentsInformationData = new String[listFile.length][3];
 			for (int i = 0; i < listFile.length; i++) {
 				f = new File(listFile[i] + "\\學生資訊.txt");
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
@@ -292,7 +292,7 @@ public class Administrator extends Member {
 	}
 
 	// 新增學生資訊
-	public void addStudent(String id, String password, String name, String startSchool) {
+	public void addStudent(String id, String name, String startSchool) {
 		try {
 			// 學生還未建立過
 			if (!checkStudentExist(id)) {
@@ -308,7 +308,7 @@ public class Administrator extends Member {
 				// 訊息寫入
 				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 				BufferedWriter writer = new BufferedWriter(write);
-				String data = id + " " + password + " " + name + " " + startSchool;
+				String data = id + " " + name + " " + startSchool;
 				writer.write(data);
 				writer.close();
 				//JOptionPane.showMessageDialog(null, "新增完成");
@@ -375,15 +375,14 @@ public class Administrator extends Member {
 	}
 
 	// 修改學生資訊
-	public void changeStudentInformation(String id, String newId, String newPassword, String newName,
-			String newStartSchool) {
+	public void changeStudentInformation(String id, String newId, String newName, String newStartSchool) {
 		try {
 			/*
 			 * File oldFile = new File("data\\students\\"+ id); File f = new
 			 * File("data\\students\\"+ newId); oldFile.renameTo(f);
 			 */
 			// 建立新學生資料夾
-			addStudent(newId, newPassword, newName, newStartSchool);
+			addStudent(newId, newName, newStartSchool);
 			copyFolder("data\\students\\" + id, "data\\students\\" + newId);
 			// 建立學生資料
 			File f = new File("data\\students\\" + newId + "\\學生資訊.txt");
@@ -394,7 +393,7 @@ public class Administrator extends Member {
 			// 捨棄舊資訊
 			reader.readLine();
 			// 加入新資訊
-			fileContent = fileContent.concat(newId + " " + newPassword + " " + newName + " " + newStartSchool + "\n");
+			fileContent = fileContent.concat(newId + " " + newName + " " + newStartSchool + "\n");
 			// 加入原有選修課
 			while ((line = reader.readLine()) != null) {
 				fileContent = fileContent.concat(line + "\n");
