@@ -49,24 +49,22 @@ public class Administrator extends Member {
 					addUser("data\\account\\studentAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
 			case 5:
 				if(type.equals("教授")) {
 					addUser("data\\account\\teacherAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
 			case 4:
 				if(type.equals("管理員")) {
 					addUser("data\\account\\administratorAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
-			default:
-				JOptionPane.showMessageDialog(null, "帳號長度不正確");
 			}
 		}catch(IOException e) {
 			System.out.println("新增使用者 Error");
@@ -257,7 +255,7 @@ public class Administrator extends Member {
 			// 建立每個文件位置
 			File[] listFile = f.listFiles();
 			// 讀取每個學生資訊
-			String[][] studentsInformationData = new String[listFile.length][4];
+			String[][] studentsInformationData = new String[listFile.length][3];
 			for (int i = 0; i < listFile.length; i++) {
 				f = new File(listFile[i] + "\\學生資訊.txt");
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
@@ -291,7 +289,7 @@ public class Administrator extends Member {
 	}
 
 	// 新增學生資訊
-	public void addStudent(String id, String password, String name, String startSchool) {
+	public void addStudentInfo(String id, String name, String startSchool) {
 		try {
 			// 學生還未建立過
 			if (!checkStudentExist(id)) {
@@ -307,10 +305,10 @@ public class Administrator extends Member {
 				// 訊息寫入
 				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 				BufferedWriter writer = new BufferedWriter(write);
-				String data = id + " " + password + " " + name + " " + startSchool;
+				String data = id + " " + name + " " + startSchool;
 				writer.write(data);
 				writer.close();
-				//JOptionPane.showMessageDialog(null, "新增完成");
+				JOptionPane.showMessageDialog(null, "新增完成");
 			} else {
 				JOptionPane.showMessageDialog(null, "學生已存在");
 			}
@@ -374,16 +372,15 @@ public class Administrator extends Member {
 	}
 
 	// 修改學生資訊
-	public void changeStudentInformation(String id, String newId, String newPassword, String newName,
-			String newStartSchool) {
+	public void changeStudentInformation(String newId, String newName, String newStartSchool) {
 		try {
 			/*
 			 * File oldFile = new File("data\\students\\"+ id); File f = new
 			 * File("data\\students\\"+ newId); oldFile.renameTo(f);
 			 */
 			// 建立新學生資料夾
-			addStudent(newId, newPassword, newName, newStartSchool);
-			copyFolder("data\\students\\" + id, "data\\students\\" + newId);
+			//addStudentInfo(newId, newName, newStartSchool);
+			//copyFolder("data\\students\\" + id, "data\\students\\" + newId);
 			// 建立學生資料
 			File f = new File("data\\students\\" + newId + "\\學生資訊.txt");
 			// 建立新內容
@@ -393,7 +390,7 @@ public class Administrator extends Member {
 			// 捨棄舊資訊
 			reader.readLine();
 			// 加入新資訊
-			fileContent = fileContent.concat(newId + " " + newPassword + " " + newName + " " + newStartSchool + "\n");
+			fileContent = fileContent.concat(newId + " " + newName + " " + newStartSchool + "\n");
 			// 加入原有選修課
 			while ((line = reader.readLine()) != null) {
 				fileContent = fileContent.concat(line + "\n");
@@ -448,6 +445,7 @@ public class Administrator extends Member {
 			e.printStackTrace();
 		}
 	}
+	
 	//-------------------------------------------------------------------------------------
 	//檢查課程是否存在
 	private boolean checkSubjectExist(String year, String subject) {

@@ -108,7 +108,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
 
         }
         else if(e.getSource() == Jbtn_studentManage){
-
+            new studentUserListFrame(user);
         }
     	else if(e.getSource() == Jbtn_ChangePW) {
 			new changePasswordFrame(user);
