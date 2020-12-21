@@ -44,7 +44,7 @@ public class changeStudentInfoFrame implements ActionListener {
         //標籤 入學年分
         lb = new JLabel("入學年分： ");
         lb.setLocation(227,257);
-        lb.setSize(158,47);
+        lb.setSize(180,47);
         lb.setFont(new Font("微軟正黑體", Font.BOLD,30));
         cp.add(lb);
         

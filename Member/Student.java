@@ -89,21 +89,33 @@ public class Student extends Member {
 	}
 
 	// 取得成績清單
-	public String[][] getScoreList() {
-		String[][] data = new String[subjects.size()][3];
-		for (int i = 0; i < subjects.size(); i++) {
-			data[i] = getScoreList(subjects.get(i).getYear(), subjects.get(i).getName());
+	public String[][] getScoreList(String year) {
+		//建立清單
+		String[][] data = new String[subjects.size()][2];
+		for(int i=0; i<subjects.size(); i++) {
+			//如果符合課程學年
+			if(subjects.get(i).getYear().equals(year)) {
+				//加入課程資訊
+				data[i] = getScoreList(subjects.get(i).getYear(), subjects.get(i).getName());
+			}
 		}
 		return data;
 	}
-
+	
 	// 取得成績清單
 	private String[] getScoreList(String year, String subject) {
+		//確認每個有選修的課程
 		for (int i = 0; i < subjects.size(); i++) {
+			//如果 學年 與 課程名稱 符合
 			if (subjects.get(i).getYear().equals(year) && subjects.get(i).getName().equals(subject)) {
+				//找出 (本使用者ID)的成績 由 this.id 
 				for (int j = 0; j < subjects.get(i).getSubjectStudents().size(); j++) {
+					//符合 本使用者ID 紀錄 課程 與 成績
 					if (subjects.get(i).getSubjectStudents().get(j).getId().equals(super.id)) {
-						String[] content = { year, subject, subjects.get(i).getSubjectStudents().get(j).getScore() };
+						//回傳 如: 108-1 計算機概論 88
+						//String[] content = { year, subject, subjects.get(i).getSubjectStudents().get(j).getScore() };
+						//回傳 如: 計算機概論 88
+						String[] content = { subject, subjects.get(i).getSubjectStudents().get(j).getScore() };
 						return content;
 						// JOptionPane.showMessageDialog(null, content, "課程成績",
 						// JOptionPane.PLAIN_MESSAGE);
