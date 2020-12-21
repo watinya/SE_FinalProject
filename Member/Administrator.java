@@ -50,24 +50,22 @@ public class Administrator extends Member {
 					addUser("data\\account\\studentAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
 			case 5:
 				if(type.equals("教授")) {
 					addUser("data\\account\\teacherAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
 			case 4:
 				if(type.equals("管理員")) {
 					addUser("data\\account\\administratorAccount.txt", newUser, id);
 					break;
 				}
-				JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
 				break;
-			default:
-				JOptionPane.showMessageDialog(null, "帳號長度不正確");
 			}
 		}catch(IOException e) {
 			System.out.println("新增使用者 Error");
@@ -197,21 +195,21 @@ public class Administrator extends Member {
 			switch (newId.length()){
 			case 9:
 				if(!newType.equals("學生")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\studentAccount.txt", id, newData);
 				return true;
 			case 5:
 				if(!newType.equals("教授")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\teacherAccount.txt", id, newData);
 				return true;
 			case 4:
 				if(!newType.equals("管理員")) {
-					JOptionPane.showMessageDialog(null, "帳號長度或類型錯誤");
+					JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 					break;
 				}
 				changeUserInformation("data\\account\\administratorAccount.txt", id, newData);
@@ -292,7 +290,7 @@ public class Administrator extends Member {
 	}
 
 	// 新增學生資訊
-	public void addStudent(String id, String name, String startSchool) {
+	public void addStudentInfo(String id, String name, String startSchool) {
 		try {
 			// 學生還未建立過
 			if (!checkStudentExist(id)) {
@@ -311,7 +309,7 @@ public class Administrator extends Member {
 				String data = id + " " + name + " " + startSchool;
 				writer.write(data);
 				writer.close();
-				//JOptionPane.showMessageDialog(null, "新增完成");
+				JOptionPane.showMessageDialog(null, "新增完成");
 			} else {
 				JOptionPane.showMessageDialog(null, "學生已存在");
 			}
@@ -375,15 +373,15 @@ public class Administrator extends Member {
 	}
 
 	// 修改學生資訊
-	public void changeStudentInformation(String id, String newId, String newName, String newStartSchool) {
+	public void changeStudentInformation(String newId, String newName, String newStartSchool) {
 		try {
 			/*
 			 * File oldFile = new File("data\\students\\"+ id); File f = new
 			 * File("data\\students\\"+ newId); oldFile.renameTo(f);
 			 */
 			// 建立新學生資料夾
-			addStudent(newId, newName, newStartSchool);
-			copyFolder("data\\students\\" + id, "data\\students\\" + newId);
+			//addStudentInfo(newId, newName, newStartSchool);
+			//copyFolder("data\\students\\" + id, "data\\students\\" + newId);
 			// 建立學生資料
 			File f = new File("data\\students\\" + newId + "\\學生資訊.txt");
 			// 建立新內容
@@ -448,6 +446,7 @@ public class Administrator extends Member {
 			e.printStackTrace();
 		}
 	}
+	
 	//-------------------------------------------------------------------------------------
 	//檢查課程是否存在
 	private boolean checkSubjectExist(String year, String subject) {

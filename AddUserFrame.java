@@ -102,12 +102,17 @@ public class AddUserFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if(cmd.equals("新增")) {
-			String type = (String) newType.getSelectedItem();
-			user.addUser(newId.getText(), newPw.getText(), newName.getText(), type);
-			newId.setText("");
-			newPw.setText("");
-			newName.setText("");
-			newType.setSelectedIndex(0);
+			if(newId.getText().length() == 9 || newId.getText().length() == 5 || newId.getText().length() == 4) {
+				String type = (String) newType.getSelectedItem();
+				user.addUser(newId.getText(), newPw.getText(), newName.getText(), type);
+				newId.setText("");
+				newPw.setText("");
+				newName.setText("");
+				newType.setSelectedIndex(0);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "帳號長度錯誤");
+			}
 		}
 		if(cmd.equals("重置")) {
 			newId.setText("");
