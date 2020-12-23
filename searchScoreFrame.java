@@ -4,32 +4,39 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import Member.ListBtnEditor;
-import Member.ListBtnMouseListener;
-import Member.ListBtnRender;
-import Member.Member;
+import Member.Student;
 
 import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
-public class searchCourseFrame extends JFrame implements ActionListener {
+public class searchScoreFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
-	private JComboBox<String> jcb_time;
-	private JTable jt;
+	private JComboBox<String> jcb_time = new JComboBox<String>();
+	
+	Student user;
+	private JButton Jbtn_print = new JButton("列印成績單");
 	private DefaultTableModel tableM;
 	
-    public searchCourseFrame()
+    public searchScoreFrame(Student user)
     {
-        super("高燕大課程平台 開課查詢");
+        super("高燕大課程平台 成績查詢");
+        this.user = user;
         Container c = getContentPane();
         c.setLayout(null);
                 
-        //設定Jlb_semester大小位置及顯示字型
-        Jlb_semester.setLocation(469,13);
+        //設定學期標籤大小位置及顯示字型
+        Jlb_semester.setLocation(173,13);
         Jlb_semester.setSize(94,46);
         Jlb_semester.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_semester);
+        
+        //設定列印成績單按鈕大小位置及顯示字型
+        Jbtn_print.setLocation(430,23);
+        Jbtn_print.setSize(136,36);
+        Jbtn_print.setFont(new Font("微軟正黑體",Font.BOLD,18));
+        Jbtn_print.addActionListener(this);
+        c.add(Jbtn_print);
         
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
@@ -39,30 +46,38 @@ public class searchCourseFrame extends JFrame implements ActionListener {
     	    return new File(current, name).isDirectory();
     	  }
     	});
-		jcb_time = new JComboBox<String>();
-		jcb_time.addItem("請選擇");
-		for(int i = directories.length - 1; i >= 0 ; i--) {
+        jcb_time.addItem("請選擇");
+    	for(int i = directories.length - 1; i >= 0 ; i--) {
     		jcb_time.addItem(directories[i]);
     	}
-        jcb_time.setLocation(560, 22);
+        jcb_time.setLocation(264, 22);
         jcb_time.setSize(130, 36);
         jcb_time.setFont(new Font("微軟正黑體",Font.BOLD,22));
-        jcb_time.addActionListener(this);
+        jcb_time.addItemListener(new ItemListener() {
+    		@Override
+    		public void itemStateChanged(ItemEvent e) {
+    	        String selectedSemester = (String) jcb_time.getSelectedItem();
+    	        Object[][] myCourse = user.getScoreList(selectedSemester);
+    	        cleanTable(tableM);
+    	        for(int i = 0; i < myCourse.length; i++) {
+    	        	tableM.addRow(myCourse[i]);
+    	        }
+    		}
+    	});
         c.add(jcb_time);
         
         //表格內容
-    	String[] columns = { "開課代號", "課程名稱", "學分數", "科目型態", "授課教師", "選修學生清單"};
+    	String[] columns = {"課程名稱", "成績"};
 		tableM = new DefaultTableModel(null, columns) {
 	    	@Override
 	    	public boolean isCellEditable(int row, int column) {
-	    		if (column < 6)
+	    		if (column < 2)
 					return false;
 				else
 					return true;
 			}// 表格不允許被編輯
 	    };
 	    JTable courseTable = new JTable(tableM) ;
-	    courseTable.addMouseListener(new ListBtnMouseListener(courseTable));
 	    //表格標題大小
 	    JTableHeader head = courseTable.getTableHeader();
 	    head.setFont(new Font("微軟正黑體", Font.BOLD, 26));
@@ -71,25 +86,18 @@ public class searchCourseFrame extends JFrame implements ActionListener {
 	    courseTable.setFont(new Font("微軟正黑體", Font.PLAIN, 20));
 	    courseTable.setRowHeight(28);
 	    
-	    courseTable.getColumnModel().getColumn(5).setCellRenderer(new ListBtnRender());
-		courseTable.getColumnModel().getColumn(5).setCellEditor(new ListBtnEditor());
-
-		JScrollPane coursePane = new JScrollPane(courseTable);
+	    JScrollPane coursePane = new JScrollPane(courseTable);
 		TableColumn column;
 		for (int i = 0; i < columns.length; i++) {
 			column = courseTable.getColumnModel().getColumn(i);
-			if (i == 1) {
-				column.setPreferredWidth(200); //second column is bigger
-			} else {
-				column.setPreferredWidth(100);
-			}
+			column.setPreferredWidth(200);
 		}
-		coursePane.setLocation(14, 72);
-		coursePane.setSize(1166, 680);
+		coursePane.setLocation(14, 66);
+		coursePane.setSize(566, 686);
 		c.add(coursePane);
 		
         //設定視窗
-        setSize(1200, 800);
+        setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
         //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
@@ -97,12 +105,16 @@ public class searchCourseFrame extends JFrame implements ActionListener {
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == jcb_time) {
-			String selectedSemester = (String) jcb_time.getSelectedItem();
-			Member.outputCourseList(selectedSemester, tableM);
-        }
-    }
-    
+    //清空表單method
+  	static void cleanTable(DefaultTableModel table) {
+  		while (table.getRowCount() > 0)
+  			table.removeRow(0);
+  	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == Jbtn_print) {
+        	user.printScore((String) jcb_time.getSelectedItem(), user);
+		}
+	}
 }

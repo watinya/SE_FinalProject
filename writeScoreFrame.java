@@ -51,8 +51,9 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     	    return new File(current, name).isDirectory();
     	  }
     	});
-    	jcb_semester = new JComboBox(new String[] {"請選擇"});
-    	for(int i = 0; i < directoriesSemester.length; i++) {
+		jcb_semester = new JComboBox<String>();
+		jcb_semester.addItem("請選擇");
+    	for(int i = directoriesSemester.length - 1; i >= 0; i--) {
     		jcb_semester.addItem(directoriesSemester[i]);
     	}
     	jcb_semester.setLocation(102, 19);

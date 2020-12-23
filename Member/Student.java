@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 public class Student extends Member {
 
-	private String inYear;
 	private ArrayList<Subject> subjects = new ArrayList<Subject>();
 
 	// 建立帳號基本屬性
@@ -69,11 +68,13 @@ public class Student extends Member {
 	}
 
 	// 列印成績單
-	public void printScore() {
+	public void printScore(String year, Member user) {
 		// 取得成績
-		String content = "";
-		for (int i = 0; i < subjects.size(); i++) {
-			content = content.concat(getScore(subjects.get(i).getYear(), subjects.get(i).getName()) + "\n");
+		Object[][] score = getScoreList(year);
+		String content = year + "成績單 " + id + " " + name + "\n";
+		for (int i = 0; i < score.length; i++) {
+			content = content.concat("\t" + (String) score[i][0] + " ");
+			content = content.concat((String) score[i][1] + "\n");
 		}
 		try {
 			// 寫入列印文檔
@@ -81,6 +82,7 @@ public class Student extends Member {
 			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 			BufferedWriter writer = new BufferedWriter(write);
 			writer.write(content);
+			writer.close();
 		} catch (IOException e) {
 			System.out.println("列印成績單Error");
 		}
@@ -89,15 +91,22 @@ public class Student extends Member {
 	}
 
 	// 取得成績清單
-	public String[][] getScoreList(String year) {
+	public Object[][] getScoreList(String year) {
 		//建立清單
-		String[][] data = new String[subjects.size()][2];
+		String[][] temp = new String[subjects.size()][2];
+		int count = 0;
 		for(int i=0; i<subjects.size(); i++) {
 			//如果符合課程學年
 			if(subjects.get(i).getYear().equals(year)) {
 				//加入課程資訊
-				data[i] = getScoreList(subjects.get(i).getYear(), subjects.get(i).getName());
+				temp[count++] = getScoreList(subjects.get(i).getYear(), subjects.get(i).getName());
 			}
+		}
+		//去除temp陣列中空白值
+		String[][] data = new String[count][2];
+		for(int i = 0; i < count; i++) {
+			data[i][0] = temp[i][0];
+			data[i][1] = temp[i][1];
 		}
 		return data;
 	}
