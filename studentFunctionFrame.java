@@ -1,7 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
 
-import Member.Member;
 import Member.Student;
 
 import java.awt.event.*;
@@ -63,10 +62,10 @@ public class studentFunctionFrame extends JFrame implements ActionListener {
         	new searchCourseFrame();
         }
         else if(e.getSource() == Jbtn_Score){
-        	user.getScore();
+        	new searchScoreFrame(user);
         }
         else if(e.getSource() == Jbtn_printTranscript) {
-        	
+        	user.printScore(user);
         }
         else if(e.getSource() == Jbtn_ChangePW) {
 			new changePasswordFrame(user);

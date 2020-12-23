@@ -8,7 +8,7 @@ import java.awt.event.*;
 public class teacherFunctionFrame extends JFrame implements ActionListener {
 	private JButton Jbtn_Course = new JButton("開課查詢");
     private JButton Jbtn_Score = new JButton("輸入成績");
-    private JButton Jbtn_generateScore = new JButton("產生授課課程成績");
+    private JButton Jbtn_generateScore = new JButton("產生課程成績");
     private JButton Jbtn_ChangePW = new JButton("修改密碼");
     private Teacher user;
     
@@ -65,7 +65,7 @@ public class teacherFunctionFrame extends JFrame implements ActionListener {
         	new writeScoreFrame(user);
         }
         else if(e.getSource() == Jbtn_generateScore) {
-        	
+        	new generateScoreFrame(user);
         }
         else if(e.getSource() == Jbtn_ChangePW) {
 			new changePasswordFrame(user);
