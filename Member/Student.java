@@ -55,7 +55,7 @@ public class Student extends Member {
 			if (subjects.get(i).getYear().equals(year) && subjects.get(i).getName().equals(subject)) {
 				for (int j = 0; j < subjects.get(i).getSubjectStudents().size(); j++) {
 					if (subjects.get(i).getSubjectStudents().get(j).getId().equals(super.id)) {
-						String content = String.format("%s%5s%3s", subject, "成績:",
+						String content = String.format("%s %s%5s%3s", year, subject, "成績:",
 								subjects.get(i).getSubjectStudents().get(j).getScore());
 						return content;
 						// JOptionPane.showMessageDialog(null, content, "課程成績",
@@ -68,13 +68,11 @@ public class Student extends Member {
 	}
 
 	// 列印成績單
-	public void printScore(String year, Member user) {
+	public void printScore(Member user) {
 		// 取得成績
-		Object[][] score = getScoreList(year);
-		String content = year + "成績單 " + id + " " + name + "\n";
-		for (int i = 0; i < score.length; i++) {
-			content = content.concat("\t" + (String) score[i][0] + " ");
-			content = content.concat((String) score[i][1] + "\n");
+		String content = id + " " + name + "成績單 " + "\n";
+		for (int i = 0; i < subjects.size(); i++) {
+			content = content.concat(getScore(subjects.get(i).getYear(), subjects.get(i).getName()) + "\n");
 		}
 		try {
 			// 寫入列印文檔

@@ -1,6 +1,5 @@
 package Member;
 
-import javax.print.DocFlavor.READER;
 import javax.swing.JOptionPane;
 import java.io.*;
 
@@ -362,6 +361,7 @@ public class Administrator extends Member {
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
 				BufferedReader reader = new BufferedReader(reade);
 				data = reader.readLine();
+				reader.close();
 				return data;
 			} catch (IOException e) {
 				System.out.println("取得學生資訊Error");

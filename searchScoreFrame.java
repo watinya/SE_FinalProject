@@ -10,12 +10,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
-public class searchScoreFrame extends JFrame implements ActionListener {
+public class searchScoreFrame extends JFrame {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time = new JComboBox<String>();
 	
 	Student user;
-	private JButton Jbtn_print = new JButton("列印成績單");
 	private DefaultTableModel tableM;
 	
     public searchScoreFrame(Student user)
@@ -26,17 +25,10 @@ public class searchScoreFrame extends JFrame implements ActionListener {
         c.setLayout(null);
                 
         //設定學期標籤大小位置及顯示字型
-        Jlb_semester.setLocation(173,13);
+        Jlb_semester.setLocation(183,13);
         Jlb_semester.setSize(94,46);
         Jlb_semester.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_semester);
-        
-        //設定列印成績單按鈕大小位置及顯示字型
-        Jbtn_print.setLocation(430,23);
-        Jbtn_print.setSize(136,36);
-        Jbtn_print.setFont(new Font("微軟正黑體",Font.BOLD,18));
-        Jbtn_print.addActionListener(this);
-        c.add(Jbtn_print);
         
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
@@ -50,7 +42,7 @@ public class searchScoreFrame extends JFrame implements ActionListener {
     	for(int i = directories.length - 1; i >= 0 ; i--) {
     		jcb_time.addItem(directories[i]);
     	}
-        jcb_time.setLocation(264, 22);
+        jcb_time.setLocation(274, 22);
         jcb_time.setSize(130, 36);
         jcb_time.setFont(new Font("微軟正黑體",Font.BOLD,22));
         jcb_time.addItemListener(new ItemListener() {
@@ -110,11 +102,4 @@ public class searchScoreFrame extends JFrame implements ActionListener {
   		while (table.getRowCount() > 0)
   			table.removeRow(0);
   	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == Jbtn_print) {
-        	user.printScore((String) jcb_time.getSelectedItem(), user);
-		}
-	}
 }
