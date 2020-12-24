@@ -62,7 +62,7 @@ public class addCourseFrame extends JFrame implements ActionListener{
         
         //設定學分數標籤大小位置及顯示字型
         Jlb_credit.setLocation(260,238);
-        Jlb_credit.setSize(120,47);
+        Jlb_credit.setSize(123,47);
         Jlb_credit.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_credit);
         //設定學分數輸入框大小位置及顯示字型
@@ -139,16 +139,12 @@ public class addCourseFrame extends JFrame implements ActionListener{
     		String credit = jCredit.getText();
     		String teacher = jTeacher.getText();
     		if(year.equals("") || id.equals("") || subject.equals("") || credit.equals("") || teacher.equals("") || type.equals(null)) {
-    			JOptionPane.showMessageDialog(null, "請填入課程資訊");
+    			JOptionPane.showMessageDialog(null, "請輸入課程資訊");
     		}
-    		else {
-    			user.addSubject(year, id, subject, credit, type, teacher);
-    			jTime.setText("");
-    			jId.setText("");
-    			jSubject.setText("");
-    			jCredit.setText("");
-    			jTeacher.setText("");
-    			bg.clearSelection();
+    	    else {
+    		    if(user.addSubject(year, id, subject, credit, type, teacher)){
+                    this.dispose();                
+                }
     		}
     	}
     }

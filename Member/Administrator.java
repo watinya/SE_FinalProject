@@ -470,7 +470,7 @@ public class Administrator extends Member {
 		return false;
 	}
 	//新增課程
-	public void addSubject(String year, String id, String subject, String credit, String type, String teacher) {
+	public boolean addSubject(String year, String id, String subject, String credit, String type, String teacher) {
 		//課程不存在
 		if(!checkSubjectExist(year, subject)) {
 			try {
@@ -488,13 +488,16 @@ public class Administrator extends Member {
 				writer.close();
 				//完成提示
 				JOptionPane.showMessageDialog(null, "新增完成");
+				return true;
 			}catch(IOException e) {
 				System.out.println("新增課程資訊Error");
 			}
 		}else {
 			//課程已存在
-			JOptionPane.showMessageDialog(null, "課程已存在");
+			JOptionPane.showMessageDialog(null, "課程資訊重複");
+			return false;
 		}
+		return false;
 	}
 	//刪除課程
 	public void removeSubject(String year, String subject) {

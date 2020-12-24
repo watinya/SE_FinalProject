@@ -22,7 +22,7 @@ public class setRemoveCourseInfoFrame extends JFrame implements ActionListener {
         
         //設定標題標籤大小位置及顯示字型
         Jlb_title.setLocation(51,13);
-        Jlb_title.setSize(330,47);
+        Jlb_title.setSize(335,47);
         Jlb_title.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_title);
         
@@ -71,8 +71,7 @@ public class setRemoveCourseInfoFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "請輸入課程資訊");
 			}
 			else {
-				String courseInfo = user.getSubjectInformation(year, subject);
-				new changeCourseInfoFrame(user, courseInfo);
+				user.removeSubject(year, subject);
 				this.dispose();
 			}
 		}

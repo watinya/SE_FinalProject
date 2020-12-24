@@ -70,7 +70,7 @@ public class changeCourseInfoFrame extends JFrame implements ActionListener{
         
         //設定學分數標籤大小位置及顯示字型
         Jlb_credit.setLocation(260,238);
-        Jlb_credit.setSize(120,47);
+        Jlb_credit.setSize(123,47);
         Jlb_credit.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_credit);
         //設定學分數輸入框大小位置及顯示字型

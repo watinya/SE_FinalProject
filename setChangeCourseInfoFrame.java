@@ -22,7 +22,7 @@ public class setChangeCourseInfoFrame extends JFrame implements ActionListener {
         
         //設定標題標籤大小位置及顯示字型
         Jlb_title.setLocation(51,13);
-        Jlb_title.setSize(330,47);
+        Jlb_title.setSize(335,47);
         Jlb_title.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_title);
         
