@@ -3,6 +3,7 @@ package Member;
 import javax.print.DocFlavor.READER;
 import javax.swing.JOptionPane;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Administrator extends Member {
 	//建立基本屬性
@@ -573,6 +574,9 @@ public class Administrator extends Member {
 										 String newCredit,
 										 String newType,
 										 String newTeacher) {
+		//學年不可變更
+		newYear = year;
+		
 		//課程存在
 		if(checkSubjectExist(year,subject)) {
 			//更改目標已存在課程
@@ -581,17 +585,26 @@ public class Administrator extends Member {
 			//更改目標 未被使用
 			}else {
 				try {
+					//紀錄 舊老師,舊課名,學生學號 辨認 導師,學生資料 是否需要變更
+					String oldTeacher, oldSubject;
+					ArrayList<String> students = new ArrayList<String>();
+					
+					//課程資料變更
 					//開舊檔 記錄學生與成績
 					File f = new File("data\\course\\" + year + "\\" + subject + ".txt");
 					InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
 					BufferedReader reader = new BufferedReader(reade);
+					
 					String line, fileContent = "";
 					//紀錄 新資訊
 					fileContent = fileContent.concat(newId +" "+ newSubject +" "+ newCredit +" "+ newType +" "+ newTeacher +"\n");
-					//跳過 舊資訊
-					reader.readLine();
+					//紀錄 舊老師,舊課名
+					line = reader.readLine();
+					oldTeacher = line.split(" ")[4];
+					oldSubject = line.split(" ")[1];
 					//紀錄 學生和成績
 					while((line = reader.readLine()) != null) {
+						students.add(line.split(" ")[0]);
 						fileContent = fileContent.concat(line +"\n");
 					}
 					reader.close();
@@ -616,6 +629,96 @@ public class Administrator extends Member {
 					BufferedWriter writer = new BufferedWriter(write);
 					writer.write(fileContent);
 					writer.close();
+					
+					//如果導師有變換 修改導師資料
+					if(!oldTeacher.equals(newTeacher)) {
+						//導師資料變更
+						//找出 (舊,新)導師 資料
+						f = new File("data\\account\\teacherAccount.txt");
+						reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+						reader = new BufferedReader(reade);
+						String oldTeacherNumber = null, newTeacherNumber = null, tNumber, tName;
+						//比對 teacherAccount.txt 的一筆資料
+						while((line = reader.readLine()) != null) {
+							tNumber = line.split(" ")[0];
+							tName = line.split(" ")[2];
+							//是 舊老師資料
+							if(tName.equals(oldTeacher)) {
+								oldTeacherNumber = tNumber;
+							}else if(tName.equals(newTeacher)) {
+								newTeacherNumber = tNumber;
+							}
+							//導師編號 都找到了 跳出迴圈
+							if(oldTeacherNumber != null && newTeacherNumber != null){
+								break;
+							}
+						}
+						reader.close();
+						//************刪除 舊導師 課程資料*************
+						f = new File("data\\teachers\\" + oldTeacherNumber + "\\指導課程.txt" );
+						reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+						reader = new BufferedReader(reade);
+						fileContent = "";
+						//找出 要修改資訊
+						while((line = reader.readLine()) != null) {
+							//符合 目標修改課程 不做紀錄
+							if(line.split(" ")[0].equals(year) && line.split(" ")[1].equals(subject)) {
+								//不做任何紀錄
+							//紀錄其他指導課程
+							}else {
+								fileContent = fileContent.concat(line + "\n");
+							}
+						}
+						reader.close();
+						//重新寫入 已刪除 修改課程 的資料
+						write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+						writer = new BufferedWriter(write);
+						writer.write(fileContent);
+						writer.close();
+						
+						//************增加 新導師 課程資料************
+						f = new File("data\\teachers\\" + newTeacherNumber + "\\指導課程.txt" );
+						reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+						reader = new BufferedReader(reade);
+						fileContent = newYear + " " + newSubject + "\n";
+						//紀錄 原有 指導課程
+						while((line = reader.readLine()) != null) {
+							fileContent = fileContent.concat(line + "\n");
+						}
+						reader.close();
+						//重新寫入 已新增 修改課程 的資料
+						write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+						writer = new BufferedWriter(write);
+						writer.write(fileContent);
+						writer.close();
+					}// end Teacher change
+					
+					//************如果 課名變更 修改學生資料************
+					if(!oldSubject.equals(newSubject)) {
+						//更新 學生們的 選修課程資料
+						for(int i=0; i<students.size(); i++) {
+							f = new File("data\\students\\" + students.get(i) + "\\選修課程.txt" );
+							reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+							reader = new BufferedReader(reade);
+							fileContent = newYear + " " + newSubject + "\n";
+							//找出 要修改資訊
+							while((line = reader.readLine()) != null) {
+								//符合 目標修改課程 不做紀錄
+								if(line.split(" ")[0].equals(year) && line.split(" ")[1].equals(subject)) {
+									//不做任何紀錄
+								//紀錄 其他選修課程
+								}else {
+									fileContent = fileContent.concat(line + "\n");
+								}
+							}
+							reader.close();
+							//重新寫入 已新增 修改課程 的資料
+							write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+							writer = new BufferedWriter(write);
+							writer.write(fileContent);
+							writer.close();
+						}
+					}
 					JOptionPane.showMessageDialog(null, "變更完成");
 				}catch(IOException e){
 					System.out.println("修改課程資訊Error");
