@@ -11,7 +11,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
 	private JButton Jbtn_courseManage = new JButton("課程資訊管理");
     private JButton Jbtn_electiveCourseMange = new JButton("學生選修課程管理");
     private JButton Jbtn_electiveCourseScore = new JButton("選修課程成績管理");
-    private JButton Jbtn_generateTranscripts = new JButton("產生成績單");
+    private JButton Jbtn_generateTranscripts = new JButton("產生學生成績單");
     private JButton Jbtn_ChangePW = new JButton("修改密碼");
     private Administrator user;
     
@@ -99,16 +99,16 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
     		new searchCourseFrame();
         }
         else if(e.getSource() == Jbtn_courseManage){
-
+            new courseInfoFrame(user);
         }
         else if(e.getSource() == Jbtn_electiveCourseMange){
 
         }
         else if(e.getSource() == Jbtn_generateTranscripts){
-
+            
         }
         else if(e.getSource() == Jbtn_studentManage){
-
+            new studentUserListFrame(user);
         }
     	else if(e.getSource() == Jbtn_ChangePW) {
 			new changePasswordFrame(user);

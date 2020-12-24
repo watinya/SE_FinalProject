@@ -88,16 +88,18 @@ public class loginFrame extends JFrame implements ActionListener{
 			while ((line = br.readLine()) != null) {
 				user = line.split(" ")[0];
 				pass = line.split(" ")[1];
-				this.name = line.split(" ")[2];
 				if (user.equals(ID) && pass.equals(ps)) {
-					isLoginSuccess = true;
+                    isLoginSuccess = true;
+                    this.name = line.split(" ")[2];
+                    break;
 				}
 			}
 			if(!isLoginSuccess) {
 	        	JOptionPane.showMessageDialog(null, "帳號或密碼錯誤");
 	        	jid.setText("");
 				jpw.setText("");
-	        }
+            }
+            br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -117,7 +119,7 @@ public class loginFrame extends JFrame implements ActionListener{
 				case 9:
 					if(checkData("data\\account\\studentAccount.txt")) {
 						this.dispose();
-						Student user = new Student(jid.getText(), jpw.getPassword(), name);
+                        Student user = new Student(jid.getText(), jpw.getPassword(), name);
 						new studentFunctionFrame(user);
 					}
 					break;

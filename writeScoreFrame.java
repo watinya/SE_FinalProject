@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 public class writeScoreFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
@@ -51,8 +50,9 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     	    return new File(current, name).isDirectory();
     	  }
     	});
-    	jcb_semester = new JComboBox(new String[] {"請選擇"});
-    	for(int i = 0; i < directoriesSemester.length; i++) {
+		jcb_semester = new JComboBox<String>();
+		jcb_semester.addItem("請選擇");
+    	for(int i = directoriesSemester.length - 1; i >= 0; i--) {
     		jcb_semester.addItem(directoriesSemester[i]);
     	}
     	jcb_semester.setLocation(102, 19);
@@ -102,8 +102,6 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     	});
 		getContentPane().add(jcb_course);
 		
-    	
-        
         //表格內容
     	String[] columns = { "學號", "姓名", "成績"};
 		tableM = new DefaultTableModel(null, columns) {
@@ -133,7 +131,8 @@ public class writeScoreFrame extends JFrame implements ActionListener {
 		coursePane.setLocation(14, 66);
 		coursePane.setSize(566, 631);
 		c.add(coursePane);
-		
+
+		//設定確認按鈕大小位置及顯示字型
 		Jbtn_confirm.setBounds(216, 710, 127, 42);
 		getContentPane().add(Jbtn_confirm);
 		Jbtn_confirm.setFont(new Font("微軟正黑體", Font.BOLD, 22));
@@ -219,9 +218,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     		}
     	});
 		getContentPane().add(jcb_course);
-		
-    	
-        
+		        
         //表格內容
     	String[] columns = { "學號", "姓名", "成績"};
 		tableM = new DefaultTableModel(null, columns) {
@@ -252,6 +249,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
 		coursePane.setSize(566, 631);
 		c.add(coursePane);
 		
+		//設定確認按鈕大小位置及顯示字型
 		Jbtn_confirm.setBounds(216, 710, 127, 42);
 		getContentPane().add(Jbtn_confirm);
 		Jbtn_confirm.setFont(new Font("微軟正黑體", Font.BOLD, 22));

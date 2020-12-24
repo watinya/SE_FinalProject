@@ -5,18 +5,18 @@ import javax.swing.event.*;
 
 import Member.Administrator;
 
-public class SetRemoveUserIdFrame implements ActionListener {
+public class setRemoveStuInfoFrame implements ActionListener {
 	Administrator user;
 	JFrame f;
 	//宣告輸入欄
     JTextField userId = new JTextField(9);
 
-	public SetRemoveUserIdFrame(Administrator user) {
+	public setRemoveStuInfoFrame(Administrator user) {
 		this.user = user;
 		//設定框架
 		//JFrame.setDefaultLookAndFeelDecorated(true);
 		//JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("輸入刪除帳號");
+		f = new JFrame("輸入刪除的學生學號");
 		f.setSize(450, 250);
 		f.setLocationRelativeTo(null);//視窗置中
 		f.setResizable(false);//視窗放大按鈕無效
@@ -24,16 +24,16 @@ public class SetRemoveUserIdFrame implements ActionListener {
 		cp.setLayout(null);
 		
 		//建立標籤
-		//標籤 刪除帳號
-		JLabel lb = new JLabel("刪除帳號：");
-		lb.setLocation(32,31);
-		lb.setSize(161,78);
+		//標籤 學號
+		JLabel lb = new JLabel("學號：");
+		lb.setLocation(60,50);
+		lb.setSize(105,47);
 		lb.setFont(new Font("微軟正黑體", Font.BOLD, 30));
 		cp.add(lb);
         
         //建立輸入欄
         //輸入欄 userId
-        userId.setLocation(191, 53);
+        userId.setLocation(159, 53);
         userId.setSize(220, 47);
         userId.setFont(new Font("微軟正黑體", Font.BOLD, 24));
 		cp.add(userId);
@@ -63,11 +63,10 @@ public class SetRemoveUserIdFrame implements ActionListener {
 		if(cmd.equals("刪除")) {
 			String ID = userId.getText();
 			if(ID.equals("")) {
-				JOptionPane.showMessageDialog(null, "請輸入要刪除的帳號");
+				JOptionPane.showMessageDialog(null, "請輸入要刪除的學號");
 			}else {
-				String userInformation = user.getUserInformation(ID);
-				user.removeUser(userInformation.split(" ")[0]);
-				JOptionPane.showMessageDialog(null, "完成刪除");
+				String userInformation = user.getStudentInformation(ID);
+				user.removeStudent(userInformation.split(" ")[0]);
 				f.dispose();
 			}
 		}

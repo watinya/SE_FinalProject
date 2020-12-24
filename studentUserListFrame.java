@@ -7,25 +7,26 @@ import javax.swing.table.TableColumn;
 
 import Member.Administrator;
 
-public class UserListFrame implements ActionListener{
-	Administrator user;
-	JFrame f;
-	JTable jt;
+public class studentUserListFrame extends JFrame implements ActionListener{
+	private JFrame f;
+	private JTable jt;
+	private Administrator user;
 
-	public UserListFrame(Administrator user) {
+	public studentUserListFrame(Administrator user) {
+		//super("高燕大課程平台 帳戶管理");
 		this.user = user;
 		
 		//設定框架
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("用戶清單");
+		f = new JFrame("學生資訊");
 		f.setSize(800, 600);
 		f.setLocationRelativeTo(null);
 		Container cp = f.getContentPane();
 		
 		//建立表格內容
-		String[] columns = {"帳號","密碼","名稱","使用者類型"};
-		jt = new JTable(user.getUserList(), columns) {
+		String[] columns = {"學號", "姓名", "入學年分"};
+		jt = new JTable(user.getAllStudentsInformationList(), columns) {
 			@Override
 	    	public boolean isCellEditable(int row, int column) {
 	    		if (column < columns.length)
@@ -40,8 +41,6 @@ public class UserListFrame implements ActionListener{
 	    column=jt.getColumnModel().getColumn(1);
 	    column.setPreferredWidth(80);
 	    column=jt.getColumnModel().getColumn(2);
-	    column.setPreferredWidth(50);
-	    column=jt.getColumnModel().getColumn(3);
 	    column.setPreferredWidth(50);
 		cp.add(new JScrollPane(jt), BorderLayout.CENTER);
 		
@@ -60,17 +59,17 @@ public class UserListFrame implements ActionListener{
 		btnReset.addActionListener(this);
 		panel.add(btnReset);
 		
-		JButton btnNew = new JButton("新增帳戶");
+		JButton btnNew = new JButton("新增學生資訊");
 		btnNew.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnNew.addActionListener(this);
 		panel.add(btnNew);
 		
-		JButton btnChange = new JButton("修改帳戶");
+		JButton btnChange = new JButton("修改學生資訊");
 		btnChange.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnChange.addActionListener(this);
 		panel.add(btnChange);
 		
-		JButton btnDelete = new JButton("刪除帳戶");
+		JButton btnDelete = new JButton("刪除學生資訊");
 		btnDelete.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnDelete.addActionListener(this);
 		panel.add(btnDelete);
@@ -83,16 +82,16 @@ public class UserListFrame implements ActionListener{
 		String cmd = e.getActionCommand();
 		if(cmd.equals("重新整理")) {
 			f.dispose();
-			new UserListFrame(user);
+			new studentUserListFrame(user);
 		}
-		if(cmd.equals("新增帳戶")) {
-			new AddUserFrame(user);
+		if(cmd.equals("新增學生資訊")) {
+			new addStudentInfoFrame(user);
 		}
-		if(cmd.equals("修改帳戶")) {
-			new SetChangeUserIdFrame(user);
+		if(cmd.equals("修改學生資訊")) {
+			new setChangeStuInfoFrame(user);
 		}
-		if(cmd.equals("刪除帳戶")) {
-			new SetRemoveUserIdFrame(user);
+		if(cmd.equals("刪除學生資訊")) {
+			new setRemoveStuInfoFrame(user);
 		}
 	}
 }//end class

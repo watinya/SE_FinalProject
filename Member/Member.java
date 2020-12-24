@@ -70,7 +70,7 @@ public class Member {
 		try {
 			outputClassmate(dataLocation);
 		}catch (IOException e) {
-			System.out.println("outputClassmate Error");
+			//System.out.println("outputClassmate Error");
 		}	
 	}
 	private static void outputClassmate(String dataLocation) throws IOException {
@@ -112,6 +112,7 @@ public class Member {
 			
 			Object[] temp = {line[0], line[1], line[2], line[3], line[4], btn};
 			tableM.addRow(temp);
+			reader.close();
 		}
 		
 		btn.addActionListener(new ActionListener(){
