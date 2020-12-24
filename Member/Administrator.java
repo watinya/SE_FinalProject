@@ -412,7 +412,6 @@ public class Administrator extends Member {
 	}
 	//複製整個資料夾內容
 	private void copyFolder(String oldPath, String newPath) {
-
 		try {
 			(new File(newPath)).mkdirs(); // 如果資料夾不存在則建立新資料夾
 			File a = new File(oldPath);
@@ -488,7 +487,7 @@ public class Administrator extends Member {
 				writer.write(subjectInformation);
 				writer.close();
 				//完成提示
-				//JOptionPane.showMessageDialog(null, "新增完成");
+				JOptionPane.showMessageDialog(null, "新增完成");
 			}catch(IOException e) {
 				System.out.println("新增課程資訊Error");
 			}
@@ -522,8 +521,8 @@ public class Administrator extends Member {
 				File f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
 				InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
 				BufferedReader reader = new BufferedReader(reade);
-				String line;
-				line = reader.readLine();
+				String line = year + " ";
+				line = line.concat(reader.readLine());
 				reader.close();
 				return line;
 			}catch(IOException e) {
@@ -563,22 +562,17 @@ public class Administrator extends Member {
 		}
 		return null;
 	} 
-	//修改 課程資訊
-	public void changeSubjectInformation(String year,
-										 String subject,
-										 String newYear,
-										 String newId,
-										 String newSubject,
-										 String newCredit,
-										 String newType,
-										 String newTeacher) {
-		//課程存在
-		if(checkSubjectExist(year,subject)) {
-			//更改目標已存在課程
-			if(checkSubjectExist(newYear,newSubject)) {
+
+	// 修改 課程資訊
+	public void changeSubjectInformation(String year, String subject, String newYear, String newId, String newSubject,
+			String newCredit, String newType, String newTeacher) {
+		// 課程存在
+		if (checkSubjectExist(year, subject)) {
+			// 更改目標已存在課程
+			if (!newYear.equals(year) && !newSubject.equals(subject) && checkSubjectExist(newYear, newSubject)) {
 				JOptionPane.showMessageDialog(null, "更改目標已存在課程\n請嘗試刪除更改目標課程");
-			//更改目標 未被使用
-			}else {
+				// 更改目標 未被使用
+			} else {
 				try {
 					//開舊檔 記錄學生與成績
 					File f = new File("data\\course\\" + year + "\\" + subject + ".txt");
@@ -586,20 +580,21 @@ public class Administrator extends Member {
 					BufferedReader reader = new BufferedReader(reade);
 					String line, fileContent = "";
 					//紀錄 新資訊
-					fileContent = fileContent.concat(newId +" "+ newSubject +" "+ newCredit +" "+ newType +" "+ newTeacher +"\n");
+					fileContent = fileContent.concat(
+							newId + " " + newSubject + " " + newCredit + " " + newType + " " + newTeacher + "\n");
 					//跳過 舊資訊
 					reader.readLine();
 					//紀錄 學生和成績
-					while((line = reader.readLine()) != null) {
-						fileContent = fileContent.concat(line +"\n");
+					while ((line = reader.readLine()) != null) {
+						fileContent = fileContent.concat(line + "\n");
 					}
 					reader.close();
 					String dataLocation = null;
 					//學年與科名 沒變化
-					if((year.equals(newYear) && subject.equals(newSubject))) {
+					if ((year.equals(newYear) && subject.equals(newSubject))) {
 						dataLocation = "data\\course\\" + year + "\\" + subject + ".txt";
-					//學年與科名 有變化
-					}else {
+						//學年與科名 有變化
+					} else {
 						//刪除 舊檔案
 						f.delete();
 						//刪除 學年內沒有課程的資料夾
@@ -616,12 +611,12 @@ public class Administrator extends Member {
 					writer.write(fileContent);
 					writer.close();
 					JOptionPane.showMessageDialog(null, "變更完成");
-				}catch(IOException e){
+				} catch (IOException e) {
 					System.out.println("修改課程資訊Error");
 				}
 			}
-		//課程不存在
-		}else {
+			//課程不存在
+		} else {
 			JOptionPane.showMessageDialog(null, "修改課程對象不存在");
 		}
 	}
