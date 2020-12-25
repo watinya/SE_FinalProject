@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Administrator extends Member {
 	//建立基本屬性
 	private ArrayList<Subject> subjects ;
+	private ArrayList<Subject> studentCourse;
 	public Administrator(String id, char[] password, String name) {
 		super(id,new String(password),name);
 	}
@@ -865,8 +866,13 @@ public class Administrator extends Member {
 	public Object[][] getStudentCourseList(String year, String studentId) {
 		this.subjects = new ArrayList<Subject>();
 		String location = "data\\students\\" + studentId + "\\選修課程.txt";
+<<<<<<< Updated upstream
 		createCourse(location);
 		Object[][] data = new Object[subjects.size()][1];
+=======
+		createCourse(location, subjects);
+		Object[][] temp = new Object[subjects.size()][5];
+>>>>>>> Stashed changes
 		int count = 0;
 		for(Subject i: subjects) {
 			if(i.getYear().equals(year)) {
@@ -875,15 +881,21 @@ public class Administrator extends Member {
 		}
 		return data;
 	}
+<<<<<<< Updated upstream
 	// 建立選修課程
 	private void createCourse(String dataLoaction){
+=======
+
+	//建立選修課程
+	private void createCourse(String dataLoaction, ArrayList array){
+>>>>>>> Stashed changes
 		try {
 			File f = new File(dataLoaction);
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
 			BufferedReader reader = new BufferedReader(reade);
 			String line;
 			while ((line = reader.readLine()) != null) {
-				subjects.add(new Subject(line.split(" ")[0], line.split(" ")[1]));
+				array.add(new Subject(line.split(" ")[0], line.split(" ")[1]));
 			}
 			reader.close();
 		}catch(IOException e) {
@@ -923,5 +935,160 @@ public class Administrator extends Member {
 				JOptionPane.showMessageDialog(null,"科目已選修");
 			}
 		}
+	}
+	//產生每個學生各學期成績單
+	public  void OutputStudentCourse(String year, String studentId) {
+		// Idea_1
+		// 某某某 學年度    第 某 學期    學期成績單
+		// 學號:        姓名: 某某某
+		// 課目名稱    必選修別   學分   成績  
+		// 某某某      必修       3      80
+		// 以下空白---
+		//
+		// 學期總評均: 80
+		// 實得學分: 3
+		
+		//建立 學生選修課程
+		studentCourse = new ArrayList<Subject>();
+		String location = "data\\students\\" + studentId + "\\選修課程.txt";
+		createCourse(location, studentCourse);
+		
+		int totalCredits = 0;
+		int totalScore = 0;
+		int sumScore = 0;
+		int averageScore = 0;
+		String studentName = "";
+		//抓取 學生姓名
+		try {
+			File f = new File("data\\students\\" + studentId +"\\學生資訊.txt");
+			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"UTF-8");
+			BufferedReader reader = new BufferedReader(reade);
+			studentName = reader.readLine().split(" ")[1];
+			reader.close();
+		}catch(Exception e) {
+			System.err.println(e);
+		}
+		//學生資料欄
+		String student = "                        學號: " + studentId + "    姓名: " + studentName + "\n";
+		//建立 檔案內容
+		StringBuilder fileContent = new StringBuilder();
+		fileContent.append("           國立高雄師範大學\n");
+		fileContent.append("     "+year);
+		//上學期
+		if(year.split("")[4].equals("1")){
+			fileContent.replace(28, 30, "學年     第一學期     學期成績單\n");
+		//下學期
+		}else {
+			fileContent.replace(28, 30, "學年     第二學期     學期成績單\n");
+		}
+		fileContent.append(student);
+		//標題欄
+		String line = String.format("%8s%13s%9s%9s\n","課目名稱"," 必選修別","學分","成績\n");
+		fileContent.append(line);
+		
+		int countLine = 0;
+		//檢查 有無 必修 科目
+		boolean cheackType = false;
+		for(Subject i : studentCourse) {
+			if(i.getYear().equals(year) && i.getType().equals("必修")) {
+				cheackType = true;
+				break;
+			}
+		}
+		//紀錄 必修科目
+		if(cheackType) {
+			fileContent.append("[必修]\n");
+			countLine++;
+			for(Subject i : studentCourse) {
+				if(i.getYear().equals(year) && i.getType().equals("必修")) {
+					totalCredits += Integer.parseInt(i.getCredit());
+					String name = i.getName();
+					String type = i.getType();
+					String credit = i.getCredit();
+					String score = "";
+					for(SubjectStudents j : i.getSubjectStudents() ) {
+						if(j.getId().equals(studentId)) {
+							sumScore += Integer.parseInt(j.getScore());
+							totalScore++;
+							score = j.getScore();
+							break;
+						}
+					}
+					line = String.format("%s%18s%15s%15s\n",name,type,credit,score);
+					fileContent.append(line);
+					countLine++;
+				}
+			}
+		}
+		
+		//檢查 有無 選修 科目
+		cheackType = false;
+		for(Subject i : studentCourse) {
+			if(i.getYear().equals(year) && i.getType().equals("選修")) {
+				cheackType = true;
+				break;
+			}
+		}
+		//紀錄 選修科目
+		if(cheackType) {
+			fileContent.append("[選修]\n");
+			countLine++;
+			for(Subject i : studentCourse) {
+				if(i.getYear().equals(year) && i.getType().equals("選修")) {
+					totalCredits += Integer.parseInt(i.getCredit());
+					String name = i.getName();
+					String type = i.getType();
+					String credit = i.getCredit();
+					String score = "";
+					for(SubjectStudents j : i.getSubjectStudents() ) {
+						if(j.getId().equals(studentId)) {
+							sumScore += Integer.parseInt(j.getScore());
+							totalScore++;
+							score = j.getScore();
+							break;
+						}
+					}
+					line = String.format("%s%18s%15s%15s\n",name,type,credit,score);
+					fileContent.append(line);
+					countLine++;
+				}
+			}
+		}
+		//無其他課程
+		fileContent.append("---以下空白---\n");
+		countLine++;
+		//跳至頁尾
+		for(int i=countLine; i<13; i++) {
+			fileContent.append(" \n");
+		}
+		//學期平均與學分
+		averageScore = sumScore/totalScore;
+		fileContent.append("學期總評均: " + averageScore + "\n");
+		fileContent.append("實得學分: " + totalCredits);
+		
+		//建立 txt檔
+		try {
+			File file = new File("data\\printFile\\toPdf.txt");
+			file.createNewFile();
+			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+			BufferedWriter writer = new BufferedWriter(write);
+			writer.write(fileContent.toString());
+			writer.close();
+			
+		}catch(Exception e) {
+			System.err.println(e);
+		}
+		//檢查用
+		//System.out.println(fileContent.toString());
+		//輸出Pdf檔到D磁碟
+		new OutputPdf("data\\printFile\\toPdf.txt", "d:\\" + studentId + ".pdf");
+	}
+	public static void main(String[] args) {
+		String year = "108-1";
+		String studentId = "410877033";
+		char[] a = {1,2,3};
+		Administrator ad = new Administrator("77001",a,"葉道明");
+		ad.OutputStudentCourse(year, studentId);
+		
 	}
 }// end class
