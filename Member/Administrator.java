@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Administrator extends Member {
 	//建立基本屬性
+	private ArrayList<Subject> subjects ;
 	public Administrator(String id, char[] password, String name) {
 		super(id,new String(password),name);
 	}
@@ -723,5 +724,204 @@ public class Administrator extends Member {
 	}
 	//--------------------------------------------------------------------------------
 	//新增 學生各學期的選修課程
-
+	public void addStudentCourse(String year, String subject, String studentId) {
+		try {
+			//建立 學生,課程 路徑
+			File fileStudentInformation = new File("data\\students\\" + studentId + "\\學生資訊.txt");
+			File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
+			File fileSubject = new File("data\\course\\" + year + "\\" + subject + ".txt");
+			//學生與科目 存在 執行課程新增
+			if(fileStudent.exists() && fileSubject.exists()) {
+				
+				//抓取 學生姓名
+				InputStreamReader reade = new InputStreamReader(new FileInputStream(fileStudentInformation), "UTF-8");
+				BufferedReader reader = new BufferedReader(reade);
+				String studentName =  reader.readLine().split(" ")[2];
+				
+				//*****新增 學生 選修課程*******
+				reade = new InputStreamReader(new FileInputStream(fileStudent), "UTF-8");
+				reader = new BufferedReader(reade);
+				//新增 課程資料
+				String line, fileContent = year + " " + subject + "\n";
+				//紀錄 其他選修課程
+				while((line = reader.readLine()) != null) {
+					fileContent = fileContent.concat(line + "\n");
+				}
+				reader.close();
+				//重新寫入 已新增 選修課程 的資料
+				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(fileStudent), "UTF-8");
+				BufferedWriter writer = new BufferedWriter(write);
+				writer.write(fileContent);
+				writer.close();
+				
+				//*****新增 課程 學生資料*******
+				reade = new InputStreamReader(new FileInputStream(fileSubject), "UTF-8");
+				reader = new BufferedReader(reade);
+				fileContent = reader.readLine() + "\n";
+				//新增 學生資料
+				fileContent = fileContent.concat(studentId + " " + studentName +  " 0\n");
+				//紀錄 其他學生
+				while((line = reader.readLine()) != null) {
+					fileContent = fileContent.concat(line + "\n");
+				}
+				reader.close();
+				//重新寫入 已新增 課程學生 的資料
+				write = new OutputStreamWriter(new FileOutputStream(fileSubject), "UTF-8");
+				writer = new BufferedWriter(write);
+				writer.write(fileContent);
+				writer.close();
+				
+				//JOptionPane.showMessageDialog(null,"新增完成");
+			}else {
+				//學生和課程 都不存在
+				if(!fileStudent.exists() && !fileSubject.exists()) {
+					JOptionPane.showMessageDialog(null,"學生與科目不存在");
+				//學生 不存在
+				}else if(!fileStudent.exists()) {
+					JOptionPane.showMessageDialog(null,"學生不存在");
+				//課程 不存在
+				}else if(!fileSubject.exists()) {
+					JOptionPane.showMessageDialog(null,"科目不存在");
+				}
+			}
+		}catch(IOException e) {
+			System.out.println("新增學生選修課程Error");
+		}
+	}
+	
+	//刪除 學生各學期的選修課程
+	public void removeStudentCourse(String year, String subject, String studentId) {
+		try {
+			//刪除 學生,課程 路徑
+			File fileStudentInformation = new File("data\\students\\" + studentId + "\\學生資訊.txt");
+			File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
+			File fileSubject = new File("data\\course\\" + year + "\\" + subject + ".txt");
+			//學生與科目 存在 執行課程新增
+			if(fileStudent.exists() && fileSubject.exists()) {
+				
+				//抓取 學生姓名
+				InputStreamReader reade = new InputStreamReader(new FileInputStream(fileStudentInformation), "UTF-8");
+				BufferedReader reader = new BufferedReader(reade);
+				String studentName =  reader.readLine().split(" ")[2];
+				
+				//*****刪除 學生 選修課程*******
+				reade = new InputStreamReader(new FileInputStream(fileStudent), "UTF-8");
+				reader = new BufferedReader(reade);
+				//新增 課程資料
+				String line, subjectYear, subjectName,fileContent = "";
+				//紀錄 其他選修課程
+				while((line = reader.readLine()) != null) {
+					subjectYear = line.split(" ")[0];
+					subjectName = line.split(" ")[1];
+					//紀錄 要刪以外的科目
+					if(!subjectYear.equals(year) && !subjectName.equals(subject)) {
+						fileContent = fileContent.concat(line + "\n");
+					}
+				}
+				reader.close();
+				//重新寫入 已刪除 選修課程 的資料
+				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(fileStudent), "UTF-8");
+				BufferedWriter writer = new BufferedWriter(write);
+				writer.write(fileContent);
+				writer.close();
+				
+				//*****刪除 課程 學生資料*******
+				reade = new InputStreamReader(new FileInputStream(fileSubject), "UTF-8");
+				reader = new BufferedReader(reade);
+				//紀錄 課程訊息
+				fileContent = reader.readLine() + "\n";
+				//紀錄 要刪除以外其他學生
+				while((line = reader.readLine()) != null) {
+					if(!studentId.equals(line.split(" ")[0]) && !studentName.equals(line.split(" ")[1])) {
+						fileContent = fileContent.concat(line + "\n");
+					}
+				}
+				reader.close();
+				//重新寫入 已刪除 課程學生 的資料
+				write = new OutputStreamWriter(new FileOutputStream(fileSubject), "UTF-8");
+				writer = new BufferedWriter(write);
+				writer.write(fileContent);
+				writer.close();
+				
+				//JOptionPane.showMessageDialog(null,"刪除完成");
+			}else {
+				//學生和課程 都不存在
+				if(!fileStudent.exists() && !fileSubject.exists()) {
+					JOptionPane.showMessageDialog(null,"學生與科目不存在");
+				//學生 不存在
+				}else if(!fileStudent.exists()) {
+					JOptionPane.showMessageDialog(null,"學生不存在");
+				//課程 不存在
+				}else if(!fileSubject.exists()) {
+					JOptionPane.showMessageDialog(null,"科目不存在");
+				}
+			}
+		}catch(IOException e) {
+			System.out.println("刪除學生選修課程Error");
+		}
+	}
+	
+	//取得 學生學年修課清單
+	public Object[][] getStudentCourseList(String year, String studentId) {
+		this.subjects = new ArrayList<Subject>();
+		String location = "data\\students\\" + studentId + "\\選修課程.txt";
+		createCourse(location);
+		Object[][] data = new Object[subjects.size()][1];
+		int count = 0;
+		for(Subject i: subjects) {
+			if(i.getYear().equals(year)) {
+				data[count][0] = i.getName();
+			}
+		}
+		return data;
+	}
+	// 建立選修課程
+	private void createCourse(String dataLoaction){
+		try {
+			File f = new File(dataLoaction);
+			InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
+			BufferedReader reader = new BufferedReader(reade);
+			String line;
+			while ((line = reader.readLine()) != null) {
+				subjects.add(new Subject(line.split(" ")[0], line.split(" ")[1]));
+			}
+			reader.close();
+		}catch(IOException e) {
+			System.out.println("建立選修課程Error");
+		}
+	}
+	//修改 學生各學期的選修課程
+	public void changeStudentCourse(String oldYear, String oldSubject, String newYear, String newSubject, String studentId) {
+		
+		File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
+		File fileNewSubject = new File("data\\course\\" + newYear + "\\" + newSubject + ".txt");
+		File fileOldSubject = new File("data\\course\\" + oldYear + "\\" + oldSubject + ".txt");
+		//檢查 學生 是否已在修改目標課程內
+		boolean check = true;
+		for(Subject i: subjects) {
+			if(i.getYear().equals(newYear) && i.getName().equals(newSubject)) {
+				check = false;
+			}
+		}
+		
+		//學生與科目 存在 執行變更
+		if(fileStudent.exists() && fileNewSubject.exists() && fileOldSubject.exists() && check) {
+			addStudentCourse(newYear,newSubject,studentId);
+			removeStudentCourse(oldYear,oldSubject,studentId);
+		}else {
+			//學生和課程 都不存在
+			if(!fileStudent.exists() && !fileNewSubject.exists() && !fileOldSubject.exists()) {
+				JOptionPane.showMessageDialog(null,"輸入錯誤");
+			//學生 不存在
+			}else if(!fileStudent.exists()) {
+				JOptionPane.showMessageDialog(null,"學生不存在");
+			//修改科目 不存在
+			}else if(!fileNewSubject.exists()) {
+				JOptionPane.showMessageDialog(null,"修改科目不存在");
+			}else if(!check) {
+			//科目 已選修
+				JOptionPane.showMessageDialog(null,"科目已選修");
+			}
+		}
+	}
 }// end class
