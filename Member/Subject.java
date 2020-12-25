@@ -13,7 +13,7 @@ public class Subject {
 	private String name;
 	private String credit;
 	private String type;
-	private String techer;
+	private String teacher;
 	private ArrayList<SubjectStudents> subjectStudents = new ArrayList<SubjectStudents>();
 	//建課程學生
 	public Subject(String year, String subjectName) {
@@ -37,6 +37,7 @@ public class Subject {
 		this.number = line.split(" ")[0];//課程編號
 		this.credit = line.split(" ")[2];//學分
 		this.type = line.split(" ")[3];//課程類型 
+		this.teacher = line.split(" ")[4];//教授
 		//抓出每個學生:學號,名字,分數
 		while((line = reader.readLine()) != null) {
 			id = line.split(" ")[0];//學號
@@ -62,8 +63,8 @@ public class Subject {
 	public String getType() {
 		return type;
 	}
-	public String getTecher() {
-		return techer;
+	public String getTeacher() {
+		return teacher;
 	}
 	public ArrayList<SubjectStudents> getSubjectStudents() {
 		return subjectStudents;

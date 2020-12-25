@@ -25,68 +25,63 @@ public class changePasswordFrame extends JFrame implements ActionListener {
         c.setLayout(null);
         
         //設定Jlb_ID大小位置及顯示字型
-        Jlb_oldPW.setLocation(313,105);
+        Jlb_oldPW.setLocation(273,105);
         Jlb_oldPW.setSize(123,47);
         Jlb_oldPW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_oldPW);
         
         //設定舊密碼輸入框大小位置及顯示字型
-        joldPw.setLocation(436,116);
+        joldPw.setLocation(396,116);
         joldPw.setSize(220,40);
         joldPw.setFont(new Font("微軟正黑體", Font.BOLD,16));
         joldPw.setEchoChar('●');
-        //jpw.setToolTipText("密碼長度8個字元");
         c.add(joldPw);
         
         //設定Jlb_newPW大小位置及顯示字型
-        Jlb_newPW.setLocation(313,165);
+        Jlb_newPW.setLocation(273,165);
         Jlb_newPW.setSize(123,47);
         Jlb_newPW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_newPW);
         
         //設定新密碼輸入框大小位置及顯示字型
-        jnewPW.setLocation(436,169);
+        jnewPW.setLocation(396,169);
         jnewPW.setSize(220,40);
         jnewPW.setFont(new Font("微軟正黑體", Font.BOLD,16));
         jnewPW.setEchoChar('●');
-        //jpw.setToolTipText("密碼長度8個字元");
         c.add(jnewPW);
         
         //設定Jlb_confirmNewPW大小位置及顯示字型
-        Jlb_confirmNewPW.setLocation(254,225);
+        Jlb_confirmNewPW.setLocation(214,225);
         Jlb_confirmNewPW.setSize(185,47);
         Jlb_confirmNewPW.setFont(new Font("微軟正黑體", Font.BOLD, 30));
         c.add(Jlb_confirmNewPW);
         
         //設定確認新密碼輸入框大小位置及顯示字型
-        jcheckedPW.setLocation(436,229);
+        jcheckedPW.setLocation(396,229);
         jcheckedPW.setSize(220,40);
         jcheckedPW.setFont(new Font("微軟正黑體", Font.BOLD,16));
         jcheckedPW.setEchoChar('●');
-        //jpw.setToolTipText("密碼長度8個字元");
         c.add(jcheckedPW);
         
         //設定確認更改按鈕大小位置及顯示字型
-        Jbtn_Confirm.setLocation(354,290);
-        Jbtn_Confirm.setSize(137,58);
+        Jbtn_Confirm.setLocation(314,290);
+        Jbtn_Confirm.setSize(125,55);
         Jbtn_Confirm.setFont(new Font("微軟正黑體",Font.BOLD,22));
         Jbtn_Confirm.addActionListener(this);
         c.add(Jbtn_Confirm);
         
-        //設定確認更改按鈕大小位置及顯示字型
-        Jbtn_Cancel.setLocation(505,290);
-        Jbtn_Cancel.setSize(137,58);
+        //設定取消更改按鈕大小位置及顯示字型
+        Jbtn_Cancel.setLocation(465,290);
+        Jbtn_Cancel.setSize(125,55);
         Jbtn_Cancel.setFont(new Font("微軟正黑體",Font.BOLD,22));
         Jbtn_Cancel.addActionListener(this);
         c.add(Jbtn_Cancel);
         
         //設定視窗
-        setSize(1000, 600);
+        setSize(900, 600);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
