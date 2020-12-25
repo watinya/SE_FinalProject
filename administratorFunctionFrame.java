@@ -102,7 +102,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
             new courseInfoFrame(user);
         }
         else if(e.getSource() == Jbtn_electiveCourseMange){
-
+            new studentCourseFrame(user, "");
         }
         else if(e.getSource() == Jbtn_generateTranscripts){
             

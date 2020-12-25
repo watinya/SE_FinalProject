@@ -734,7 +734,7 @@ public class Administrator extends Member {
 			//抓取 學生姓名
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(fileStudentInformation), "UTF-8");
 			BufferedReader reader = new BufferedReader(reade);
-			String studentName =  reader.readLine().split(" ")[2];
+			String studentName =  reader.readLine().split(" ")[1];
 			
 			//*****新增 學生 選修課程*******
 			reade = new InputStreamReader(new FileInputStream(fileStudent), "UTF-8");
