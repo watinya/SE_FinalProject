@@ -730,7 +730,7 @@ public class Administrator extends Member {
 			File fileStudentInformation = new File("data\\students\\" + studentId + "\\學生資訊.txt");
 			File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
 			File fileSubject = new File("data\\course\\" + year + "\\" + subject + ".txt");
-			
+
 			//抓取 學生姓名
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(fileStudentInformation), "UTF-8");
 			BufferedReader reader = new BufferedReader(reade);
@@ -791,7 +791,7 @@ public class Administrator extends Member {
 			File fileStudentInformation = new File("data\\students\\" + studentId + "\\學生資訊.txt");
 			File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
 			File fileSubject = new File("data\\course\\" + year + "\\" + subject + ".txt");
-			
+
 			//抓取 學生姓名
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(fileStudentInformation), "UTF-8");
 			BufferedReader reader = new BufferedReader(reade);
@@ -867,6 +867,7 @@ public class Administrator extends Member {
 		}
 		return data;
 	}
+
 	//建立選修課程
 	private void createCourse(String dataLoaction){
 		try {
