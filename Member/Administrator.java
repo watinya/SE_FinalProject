@@ -964,7 +964,7 @@ public class Administrator extends Member {
 		}
 		fileContent.append(student);
 		//標題欄
-		String line = String.format("%8s%13s%9s%9s\n","課目名稱"," 必選修別","學分","成績\n");
+		String line = String.format("%8s%15s%9s%9s\n","課目名稱"," 必選修別","學分","成績\n");
 		fileContent.append(line);
 		
 		int countLine = 0;
@@ -987,6 +987,10 @@ public class Administrator extends Member {
 					String type = i.getType();
 					String credit = i.getCredit();
 					String score = "";
+					int addNameLong = name.length();
+					for(int k=addNameLong; k<12; k++) {
+						name += "    ";
+					}
 					for(SubjectStudents j : i.getSubjectStudents() ) {
 						if(j.getId().equals(studentId)) {
 							sumScore += Integer.parseInt(j.getScore());
@@ -995,7 +999,7 @@ public class Administrator extends Member {
 							break;
 						}
 					}
-					line = String.format("%s%18s%15s%15s\n",name,type,credit,score);
+					line = String.format("%-1s%-23s%-17s%3s\n",name,type,credit,score);
 					fileContent.append(line);
 					countLine++;
 				}
@@ -1021,6 +1025,11 @@ public class Administrator extends Member {
 					String type = i.getType();
 					String credit = i.getCredit();
 					String score = "";
+					//課目名稱排版
+					int addNameLong = name.length();
+					for(int k=addNameLong; k<12; k++) {
+						name += "    ";
+					}
 					for(SubjectStudents j : i.getSubjectStudents() ) {
 						if(j.getId().equals(studentId)) {
 							sumScore += Integer.parseInt(j.getScore());
@@ -1029,7 +1038,7 @@ public class Administrator extends Member {
 							break;
 						}
 					}
-					line = String.format("%s%18s%15s%15s\n",name,type,credit,score);
+					line = String.format("%-1s%-23s%-17s%3s\n",name,type,credit,score);
 					fileContent.append(line);
 					countLine++;
 				}
@@ -1039,7 +1048,7 @@ public class Administrator extends Member {
 		fileContent.append("---以下空白---\n");
 		countLine++;
 		//跳至頁尾
-		for(int i=countLine; i<13; i++) {
+		for(int i=countLine; i<17; i++) {
 			fileContent.append(" \n");
 		}
 		//學期平均與學分
@@ -1059,8 +1068,20 @@ public class Administrator extends Member {
 		}catch(Exception e) {
 			System.err.println(e);
 		}
-
+		//輸出Pdf檔到D槽
+		new OutputPdf("data\\printFile\\toPdf.txt", "d:\\" + studentId + ".pdf");
 		//輸出Pdf檔到C槽
-		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\" + studentId + " " + year + ".pdf");
+		//new OutputPdf("data\\printFile\\toPdf.txt", "C:\\" + studentId + " " + year + ".pdf");
 	}
+	/* 測試
+	public static void main(String[] args) {
+		String year = "109-1";
+		String studentId = "410877019";
+		char[] a = {1,2,3};
+		Administrator ad = new Administrator("77001",a,"葉道明");
+		ad.OutputStudentCourse(year, studentId);
+		ad.OutputStudentCourse("108-1", "410877033");
+		
+	}
+	*/
 }// end class
