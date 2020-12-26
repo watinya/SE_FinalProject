@@ -1068,20 +1068,9 @@ public class Administrator extends Member {
 		}catch(Exception e) {
 			System.err.println(e);
 		}
-		//輸出Pdf檔到D槽
-		new OutputPdf("data\\printFile\\toPdf.txt", "d:\\" + studentId + ".pdf");
 		//輸出Pdf檔到C槽
-		//new OutputPdf("data\\printFile\\toPdf.txt", "C:\\" + studentId + " " + year + ".pdf");
+		File f = new File("C:\\學期成績單");
+		f.mkdir();
+		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\學期成績單\\" + studentId + " " + year + ".pdf");
 	}
-	/* 測試
-	public static void main(String[] args) {
-		String year = "109-1";
-		String studentId = "410877019";
-		char[] a = {1,2,3};
-		Administrator ad = new Administrator("77001",a,"葉道明");
-		ad.OutputStudentCourse(year, studentId);
-		ad.OutputStudentCourse("108-1", "410877033");
-		
-	}
-	*/
 }// end class
