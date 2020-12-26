@@ -105,7 +105,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
             new studentCourseFrame(user, "");
         }
         else if(e.getSource() == Jbtn_generateTranscripts){
-            
+            new generateTranscriptsFrame(user);
         }
         else if(e.getSource() == Jbtn_studentManage){
             new studentUserListFrame(user);
