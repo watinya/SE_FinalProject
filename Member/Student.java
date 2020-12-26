@@ -84,6 +84,8 @@ public class Student extends Member {
 		} catch (IOException e) {
 			System.out.println("列印成績單Error");
 		}
+		//txt 轉成 Pdf
+		new OutputPdf("data\\printFile\\temp.txt","data\\printFile\\temp.pdf");
 		// 打開列印視窗
 		new PrintFile();
 	}
