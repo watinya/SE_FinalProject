@@ -1044,7 +1044,7 @@ public class Administrator extends Member {
 		}
 		//學期平均與學分
 		averageScore = sumScore/totalScore;
-		fileContent.append("學期總評均: " + averageScore + "\n");
+		fileContent.append("學期總平均: " + averageScore + "\n");
 		fileContent.append("實得學分: " + totalCredits);
 		
 		//建立 txt檔
@@ -1059,17 +1059,8 @@ public class Administrator extends Member {
 		}catch(Exception e) {
 			System.err.println(e);
 		}
-		//檢查用
-		//System.out.println(fileContent.toString());
-		//輸出Pdf檔到D磁碟
-		new OutputPdf("data\\printFile\\toPdf.txt", "d:\\" + studentId + ".pdf");
-	}
-	public static void main(String[] args) {
-		String year = "108-1";
-		String studentId = "410877033";
-		char[] a = {1,2,3};
-		Administrator ad = new Administrator("77001",a,"葉道明");
-		ad.OutputStudentCourse(year, studentId);
-		
+
+		//輸出Pdf檔到桌面
+		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\Users\\user\\Desktop\\" + studentId + ".pdf");
 	}
 }// end class
