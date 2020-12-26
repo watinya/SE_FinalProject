@@ -1060,7 +1060,7 @@ public class Administrator extends Member {
 			System.err.println(e);
 		}
 
-		//輸出Pdf檔到桌面
-		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\Users\\user\\Desktop\\" + studentId + ".pdf");
+		//輸出Pdf檔到C槽
+		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\" + studentId + " " + year + ".pdf");
 	}
 }// end class

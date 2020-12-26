@@ -76,7 +76,7 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
             String studentID = jid.getText();
             user.OutputStudentCourse(selectedSemester, studentID);
             
-            JOptionPane.showMessageDialog(null, "檔案已儲存至桌面");
+            JOptionPane.showMessageDialog(null, "檔案已儲存至C槽");
             jcb_time.setSelectedIndex(0);
             jid.setText("");
     	}
