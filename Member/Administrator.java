@@ -1059,10 +1059,18 @@ public class Administrator extends Member {
 		}catch(Exception e) {
 			System.err.println(e);
 		}
+<<<<<<< Updated upstream
 		//檢查用
 		//System.out.println(fileContent.toString());
 		//輸出Pdf檔到D磁碟
 		new OutputPdf("data\\printFile\\toPdf.txt", "d:\\" + studentId + ".pdf");
+=======
+
+		//輸出Pdf檔到C槽
+		File f = new File("C:\\學期成績單");
+		f.mkdir();
+		new OutputPdf("data\\printFile\\toPdf.txt", "C:\\學期成績單\\" + studentId + " " + year + ".pdf");
+>>>>>>> Stashed changes
 	}
 	public static void main(String[] args) {
 		String year = "108-1";
