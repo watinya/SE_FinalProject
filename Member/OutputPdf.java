@@ -1,14 +1,5 @@
 package Member;
 
-<<<<<<< Updated upstream
-import java.io.FileOutputStream;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-
-public class OutputPdf {
-   public OutputPdf(String content, String saveLocation) {
-=======
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,20 +16,10 @@ public class OutputPdf {
 	//Windows 內建文字新: 細明體
 	private static final String FONT = "c:\\windows\\fonts\\mingliu.ttc,1";
 	public OutputPdf(String txtLocation, String pdfLocation) {
->>>>>>> Stashed changes
 	   try {
 		   //建立檔案
 		   Document document = new Document();
 		   //寫入檔案位置
-<<<<<<< Updated upstream
-		   PdfWriter.getInstance(document, new FileOutputStream(saveLocation));
-		   document.open();
-		   //段落內容
-		   Paragraph para = new Paragraph(content);
-		   //加入內容
-		   document.add(para);
-		   
-=======
 		   PdfWriter.getInstance(document, new FileOutputStream(pdfLocation));
 		   document.open();
 		   
@@ -78,14 +59,9 @@ public class OutputPdf {
 	           document.add(new Paragraph(str, font));
 	       }
 		   bufferedReader.close();
->>>>>>> Stashed changes
 		   document.close();
 	   }catch(Exception e) {
 		   System.err.println(e);
 	   }
    }
-<<<<<<< Updated upstream
-=======
-   
->>>>>>> Stashed changes
 }//end class
