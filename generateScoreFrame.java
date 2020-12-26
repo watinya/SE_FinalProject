@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.Member;
 import Member.Teacher;
 
 import java.awt.event.*;
@@ -146,7 +147,7 @@ public class generateScoreFrame extends JFrame {
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
   		File f = new File(dataLocation);
-  		cleanTable(tableM);
+  		Member.cleanTable(tableM);
   		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
   		BufferedReader reader = new BufferedReader(read);
   		String line, id, name, score;
@@ -163,9 +164,4 @@ public class generateScoreFrame extends JFrame {
   		}
   		reader.close();
   	}
-  	// 清空表單method
- 	static void cleanTable(DefaultTableModel table) {
- 		while (table.getRowCount() > 0)
- 			table.removeRow(0);
- 	}
 }

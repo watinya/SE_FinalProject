@@ -124,11 +124,10 @@ public class Member {
 	}
 	
 	// 清空表單method
-	static void cleanTable(DefaultTableModel table) {
+	public static void cleanTable(DefaultTableModel table) {
 		while (table.getRowCount() > 0)
 			table.removeRow(0);
 	}
-	
 }// end class
 
 

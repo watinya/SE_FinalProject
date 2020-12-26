@@ -5,6 +5,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.Administrator;
+import Member.Member;
 import Member.Teacher;
 
 import java.awt.event.*;
@@ -45,10 +46,10 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         //設定學期下拉式選單大小位置及顯示字型
         File fileSemester = new File("data\\course");
     	String[] directoriesSemester = fileSemester.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
 		jcb_semester = new JComboBox<String>();
 		jcb_semester.addItem("請選擇");
@@ -141,10 +142,8 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         //設定視窗
         setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 	
 	public writeScoreFrame(Administrator user)
@@ -162,13 +161,14 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         //設定學期下拉式選單大小位置及顯示字型
         File fileSemester = new File("data\\course");
     	String[] directoriesSemester = fileSemester.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
-    	jcb_semester = new JComboBox(new String[] {"請選擇"});
-    	for(int i = 0; i < directoriesSemester.length; i++) {
+		jcb_semester = new JComboBox<String>();
+		jcb_semester.addItem("請選擇");
+    	for(int i = directoriesSemester.length - 1; i >= 0; i--) {
     		jcb_semester.addItem(directoriesSemester[i]);
     	}
     	jcb_semester.setLocation(102, 19);
@@ -183,16 +183,16 @@ public class writeScoreFrame extends JFrame implements ActionListener {
 				String[] directories = fileCourse.list(new FilenameFilter() {
 					@Override
 					public boolean accept(File current, String name) {
-						 if(name.lastIndexOf('.')>0) {
-			                  int lastIndex = name.lastIndexOf('.');
-			                  String str = name.substring(lastIndex);
-			                  if(str.equals(".txt")) {
-			                	  return true;
-			                  }
-						 }
-			             return false;
-					}
-				  });
+						 	if(name.lastIndexOf('.')>0) {
+			                  	int lastIndex = name.lastIndexOf('.');
+			                  	String str = name.substring(lastIndex);
+			                  	if(str.equals(".txt")) {
+			                	  	return true;
+			                  	}
+						 	}
+			             	return false;
+						}
+				  	});
 				for(int i = 0; i < directories.length; i++) {
 					directories[i] = directories[i].replace(".txt", "");
 					jcb_course.addItem(directories[i]);
@@ -258,26 +258,23 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         //設定視窗
         setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-	
 
 	@Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Jbtn_confirm) {
         	try {
 				judge:{
-				for(int i = 0; i < tableM.getColumnCount(); i++){
+				for(int i = 0; i < tableM.getColumnCount() - 1; i++){
 					String score = (String) tableM.getValueAt(i, 2);
 					if(!Numornot(score)){
-						JOptionPane.showMessageDialog(new JFrame(), "成績有誤", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(new JFrame(), "成績必須為數字", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
 						break judge;
 					}
+					writeScore(tableM);
 				}
-				writeScore(tableM);
 				JOptionPane.showMessageDialog(new JFrame(), "成績已變更", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} catch (IOException e1) {e1.printStackTrace();}
@@ -292,7 +289,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
     }
     
     //寫入成績
-    static void writeScore(DefaultTableModel tableM) throws IOException {
+    private static void writeScore(DefaultTableModel tableM) throws IOException {
 		FileInputStream fr = new FileInputStream(dataLocation);
 		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
 		String title = br.readLine();
@@ -331,7 +328,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
   		File f = new File(dataLocation);
-  		cleanTable(tableM);
+  		Member.cleanTable(tableM);
   		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
   		BufferedReader reader = new BufferedReader(read);
   		String line, id, name, score;
@@ -348,9 +345,4 @@ public class writeScoreFrame extends JFrame implements ActionListener {
   		}
   		reader.close();
   	}
-  	// 清空表單method
- 	static void cleanTable(DefaultTableModel table) {
- 		while (table.getRowCount() > 0)
- 			table.removeRow(0);
- 	}
 }
