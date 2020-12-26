@@ -270,7 +270,7 @@ public class writeScoreFrame extends JFrame implements ActionListener {
         if(e.getSource() == Jbtn_confirm) {
         	try {
 				judge:{
-				for(int i = 0; i < tableM.getColumnCount(); i++){
+				for(int i = 0; i < tableM.getColumnCount()-1; i++){
 					String score = (String) tableM.getValueAt(i, 2);
 					if(!Numornot(score)){
 						JOptionPane.showMessageDialog(new JFrame(), "成績有誤", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
@@ -325,8 +325,9 @@ public class writeScoreFrame extends JFrame implements ActionListener {
   		dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
   		try {
   			outputClassmate(dataLocation, tableM);
-  		}catch (IOException e) {
-  			System.out.println("outputClassmate Error");
+  		}catch(FileNotFoundException e) {}
+  		catch(IOException e) {
+  			System.err.println(e);
   		}	
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
