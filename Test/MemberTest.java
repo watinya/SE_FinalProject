@@ -1,4 +1,4 @@
-package Member;
+package Test;
 
 import static org.junit.Assert.*;
 
