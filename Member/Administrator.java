@@ -41,7 +41,7 @@ public class Administrator extends Member {
 		return data;
 	}
 	//新增使用者
-	public void addUser(String id,String password, String name, String type) {
+	public boolean addUser(String id,String password, String name, String type) {
 		//建立新用戶資料字串
 		String newUser = id +" "+ password +" "+ name +" "+ type ;
 		try {
@@ -53,25 +53,29 @@ public class Administrator extends Member {
 					break;
 				}
 				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
-				break;
+				return false;
 			case 5:
 				if(type.equals("教授")) {
 					addUser("data\\account\\teacherAccount.txt", newUser, id);
 					break;
 				}
 				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
-				break;
+				return false;
+				
 			case 4:
 				if(type.equals("管理員")) {
 					addUser("data\\account\\administratorAccount.txt", newUser, id);
 					break;
 				}
 				JOptionPane.showMessageDialog(null, "帳號長度與類型錯誤");
-				break;
+				return false;
+				
 			}
 		}catch(IOException e) {
 			System.out.println("新增使用者 Error");
+			return false;
 		}
+		return true;
 	}
 	//執行新增用戶
 	private void addUser(String dataLocation, String newUser, String id) throws IOException {
@@ -110,7 +114,7 @@ public class Administrator extends Member {
 	}
 	
 	//刪除使用者
-	public void removeUser(String id) {
+	public boolean removeUser(String id) {
 		try {
 			//選擇檔案路徑
 			switch (id.length()){
@@ -125,10 +129,13 @@ public class Administrator extends Member {
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "帳號長度不正確");
+				return false;
 			}
 		}catch(IOException e) {
 			System.out.println("新增使用者 Error");
+			return false;
 		}
+		return true;
 	}
 	//執行刪除用戶
 	private void removeUser(String dataLocation, String id) throws IOException {
@@ -292,7 +299,7 @@ public class Administrator extends Member {
 	}
 
 	// 新增學生資訊
-	public void addStudentInfo(String id, String name, String startSchool) {
+	public boolean addStudentInfo(String id, String name, String startSchool) {
 		try {
 			// 學生還未建立過
 			if (!checkStudentExist(id)) {
@@ -314,14 +321,17 @@ public class Administrator extends Member {
 				JOptionPane.showMessageDialog(null, "新增完成");
 			} else {
 				JOptionPane.showMessageDialog(null, "學生已存在");
+				return false;
 			}
 		} catch (IOException e) {
 			System.out.println("新增學生資訊Error");
+			return false;
 		}
+		return true;
 	}
 
 	// 刪除學生資訊
-	public void removeStudent(String id) {
+	public boolean removeStudent(String id) {
 		// 學生存在
 		if (checkStudentExist(id)) {
 			// 宣告 要刪除檔案
@@ -330,7 +340,9 @@ public class Administrator extends Member {
 			JOptionPane.showMessageDialog(null, "刪除完成");
 		} else {
 			JOptionPane.showMessageDialog(null, "學生不存在");
+			return false;
 		}
+		return true;
 	}
 
 	// 執行檔案刪除
@@ -376,7 +388,7 @@ public class Administrator extends Member {
 	}
 
 	// 修改學生資訊
-	public void changeStudentInformation(String newId, String newName, String newStartSchool) {
+	public boolean changeStudentInformation(String newId, String newName, String newStartSchool) {
 		try {
 			/*
 			 * File oldFile = new File("data\\students\\"+ id); File f = new
@@ -411,7 +423,9 @@ public class Administrator extends Member {
 			JOptionPane.showMessageDialog(null, "修改完成");
 		} catch (IOException e) {
 			System.out.println("修改學生資訊Error");
+			return false;
 		}
+		return true;
 	}
 	
 	//-------------------------------------------------------------------------------------
