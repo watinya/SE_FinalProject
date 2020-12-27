@@ -1,4 +1,4 @@
-packag;
+package Member;
 
 import static org.junit.Assert.*;
 
