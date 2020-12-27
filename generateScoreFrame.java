@@ -28,7 +28,7 @@ public class generateScoreFrame extends JFrame {
 	
     public generateScoreFrame(Teacher user)
     {
-        super("高燕大課程平台 查看成績");
+        super("查看成績");
         Container c = getContentPane();
         c.setLayout(null);
                 
@@ -142,7 +142,7 @@ public class generateScoreFrame extends JFrame {
   		try {
   			outputClassmate(dataLocation, tableM);
   		}catch (IOException e) {
-  			//System.out.println("outputClassmate Error");
+  			System.out.println("outputClassmate Error");
   		}	
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {

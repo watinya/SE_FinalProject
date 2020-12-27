@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -13,10 +12,9 @@ public class SetRemoveUserIdFrame implements ActionListener {
 
 	public SetRemoveUserIdFrame(Administrator user) {
 		this.user = user;
+
 		//設定框架
-		//JFrame.setDefaultLookAndFeelDecorated(true);
-		//JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("輸入刪除帳號");
+		f = new JFrame("刪除帳號");
 		f.setSize(450, 250);
 		f.setLocationRelativeTo(null);//視窗置中
 		f.setResizable(false);//視窗放大按鈕無效
@@ -74,6 +72,5 @@ public class SetRemoveUserIdFrame implements ActionListener {
 		if(cmd.equals("重置")) {
 			userId.setText("");
 		}
-		
 	}
 }

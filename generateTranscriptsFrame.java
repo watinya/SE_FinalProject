@@ -15,7 +15,7 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
     private Administrator user;
     
     public generateTranscriptsFrame(Administrator user) {
-        super("高燕大課程平台 產生成績單");
+        super("產生成績單");
         this.user = user;
         Container c = getContentPane();
         c.setLayout(null);

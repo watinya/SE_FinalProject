@@ -24,7 +24,7 @@ public class courseInfoFrame extends JFrame implements ActionListener {
 	
     public courseInfoFrame(Administrator user)
     {
-        super("高燕大課程平台 課程資訊管理");
+        super("課程資訊管理");
         Container c = getContentPane();
         this.user = user;
         c.setLayout(null);

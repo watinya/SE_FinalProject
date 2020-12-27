@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -19,8 +18,6 @@ public class changeStudentInfoFrame implements ActionListener {
 		this.user = user;
 		this.userInformation = userInformation;
 		//設定框架
-		//JFrame.setDefaultLookAndFeelDecorated(true);
-		//JDialog.setDefaultLookAndFeelDecorated(true);
 		f = new JFrame("修改學生資訊");
 		f.setSize(900, 600);
 		f.setLocationRelativeTo(null);//視窗置中

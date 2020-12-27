@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
@@ -13,9 +12,8 @@ public class studentUserListFrame extends JFrame implements ActionListener{
 	private Administrator user;
 
 	public studentUserListFrame(Administrator user) {
-		//super("高燕大課程平台 帳戶管理");
 		this.user = user;
-		
+
 		//設定框架
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
@@ -23,7 +21,7 @@ public class studentUserListFrame extends JFrame implements ActionListener{
 		f.setSize(800, 600);
 		f.setLocationRelativeTo(null);
 		Container cp = f.getContentPane();
-		
+
 		//建立表格內容
 		String[] columns = {"學號", "姓名", "入學年分"};
 		jt = new JTable(user.getAllStudentsInformationList(), columns) {
@@ -43,7 +41,7 @@ public class studentUserListFrame extends JFrame implements ActionListener{
 	    column=jt.getColumnModel().getColumn(2);
 	    column.setPreferredWidth(50);
 		cp.add(new JScrollPane(jt), BorderLayout.CENTER);
-		
+
 		//表格標題大小
 	    JTableHeader head = jt.getTableHeader();
 	    head.setFont(new Font("微軟正黑體", Font.BOLD, 26));
@@ -51,29 +49,29 @@ public class studentUserListFrame extends JFrame implements ActionListener{
 	    //表格大小
 	    jt.setFont(new Font("微軟正黑體", Font.PLAIN, 20));
 	    jt.setRowHeight(28);
-		
+
 		//增加按鈕
 		JPanel panel = new JPanel(new GridLayout(4,1));
 		JButton btnReset = new JButton("重新整理");
 		btnReset.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnReset.addActionListener(this);
 		panel.add(btnReset);
-		
+
 		JButton btnNew = new JButton("新增學生資訊");
 		btnNew.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnNew.addActionListener(this);
 		panel.add(btnNew);
-		
+
 		JButton btnChange = new JButton("修改學生資訊");
 		btnChange.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnChange.addActionListener(this);
 		panel.add(btnChange);
-		
+
 		JButton btnDelete = new JButton("刪除學生資訊");
 		btnDelete.setFont(new Font("微軟正黑體", Font.BOLD, 22));
 		btnDelete.addActionListener(this);
 		panel.add(btnDelete);
-		
+
 		cp.add(panel,BorderLayout.SOUTH);
 		f.setVisible(true);
 	}
@@ -94,4 +92,4 @@ public class studentUserListFrame extends JFrame implements ActionListener{
 			new setRemoveStuInfoFrame(user);
 		}
 	}
-}//end class
+}//end class 

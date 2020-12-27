@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
+@SuppressWarnings("serial")
 public class writeScoreFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_semester;
@@ -322,9 +323,10 @@ public class writeScoreFrame extends JFrame implements ActionListener {
   		dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
   		try {
   			outputClassmate(dataLocation, tableM);
-  		}catch (IOException e) {
-  			System.out.println("outputClassmate Error");
-  		}	
+		}catch(FileNotFoundException e) {}
+		catch(IOException e) {
+		System.err.println(e);
+	}		  		
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
   		File f = new File(dataLocation);
