@@ -68,7 +68,41 @@ public class AdministratorTest {
 		boolean output = test.changeStudentInformation("410877033", "test", "109");
 	}
 	
-	//400line
+	@Test
+	public void addSubjectTest() {
+		boolean output = test.addSubject(year, "test", "test", "1", "必修", "test");
+		assertEquals(true, output);
+	}
+	
+	@Test
+	public void removeSubjectTest() {
+		boolean output = test.removeSubject(year, "test");
+		assertEquals(true, output);
+	}
+	
+	@Test
+	public void getSubjectInformationTest() {
+		String output = test.getSubjectInformation("108-1", "計算機概論");
+		assertEquals("108-1 SM101 計算機概論 3 必修 葉道明", output);
+	}
+	
+	@Test
+	public void changeSubjectInformationTest() {
+		boolean output = test.changeSubjectInformation(year, subject, year, "test", subject, "test", "test", "葉道明");
+		assertEquals(true, output);
+	}
+	
+	@Test
+	public void addStudentCourseTest() {
+		boolean output = test.addStudentCourse(year, subject, studentId);
+		assertEquals(true, output);
+	}
+	
+	@Test
+	public void removeStudentCourseTest() {
+		boolean output = test.removeStudentCourse(year, subject, studentId);
+		assertEquals(true, output);
+	}
 	
 	/*
 	@Test
