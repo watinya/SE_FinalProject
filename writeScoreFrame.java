@@ -323,10 +323,10 @@ public class writeScoreFrame extends JFrame implements ActionListener {
   		dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
   		try {
   			outputClassmate(dataLocation, tableM);
-		}catch(FileNotFoundException e) {}
-		catch(IOException e) {
-		System.err.println(e);
-	}		  		
+  		}catch(FileNotFoundException e) {}
+  		catch(IOException e) {
+  			System.err.println(e);
+  		}	
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
   		File f = new File(dataLocation);

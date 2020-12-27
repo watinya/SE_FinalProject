@@ -39,7 +39,7 @@ public class OutputPdf {
 		   subjectTitle.setStyle(1);
 		   
 	       Font font = new Font(baseFont);
-	       font.setSize(25);
+	       font.setSize(20);
 	       font.setStyle(0);
 	       //讀出 txt
 	       InputStreamReader isr = new InputStreamReader(new FileInputStream(new File(txtLocation)), "UTF-8");
