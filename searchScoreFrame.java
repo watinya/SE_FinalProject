@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+@SuppressWarnings("serial")
 public class searchScoreFrame extends JFrame {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time = new JComboBox<String>();
@@ -34,10 +35,10 @@ public class searchScoreFrame extends JFrame {
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
     	String[] directories = file.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
         jcb_time.addItem("請選擇");
     	for(int i = directories.length - 1; i >= 0 ; i--) {

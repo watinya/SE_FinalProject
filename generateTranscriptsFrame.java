@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class generateTranscriptsFrame extends JFrame implements ActionListener{
     private JLabel Jlb_time = new JLabel("學期：");
     private JLabel Jlb_id = new JLabel("學號：");

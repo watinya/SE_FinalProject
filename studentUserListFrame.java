@@ -6,6 +6,7 @@ import javax.swing.table.TableColumn;
 
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class studentUserListFrame extends JFrame implements ActionListener{
 	private JFrame f;
 	private JTable jt;

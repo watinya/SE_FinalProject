@@ -13,6 +13,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+@SuppressWarnings("serial")
 public class searchCourseFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time;

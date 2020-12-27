@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class setChangeCourseInfoFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_title = new JLabel("請選擇要修改的課程資訊");
 	private JLabel Jlb_time = new JLabel("學期：");
@@ -35,13 +36,13 @@ public class setChangeCourseInfoFrame extends JFrame implements ActionListener {
         //設定學期下拉式選單大小位置及顯示字型
         File fileSemester = new File("data\\course");
     	String[] directoriesSemester = fileSemester.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
     	jcb_semester = new JComboBox<>(new String[] {"請選擇"});
-    	for(int i = 0; i < directoriesSemester.length; i++) {
+    	for(int i = directoriesSemester.length - 1; i >= 0 ; i--) {
     		jcb_semester.addItem(directoriesSemester[i]);
     	}
     	jcb_semester.setLocation(157, 65);

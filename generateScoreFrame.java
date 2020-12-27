@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+@SuppressWarnings("serial")
 public class generateScoreFrame extends JFrame {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_semester;

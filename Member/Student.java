@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class Student extends Member {
 
 	private ArrayList<Subject> subjects = new ArrayList<Subject>();
@@ -79,8 +77,6 @@ public class Student extends Member {
 		}
 		return null;
 	}
-	
-	
 	
 	// 列印成績單
 	public boolean printScore(Member user) {

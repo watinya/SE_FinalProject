@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+@SuppressWarnings("serial")
 public class loginFrame extends JFrame implements ActionListener{
     private JLabel Jlb_title = new JLabel("高燕大課程平台");
 	private JLabel Jlb_ID = new JLabel("帳號：");

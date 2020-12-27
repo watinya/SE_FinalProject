@@ -1,11 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 import Member.Member;
 
-import java.awt.event.*;
-import java.io.IOException;
-
+@SuppressWarnings("serial")
 public class changePasswordFrame extends JFrame implements ActionListener {
 	private JButton Jbtn_Confirm = new JButton("確認更改");
 	private JButton Jbtn_Cancel = new JButton("取消");

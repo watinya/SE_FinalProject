@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class changeCourseInfoFrame extends JFrame implements ActionListener{
 	private JLabel Jlb_time = new JLabel("學期：");
     private JLabel Jlb_id = new JLabel("代碼：");

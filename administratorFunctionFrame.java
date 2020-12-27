@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class administratorFunctionFrame extends JFrame implements ActionListener {
     private JLabel userID;
     private JButton Jbtn_logout = new JButton("登出");

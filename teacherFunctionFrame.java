@@ -5,6 +5,7 @@ import Member.Teacher;
 
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class teacherFunctionFrame extends JFrame implements ActionListener {
     private JLabel userID;
     private JButton Jbtn_logout = new JButton("登出");

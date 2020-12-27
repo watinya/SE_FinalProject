@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+@SuppressWarnings("serial")
 public class courseInfoFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time;
@@ -66,10 +67,10 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
     	String[] directories = file.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	    @Override
+    	    public boolean accept(File current, String name) {
+    	        return new File(current, name).isDirectory();
+    	    }
     	});
 		jcb_time = new JComboBox<String>();
 		jcb_time.addItem("請選擇");

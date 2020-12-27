@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import Member.Student;
 
+@SuppressWarnings("serial")
 public class studentFunctionFrame extends JFrame implements ActionListener {
     private JLabel userID;
     private JButton Jbtn_logout = new JButton("登出");

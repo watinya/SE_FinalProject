@@ -855,7 +855,7 @@ public class Administrator extends Member {
 		return data;
 	}
 	//建立選修課程
-	private void createCourse(String dataLoaction, ArrayList array){
+	private void createCourse(String dataLoaction, ArrayList<Subject> array){
 		try {
 			File f = new File(dataLoaction);
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");
