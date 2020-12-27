@@ -39,7 +39,7 @@ public class Student extends Member {
 		}
 		reader.close();
 	}
-
+	/*
 	// 查看所有成績
 	public void getScore() {
 		String content = "";
@@ -48,7 +48,20 @@ public class Student extends Member {
 		}
 		JOptionPane.showMessageDialog(null, content, "課程成績", JOptionPane.PLAIN_MESSAGE);
 	}
-
+	*/
+	//查看成績
+	public String getScore(String id, String year, String subject) {
+		for(Subject i : subjects) {
+			if(i.getYear().equals(year)) {
+				for(SubjectStudents j : i.getSubjectStudents()) {
+					if(j.getId().equals(id)) {
+						return j.getScore();
+					}
+				}
+			}
+		}
+		return null;
+	}
 	// 找出每科成績
 	private String getScore(String year, String subject) {
 		for (int i = 0; i < subjects.size(); i++) {
@@ -66,9 +79,11 @@ public class Student extends Member {
 		}
 		return null;
 	}
-
+	
+	
+	
 	// 列印成績單
-	public void printScore(Member user) {
+	public boolean printScore(Member user) {
 		// 取得成績
 		String content = id + " " + name + "成績單 " + "\n";
 		for (int i = 0; i < subjects.size(); i++) {
@@ -83,11 +98,13 @@ public class Student extends Member {
 			writer.close();
 		} catch (IOException e) {
 			System.out.println("列印成績單Error");
+			return false;
 		}
 		//txt 轉成 Pdf
 		new OutputPdf("data\\printFile\\temp.txt","data\\printFile\\temp.pdf");
 		// 打開列印視窗
 		new PrintFile();
+		return true;
 	}
 
 	// 取得成績清單

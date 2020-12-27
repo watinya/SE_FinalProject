@@ -482,7 +482,7 @@ public class Administrator extends Member {
 		return false;
 	}
 	//刪除課程
-	public void removeSubject(String year, String subject) {
+	public boolean removeSubject(String year, String subject) {
 		//課程存在
 		if(checkSubjectExist(year, subject)) {
 			//刪除課程
@@ -492,12 +492,14 @@ public class Administrator extends Member {
 			f = new File("data\\course\\"+ year);
 			f.delete();
 			JOptionPane.showMessageDialog(null, "刪除完成");
+			return true;
 		}else {
 			//課程不存在
 			JOptionPane.showMessageDialog(null, "課程不存在");
+			return false;
 		}
 	}
-	//取得 課程資訊
+	//取得 課程資訊 "108-1 SM101 計算機概論 3 必修 葉道明"
 	public String getSubjectInformation(String year, String subject) {
 		//課程存在
 		if(checkSubjectExist(year, subject)) {
@@ -548,13 +550,14 @@ public class Administrator extends Member {
 		return null;
 	} 
 	// 修改 課程資訊
-	public void changeSubjectInformation(String year, String subject, String newYear, String newId, String newSubject,
+	public boolean changeSubjectInformation(String year, String subject, String newYear, String newId, String newSubject,
 			String newCredit, String newType, String newTeacher) {
 		// 課程存在
 		if (checkSubjectExist(year, subject)) {
 			// 更改目標已存在課程
 			if (!newYear.equals(year) && !newSubject.equals(subject) && checkSubjectExist(newYear, newSubject)) {
 				JOptionPane.showMessageDialog(null, "更改目標已存在課程\n請嘗試刪除更改目標課程");
+				return false;
 				// 更改目標 未被使用
 			} else {
 				try {
@@ -697,9 +700,11 @@ public class Administrator extends Member {
 					System.out.println("修改課程資訊Error");
 				}
 			}
+			return true;
 			//課程不存在
 		} else {
 			JOptionPane.showMessageDialog(null, "修改課程對象不存在");
+			return false;
 		}
 	}
 	//--------------------------------------------------------------------------------
@@ -765,7 +770,7 @@ public class Administrator extends Member {
 	}
 	
 	//刪除 學生各學期的選修課程
-	public void removeStudentCourse(String year, String subject, String studentId) {
+	public boolean removeStudentCourse(String year, String subject, String studentId) {
 		try {
 			//刪除 學生,課程 路徑
 			File fileStudentInformation = new File("data\\students\\" + studentId + "\\學生資訊.txt");
@@ -817,8 +822,10 @@ public class Administrator extends Member {
 			writer.close();
 			
 			JOptionPane.showMessageDialog(null,"刪除完成");
+			return true;
 		}catch(IOException e) {
 			System.out.println("刪除學生選修課程Error");
+			return false;
 		}
 	}
 	

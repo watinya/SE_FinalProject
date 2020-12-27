@@ -9,9 +9,9 @@ public class TeacherTest {
 	String id = "77014";
 	String name = "孫培真";
 	Teacher test = new Teacher(id,pw,name);
-	String year = "108-1";
-	String subject = "科技與社會";
-	String studentId = "410877019";
+	String year = "108-2";
+	String subject = "微積分";
+	String studentId = "410877033";
 
 	@Test
 	public void setScoreTest() {
@@ -22,7 +22,7 @@ public class TeacherTest {
 	@Test
 	public void getSubjectInformationTest() {
 		String output = test.getSubjectInformation(year, subject);
-		assertEquals("SM104 科技與社會 2 必修 孫培真", output);
+		assertEquals("SM103 微積分 3 選修 孫培真", output);
 	}
 	/*
 	@Test
