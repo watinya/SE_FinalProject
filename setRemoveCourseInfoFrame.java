@@ -113,8 +113,7 @@ public class setRemoveCourseInfoFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "請輸入課程資訊");
 			}
 			else {
-				String courseInfo = user.getSubjectInformation(selectedSemester, selectedCourse);
-				new changeCourseInfoFrame(user, courseInfo);
+				user.removeSubject(selectedSemester, selectedCourse);
 				this.dispose();
 			}
 		}
