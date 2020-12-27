@@ -94,7 +94,7 @@ public class changePasswordFrame extends JFrame implements ActionListener {
 				try {
 					Member.changePassword(user.id, oldPw, newPw);
 					user.password = newPw;
-				} catch (IOException e1) {e1.printStackTrace();}
+				} catch (Exception e1) {e1.printStackTrace();}
 				JOptionPane.showMessageDialog(new JFrame(), "密碼變更成功", "變更密碼", JOptionPane.INFORMATION_MESSAGE);
 				this.dispose();
 			} else {

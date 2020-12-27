@@ -25,7 +25,7 @@ public class Member {
 		this.name = name;
 	}
 	//更改密碼method
-	public static void changePassword(String account, String oldPassword, String newPassword) throws IOException {
+	public static boolean changePassword(String account, String oldPassword, String newPassword){
 		String file;
 		//找檔案路徑
 		switch (account.length()) {
@@ -36,44 +36,52 @@ public class Member {
 			file = "data\\account\\teacherAccount.txt";
 			break;
 		case 4:
-			file = "data\\account\\manageAccount.txt";
+			file = "data\\account\\administratorAccount.txt";
 			break;
 		default:
 			file = "";
+			return false;
 		}
-		FileInputStream fr = new FileInputStream(file);
-		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
-		String writeText="";
-		while (br.ready()) {
-			String temp = br.readLine();
-			String[] info = temp.split(" ");
-
-			if (info[0].equals(account) && info[1].equals(oldPassword)) {
-				temp = "";
-				info[1] = newPassword;
-				for(int i = 0; i < info.length; i++) 
-					temp += info[i] + " ";
-			}	
-			writeText += temp+"\n";
+		try {
+			FileInputStream fr = new FileInputStream(file);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
+			String writeText="";
+			while (br.ready()) {
+				String temp = br.readLine();
+				String[] info = temp.split(" ");
+	
+				if (info[0].equals(account) && info[1].equals(oldPassword)) {
+					temp = "";
+					info[1] = newPassword;
+					for(int i = 0; i < info.length; i++) 
+						temp += info[i] + " ";
+				}	
+				writeText += temp+"\n";
+			}
+			br.close();
+			FileOutputStream writerStream = new FileOutputStream(file);    
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
+			writer.write(writeText);
+			writer.close();
+		}catch(Exception e) {
+			System.err.println(e);
 		}
-		br.close();
-		FileOutputStream writerStream = new FileOutputStream(file);    
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
-		writer.write(writeText);
-		writer.close(); 
+		return true;
 	}
 	
 	//列出課程同學
-	public static void outputClassmate(String year, String subjectName)  {
+	public static boolean outputClassmate(String year, String subjectName)  {
 		//建檔案路徑
 		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
 		try {
 			outputClassmate(dataLocation);
-		}catch (IOException e) {
-			//System.out.println("outputClassmate Error");
-		}	
+		}catch (Exception e) {
+			System.err.println(e);
+			return false;
+		}
+		return true;
 	}
-	private static void outputClassmate(String dataLocation) throws IOException {
+	private static boolean outputClassmate(String dataLocation) throws IOException {
 		File f = new File(dataLocation);
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
 		BufferedReader reader = new BufferedReader(read);
@@ -88,16 +96,19 @@ public class Member {
 		}
 		reader.close();
 		JOptionPane.showMessageDialog(null, fileContent, "選課名單", JOptionPane.PLAIN_MESSAGE);
+		return true;
 	}
 	
 	//列出學期課程清單
-	static public void outputCourseList(String year, DefaultTableModel tableM) {
+	static public boolean outputCourseList(String year, DefaultTableModel tableM) {
 		String dataLocation = "data\\course\\" + year;
 		try {
 			createCourseList(dataLocation, tableM, year);
 		}catch(IOException e) {
-			System.out.println("outputCourseList Error");
+			System.err.println(e);
+			return false;
 		}
+		return true;
 	}
 	static private void createCourseList(String dataLocation, DefaultTableModel tableM, String year) throws IOException {
 		File f = new File(dataLocation);

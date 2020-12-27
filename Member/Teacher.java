@@ -38,7 +38,7 @@ public class Teacher extends Member{
 			reader.close();
 	}
 	//輸入學生成績
-	public void setScore(String subject, String studentId, String score){
+	public boolean setScore(String subject, String studentId, String score){
 		try {
 			File f = new File("data\\course\\"+findSubject(subject).getYear()+"\\"+ subject +".txt");
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");
@@ -63,7 +63,9 @@ public class Teacher extends Member{
 			writer.close();
 		}catch(IOException e) {
 			System.out.println("輸入學生成績 Error");
+			return false;
 		}
+		return true;
 	}
 	private Subject findSubject(String subject) {
 		for(int i=0; i<subjects.size(); i++) {
