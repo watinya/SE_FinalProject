@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -19,8 +18,6 @@ public class ChangeUserInformationFrame implements ActionListener {
 		this.user = user;
 		this.userInformation = userInformation;
 		//設定框架
-		//JFrame.setDefaultLookAndFeelDecorated(true);
-		//JDialog.setDefaultLookAndFeelDecorated(true);
 		f = new JFrame("修改用戶資訊");
 		f.setSize(900, 600);
 		f.setLocationRelativeTo(null);//視窗置中
@@ -116,7 +113,6 @@ public class ChangeUserInformationFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if(cmd.equals("變更")) {
-			//user.addUser(newId.getText(), newPw.getText(), newName.getText(), newType.getText());
 			if(user.changeUserInformation(userInformation.split(" ")[0], newId.getText(), newPw.getText(), newName.getText(), type.getText()))
 				f.dispose();
 		}

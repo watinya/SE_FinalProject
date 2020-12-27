@@ -16,7 +16,6 @@ import java.io.FilenameFilter;
 public class searchCourseFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time;
-	private JTable jt;
 	private DefaultTableModel tableM;
 	
     public searchCourseFrame()
@@ -91,10 +90,8 @@ public class searchCourseFrame extends JFrame implements ActionListener {
         //設定視窗
         setSize(1200, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     @Override
@@ -104,5 +101,4 @@ public class searchCourseFrame extends JFrame implements ActionListener {
 			Member.outputCourseList(selectedSemester, tableM);
         }
     }
-    
 }

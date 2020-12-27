@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -17,8 +16,6 @@ public class AddUserFrame implements ActionListener {
 	public AddUserFrame(Administrator user) {
 		this.user = user;
 		//設定框架
-		//JFrame.setDefaultLookAndFeelDecorated(true);
-		//JDialog.setDefaultLookAndFeelDecorated(true);
 		f = new JFrame("新增用戶");
 		f.setSize(900, 600);
 		f.setLocationRelativeTo(null);//視窗置中
@@ -102,16 +99,19 @@ public class AddUserFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if(cmd.equals("新增")) {
-			if(newId.getText().length() == 9 || newId.getText().length() == 5 || newId.getText().length() == 4) {
-				String type = (String) newType.getSelectedItem();
-				user.addUser(newId.getText(), newPw.getText(), newName.getText(), type);
+			String id = newId.getText();
+			String pw = newPw.getText();
+			String name = newName.getText();
+			String type = (String) newType.getSelectedItem();
+			if(id.equals("") || pw.equals("") || name.equals("") || type.equals("")){
+				JOptionPane.showMessageDialog(null, "欄位不可為空");
+			}
+			else if(id.length() == 9 || id.length() == 5 || id.length() == 4) {
+				user.addUser(id, pw, name, type);
 				newId.setText("");
 				newPw.setText("");
 				newName.setText("");
 				newType.setSelectedIndex(0);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "帳號長度錯誤");
 			}
 		}
 		if(cmd.equals("重置")) {

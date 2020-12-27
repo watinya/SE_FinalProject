@@ -96,7 +96,7 @@ public class Teacher extends Member{
 		//課程不存在
 		return false;
 	}
-	//取的課程資訊
+	//取得課程資訊
 	public String getSubjectInformation(String year, String subject) {
 		if(checkSubjectExist(year, subject)) {
 			try {

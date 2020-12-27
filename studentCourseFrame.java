@@ -5,6 +5,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.Administrator;
+import Member.Member;
 
 import java.awt.event.*;
 import java.io.File;
@@ -134,7 +135,7 @@ public class studentCourseFrame extends JFrame implements ActionListener {
 		String student = jid.getText();
         if(e.getSource() == jcb_time) {
 			Object[][] courseList = user.getStudentCourseList(selectedSemester, student);
-			cleanTable(tableM);
+			Member.cleanTable(tableM);
 			for(int i = 0; i < courseList.length; i++) {
 				tableM.addRow(courseList[i]);
 			}
@@ -166,10 +167,4 @@ public class studentCourseFrame extends JFrame implements ActionListener {
         	}
         }
     }
-    
-    // 清空表單method
- 	static void cleanTable(DefaultTableModel table) {
- 		while (table.getRowCount() > 0)
- 			table.removeRow(0);
- 	}
 }

@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.Member;
 import Member.Teacher;
 
 import java.awt.event.*;
@@ -27,7 +28,7 @@ public class generateScoreFrame extends JFrame {
 	
     public generateScoreFrame(Teacher user)
     {
-        super("高燕大課程平台 查看成績");
+        super("查看成績");
         Container c = getContentPane();
         c.setLayout(null);
                 
@@ -141,12 +142,12 @@ public class generateScoreFrame extends JFrame {
   		try {
   			outputClassmate(dataLocation, tableM);
   		}catch (IOException e) {
-  			//System.out.println("outputClassmate Error");
+  			System.out.println("outputClassmate Error");
   		}	
   	}
   	private static void outputClassmate(String dataLocation, DefaultTableModel tableM) throws IOException {
   		File f = new File(dataLocation);
-  		cleanTable(tableM);
+  		Member.cleanTable(tableM);
   		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
   		BufferedReader reader = new BufferedReader(read);
   		String line, id, name, score;
@@ -163,9 +164,4 @@ public class generateScoreFrame extends JFrame {
   		}
   		reader.close();
   	}
-  	// 清空表單method
- 	static void cleanTable(DefaultTableModel table) {
- 		while (table.getRowCount() > 0)
- 			table.removeRow(0);
- 	}
 }

@@ -1,8 +1,4 @@
-
-
-
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -10,7 +6,7 @@ public class CourseListFrame {
 	JTable jt;
 
 	public CourseListFrame(String[][] fileContent) {
-		JFrame frame = new JFrame("課表");
+		JFrame frame = new JFrame("課程清單");
 		Container c = frame.getContentPane();
 		
 		//建立表格

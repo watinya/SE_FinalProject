@@ -413,41 +413,6 @@ public class Administrator extends Member {
 			System.out.println("修改學生資訊Error");
 		}
 	}
-	//複製整個資料夾內容
-	private void copyFolder(String oldPath, String newPath) {
-		try {
-			(new File(newPath)).mkdirs(); // 如果資料夾不存在則建立新資料夾
-			File a = new File(oldPath);
-			String[] file = a.list();
-			File temp = null;
-			for (int i = 0; i < file.length; i++) {
-				if (oldPath.endsWith(File.separator)) {
-					temp = new File(oldPath + file[i]);
-				} else {
-					temp = new File(oldPath + File.separator + file[i]);
-				}
-
-				if (temp.isFile()) {
-					FileInputStream input = new FileInputStream(temp);
-					FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()).toString());
-					byte[] b = new byte[1024 * 5];
-					int len;
-					while ((len = input.read(b)) != -1) {
-						output.write(b, 0, len);
-					}
-					output.flush();
-					output.close();
-					input.close();
-				}
-				if (temp.isDirectory()) {// 如果是子資料夾
-					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("複製整個資料夾內容操作出錯");
-			e.printStackTrace();
-		}
-	}
 	
 	//-------------------------------------------------------------------------------------
 	//檢查課程是否存在

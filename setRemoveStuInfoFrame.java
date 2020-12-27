@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -14,9 +13,7 @@ public class setRemoveStuInfoFrame implements ActionListener {
 	public setRemoveStuInfoFrame(Administrator user) {
 		this.user = user;
 		//設定框架
-		//JFrame.setDefaultLookAndFeelDecorated(true);
-		//JDialog.setDefaultLookAndFeelDecorated(true);
-		f = new JFrame("輸入刪除的學生學號");
+		f = new JFrame("刪除學生資訊");
 		f.setSize(450, 250);
 		f.setLocationRelativeTo(null);//視窗置中
 		f.setResizable(false);//視窗放大按鈕無效
@@ -73,6 +70,5 @@ public class setRemoveStuInfoFrame implements ActionListener {
 		if(cmd.equals("重置")) {
 			userId.setText("");
 		}
-		
 	}
 }

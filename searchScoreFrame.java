@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.Member;
 import Member.Student;
 
 import java.awt.event.*;
@@ -50,7 +51,7 @@ public class searchScoreFrame extends JFrame {
     		public void itemStateChanged(ItemEvent e) {
     	        String selectedSemester = (String) jcb_time.getSelectedItem();
     	        Object[][] myCourse = user.getScoreList(selectedSemester);
-    	        cleanTable(tableM);
+    	        Member.cleanTable(tableM);
     	        for(int i = 0; i < myCourse.length; i++) {
     	        	tableM.addRow(myCourse[i]);
     	        }
@@ -91,15 +92,7 @@ public class searchScoreFrame extends JFrame {
         //設定視窗
         setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
-    //清空表單method
-  	static void cleanTable(DefaultTableModel table) {
-  		while (table.getRowCount() > 0)
-  			table.removeRow(0);
-  	}
 }

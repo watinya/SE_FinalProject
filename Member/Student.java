@@ -126,8 +126,6 @@ public class Student extends Member {
 						//回傳 如: 計算機概論 88
 						String[] content = { subject, subjects.get(i).getSubjectStudents().get(j).getScore() };
 						return content;
-						// JOptionPane.showMessageDialog(null, content, "課程成績",
-						// JOptionPane.PLAIN_MESSAGE);
 					}
 				}
 			}
