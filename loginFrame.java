@@ -1,7 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
 
-
 import Member.Student;
 import Member.Teacher;
 import Member.Administrator;
@@ -12,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+@SuppressWarnings("serial")
 public class loginFrame extends JFrame implements ActionListener{
     private JLabel Jlb_title = new JLabel("高燕大課程平台");
 	private JLabel Jlb_ID = new JLabel("帳號：");
@@ -56,7 +56,6 @@ public class loginFrame extends JFrame implements ActionListener{
         jpw.setSize(220,40);
         jpw.setFont(new Font("微軟正黑體", Font.BOLD,16));
         jpw.setEchoChar('●');
-        //jpw.setToolTipText("密碼長度8個字元");
         c.add(jpw);
         
         //設定登入按鈕大小位置及顯示字型
@@ -69,7 +68,6 @@ public class loginFrame extends JFrame implements ActionListener{
         //設定視窗
         setSize(1200, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,10 +109,6 @@ public class loginFrame extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == Jbtn_Login) {
-        	
-        	//text
-        	//new addUser(jid.getText(),jpw.getPassword(),"text");
-        	
 	        switch(jid.getText().length()) {
 				case 9:
 					if(checkData("data\\account\\studentAccount.txt")) {

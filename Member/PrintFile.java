@@ -1,11 +1,8 @@
 package Member;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -16,11 +13,10 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.swing.JFileChooser;
 
 public class PrintFile {
 	public PrintFile() {
-		JFileChooser fileChooser = new JFileChooser(); // 建立列印作業
+		//JFileChooser fileChooser = new JFileChooser(); // 建立列印作業
 		// int state = fileChooser.showOpenDialog(null);
 		// if (state == JFileChooser.APPROVE_OPTION) {
 		File file = new File("data\\printFile\\temp.pdf"); // 獲取選擇的檔案

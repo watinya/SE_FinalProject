@@ -448,7 +448,7 @@ public class Administrator extends Member {
 		}
 		return true;
 	}
-<<<<<<< Updated upstream
+
 	//複製整個資料夾內容
 	private void copyFolder(String oldPath, String newPath) {
 		try {
@@ -484,21 +484,7 @@ public class Administrator extends Member {
 			e.printStackTrace();
 		}
 	}
-=======
-	/*
-	public static void main(String[] args) {
-		char[] pw = {1,2,3};
-		String id = "0417";
-		String name = "WI";
-		Administrator test = new Administrator(id,pw,name);
-		String year = "108-1";
-		String subject = "科技與社會";
-		String studentId = "410877033";
-		test.changeStudentInformation("410877033", "梁家銘", "108");
-	}
-	*/
->>>>>>> Stashed changes
-	
+
 	//-------------------------------------------------------------------------------------
 	//檢查課程是否存在
 	private boolean checkSubjectExist(String year, String subject) {
@@ -961,7 +947,7 @@ public class Administrator extends Member {
 		return data;
 	}
 	//建立選修課程
-	private void createCourse(String dataLoaction, ArrayList array){
+	private void createCourse(String dataLoaction, ArrayList<Subject> array){
 		try {
 			File f = new File(dataLoaction);
 			InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "utf-8");

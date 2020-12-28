@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class Student extends Member {
 
 	private ArrayList<Subject> subjects = new ArrayList<Subject>();
@@ -80,8 +78,6 @@ public class Student extends Member {
 		return null;
 	}
 	
-	
-	
 	// 列印成績單
 	public boolean printScore(Member user) {
 		// 取得成績
@@ -143,8 +139,6 @@ public class Student extends Member {
 						//回傳 如: 計算機概論 88
 						String[] content = { subject, subjects.get(i).getSubjectStudents().get(j).getScore() };
 						return content;
-						// JOptionPane.showMessageDialog(null, content, "課程成績",
-						// JOptionPane.PLAIN_MESSAGE);
 					}
 				}
 			}

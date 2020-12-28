@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 import Member.Administrator;
 
+@SuppressWarnings("serial")
 public class generateTranscriptsFrame extends JFrame implements ActionListener{
-	private JLabel Jlb_time = new JLabel("學期：");
+    private JLabel Jlb_time = new JLabel("學期：");
     private JLabel Jlb_id = new JLabel("學號：");
     private JTextField jid = new JTextField(9);
     private JComboBox<String> jcb_time = new JComboBox<String>();
@@ -15,7 +16,7 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
     private Administrator user;
     
     public generateTranscriptsFrame(Administrator user) {
-        super("高燕大課程平台 產生成績單");
+        super("產生成績單");
         this.user = user;
         Container c = getContentPane();
         c.setLayout(null);
@@ -40,16 +41,16 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
        
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
-    	String[] directories = file.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
-    	});
+        String[] directories = file.list(new FilenameFilter() {
+        @Override
+        public boolean accept(File current, String name) {
+          return new File(current, name).isDirectory();
+        }
+        });
         jcb_time.addItem("請選擇");
-    	for(int i = directories.length - 1; i >= 0 ; i--) {
-    		jcb_time.addItem(directories[i]);
-    	}
+      	for(int i = directories.length - 1; i >= 0 ; i--) {
+    	  	jcb_time.addItem(directories[i]);
+    	  }
         jcb_time.setLocation(167, 93);
         jcb_time.setSize(130, 36);
         jcb_time.setFont(new Font("微軟正黑體",Font.BOLD,22));
@@ -71,7 +72,7 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-    	if(e.getSource() == Jbtn_Confirm) {
+    	  if(e.getSource() == Jbtn_Confirm) {
             String selectedSemester = (String) jcb_time.getSelectedItem();
             String studentID = jid.getText();
             user.OutputStudentCourse(selectedSemester, studentID);
@@ -79,6 +80,6 @@ public class generateTranscriptsFrame extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "檔案已儲存至C槽");
             jcb_time.setSelectedIndex(0);
             jid.setText("");
-    	}
+    	  }
     }   
 }

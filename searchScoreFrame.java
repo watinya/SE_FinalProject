@@ -4,12 +4,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.Member;
 import Member.Student;
 
 import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+@SuppressWarnings("serial")
 public class searchScoreFrame extends JFrame {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time = new JComboBox<String>();
@@ -33,10 +35,10 @@ public class searchScoreFrame extends JFrame {
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
     	String[] directories = file.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
         jcb_time.addItem("請選擇");
     	for(int i = directories.length - 1; i >= 0 ; i--) {
@@ -50,7 +52,7 @@ public class searchScoreFrame extends JFrame {
     		public void itemStateChanged(ItemEvent e) {
     	        String selectedSemester = (String) jcb_time.getSelectedItem();
     	        Object[][] myCourse = user.getScoreList(selectedSemester);
-    	        cleanTable(tableM);
+    	        Member.cleanTable(tableM);
     	        for(int i = 0; i < myCourse.length; i++) {
     	        	tableM.addRow(myCourse[i]);
     	        }
@@ -91,15 +93,7 @@ public class searchScoreFrame extends JFrame {
         //設定視窗
         setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
-        //setLocation(300,200);
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
-    //清空表單method
-  	static void cleanTable(DefaultTableModel table) {
-  		while (table.getRowCount() > 0)
-  			table.removeRow(0);
-  	}
 }

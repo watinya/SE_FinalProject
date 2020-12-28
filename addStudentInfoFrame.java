@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Member.Administrator;
 
@@ -82,15 +81,21 @@ public class addStudentInfoFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
+		String id = Id.getText();
+		String name = Name.getText();
+		String inYear = InYear.getText();
 		if(cmd.equals("新增")) {
-			if(Id.getText().length() == 9) {
-				user.addStudentInfo(Id.getText(), Name.getText(), InYear.getText());
+			if(id.equals("") || name.equals("") || inYear.equals("")){
+				JOptionPane.showMessageDialog(null, "欄位不可為空");
+			}
+			else if(id.length() != 9){
+				JOptionPane.showMessageDialog(null, "學號須為九位數");
+			}
+			else {
+				user.addStudentInfo(id, name, inYear);
 				Id.setText("");
 				Name.setText("");
 				InYear.setText("");
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "學號須為九位數");
 			}
 		}
 		if(cmd.equals("重置")) {

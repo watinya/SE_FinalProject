@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+@SuppressWarnings("serial")
 public class courseInfoFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_time;
@@ -24,7 +25,7 @@ public class courseInfoFrame extends JFrame implements ActionListener {
 	
     public courseInfoFrame(Administrator user)
     {
-        super("高燕大課程平台 課程資訊管理");
+        super("課程資訊管理");
         Container c = getContentPane();
         this.user = user;
         c.setLayout(null);
@@ -66,10 +67,10 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         //設定下拉式選單大小位置及顯示字型
         File file = new File("data\\course");
     	String[] directories = file.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	    @Override
+    	    public boolean accept(File current, String name) {
+    	        return new File(current, name).isDirectory();
+    	    }
     	});
 		jcb_time = new JComboBox<String>();
 		jcb_time.addItem("請選擇");
@@ -128,7 +129,7 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         if(e.getSource() == jcb_time) {
 			String selectedSemester = (String) jcb_time.getSelectedItem();
 			Object[][] courseList = user.getYearSubjectInformationList(selectedSemester);
-			cleanTable(tableM);
+			Member.cleanTable(tableM);
 			for(int i = 0; i < courseList.length; i++) {
 				tableM.addRow(courseList[i]);
 			}
@@ -147,10 +148,4 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         	new setRemoveCourseInfoFrame(user);
         }
     }
-    
-    // 清空表單method
- 	static void cleanTable(DefaultTableModel table) {
- 		while (table.getRowCount() > 0)
- 			table.removeRow(0);
- 	}
 }
