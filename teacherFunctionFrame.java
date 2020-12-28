@@ -78,7 +78,7 @@ public class teacherFunctionFrame extends JFrame implements ActionListener {
         	new searchCourseFrame();
         }
         else if(e.getSource() == Jbtn_Score) {
-        	new writeScoreFrame(user);
+        	new TeacherWriteScoreFrame(user);
         }
         else if(e.getSource() == Jbtn_generateScore) {
         	new generateScoreFrame(user);

@@ -4,32 +4,27 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.Administrator;
 import Member.Member;
-import Member.Teacher;
 
 import java.awt.event.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 @SuppressWarnings("serial")
-public class generateScoreFrame extends JFrame {
+public class AdministratorWriteScoreFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_semester = new JLabel("學期：");
 	private JComboBox<String> jcb_semester;
 	private JLabel Jlb_course = new JLabel("課程：");
 	private JComboBox<String> jcb_course;
+	private JButton Jbtn_confirm = new JButton("確認");
 	
 	private DefaultTableModel tableM;
-	
-    public generateScoreFrame(Teacher user)
+    
+	public AdministratorWriteScoreFrame(Administrator user)
     {
-        super("查看成績");
-        Container c = getContentPane();
+        super("高燕大課程平台 輸入成績");
+		Container c = getContentPane();
         c.setLayout(null);
                 
         //設定學期標籤大小位置及顯示字型
@@ -41,10 +36,10 @@ public class generateScoreFrame extends JFrame {
         //設定學期下拉式選單大小位置及顯示字型
         File fileSemester = new File("data\\course");
     	String[] directoriesSemester = fileSemester.list(new FilenameFilter() {
-    	  @Override
-    	  public boolean accept(File current, String name) {
-    	    return new File(current, name).isDirectory();
-    	  }
+    	  	@Override
+    	  	public boolean accept(File current, String name) {
+    	    	return new File(current, name).isDirectory();
+    	  	}
     	});
 		jcb_semester = new JComboBox<String>();
 		jcb_semester.addItem("請選擇");
@@ -57,25 +52,26 @@ public class generateScoreFrame extends JFrame {
     	jcb_semester.addItemListener(new ItemListener() {
     		@Override
     		public void itemStateChanged(ItemEvent e) {
-    			File fileCourse = new File("data\\teachers\\" + user.id + "\\指導課程.txt");
-    	        String selectedSemester = (String) jcb_semester.getSelectedItem();
-    	        jcb_course.removeAllItems();
-    			try {
-    				InputStreamReader read = new InputStreamReader(new FileInputStream(fileCourse), "utf-8");
-    				BufferedReader reader = new BufferedReader(read);
-    				String line, semester, name= "";
-    				//抓出每個課程學期與名稱
-    				while((line = reader.readLine()) != null) {
-    					semester = line.split(" ")[0];
-    					name = line.split(" ")[1];
-    					if(semester.equals(selectedSemester)) {
-    						jcb_course.addItem(name);
-    					}
-    				}
-    				reader.close();
-    			} catch (UnsupportedEncodingException | FileNotFoundException ee) {ee.printStackTrace();
-    			} catch (IOException ee) {ee.printStackTrace();
-    			}
+				String selectedSemester = (String) jcb_semester.getSelectedItem();
+    			File fileCourse = new File("data\\course\\"+selectedSemester);
+				jcb_course.removeAllItems();
+				String[] directories = fileCourse.list(new FilenameFilter() {
+					@Override
+					public boolean accept(File current, String name) {
+						 	if(name.lastIndexOf('.')>0) {
+			                  	int lastIndex = name.lastIndexOf('.');
+			                  	String str = name.substring(lastIndex);
+			                  	if(str.equals(".txt")) {
+			                	  	return true;
+			                  	}
+						 	}
+			             	return false;
+						}
+				  	});
+				for(int i = 0; i < directories.length; i++) {
+					directories[i] = directories[i].replace(".txt", "");
+					jcb_course.addItem(directories[i]);
+				}
     		}
     	});
     	c.add(jcb_semester);
@@ -97,13 +93,13 @@ public class generateScoreFrame extends JFrame {
     		}
     	});
 		getContentPane().add(jcb_course);
-		
+		        
         //表格內容
     	String[] columns = { "學號", "姓名", "成績"};
 		tableM = new DefaultTableModel(null, columns) {
 	    	@Override
 	    	public boolean isCellEditable(int row, int column) {
-	    		if (column < 3)
+	    		if (column < 2)
 					return false;
 				else
 					return true;
@@ -125,13 +121,45 @@ public class generateScoreFrame extends JFrame {
 			column.setPreferredWidth(100);
 		}
 		coursePane.setLocation(14, 66);
-		coursePane.setSize(566, 686);
+		coursePane.setSize(566, 631);
 		c.add(coursePane);
+		
+		//設定確認按鈕大小位置及顯示字型
+		Jbtn_confirm.setBounds(216, 710, 127, 42);
+		getContentPane().add(Jbtn_confirm);
+		Jbtn_confirm.setFont(new Font("微軟正黑體", Font.BOLD, 22));
+		Jbtn_confirm.addActionListener(this);
 		
         //設定視窗
         setSize(600, 800);
         setLocationRelativeTo(null);//視窗置中
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
+    }
+
+	@Override
+    public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == Jbtn_confirm) {
+			judge: {
+				for (int i = 0; i < tableM.getColumnCount() - 1; i++) {
+					String score = (String) tableM.getValueAt(i, 2);
+					if (!Numornot(score)) {
+						JOptionPane.showMessageDialog(new JFrame(), "成績必須為數字", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+						break judge;
+					}
+					String selectedSemester = (String) jcb_semester.getSelectedItem();
+					String selectedCourse = (String) jcb_course.getSelectedItem();
+					Member.writeScore(selectedSemester, selectedCourse, tableM);
+				}
+				JOptionPane.showMessageDialog(new JFrame(), "成績已變更", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+			}
+        }
+	}
+	//判斷輸入成績是否為數字
+	public boolean Numornot(String msg){
+        try{
+            Integer.parseInt(msg);
+			return true;
+		}catch(Exception e){return false;}
     }
 }

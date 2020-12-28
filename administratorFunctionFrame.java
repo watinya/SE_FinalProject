@@ -109,7 +109,7 @@ public class administratorFunctionFrame extends JFrame implements ActionListener
             new UserListFrame(user);
         }
         else if(e.getSource() == Jbtn_electiveCourseScore){
-            new writeScoreFrame(user);
+            new AdministratorWriteScoreFrame(user);
         }
     	else if(e.getSource() == Jbtn_Course) {
     		new searchCourseFrame();
