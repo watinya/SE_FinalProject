@@ -23,7 +23,6 @@ public class generateScoreFrame extends JFrame {
 	private JComboBox<String> jcb_semester;
 	private JLabel Jlb_course = new JLabel("課程：");
 	private JComboBox<String> jcb_course;
-	
 	private DefaultTableModel tableM;
 	
     public generateScoreFrame(Teacher user)
@@ -93,8 +92,14 @@ public class generateScoreFrame extends JFrame {
         jcb_course.addItemListener(new ItemListener() {
     		@Override
     		public void itemStateChanged(ItemEvent e) {
-    			Member.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem(), tableM);
-    		}
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					Object[][] data = user.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem());
+					Member.cleanTable(tableM);
+					for(int i = 0; i < data.length; i++){
+						tableM.addRow(data[i]);
+					}
+				}
+			}
     	});
 		getContentPane().add(jcb_course);
 		

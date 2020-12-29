@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -100,37 +99,6 @@ public class Member {
 		return true;
 	}
 	
-	//列出課程學生成績
-	public static void getCourseStudentScore(String year, String subjectName, DefaultTableModel tableM)  {
-		//建檔案路徑
-		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
-		try {
-			getCourseStudentScore(dataLocation, tableM);
-		}catch(FileNotFoundException e) {}
-		catch(IOException e) {
-			System.err.println(e);
-		}	
-	}
-	private static void getCourseStudentScore(String dataLocation, DefaultTableModel tableM) throws IOException {
-		File f = new File(dataLocation);
-		Member.cleanTable(tableM);
-		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
-		BufferedReader reader = new BufferedReader(read);
-		String line, id, name, score;
-		//跳過第一行
-		reader.readLine();
-		//抓出每個學生學號與名字
-		while((line = reader.readLine()) != null) {
-			id = line.split(" ")[0];
-			name = line.split(" ")[1];
-			score = line.split(" ")[2];
-			
-			Object[] temp = {id, name, score};
-			tableM.addRow(temp);
-		}
-		reader.close();
-	}
-
 	//列出學期課程清單
 	public static boolean outputCourseList(String year, DefaultTableModel tableM) {
 		String dataLocation = "data\\course\\" + year;
@@ -166,44 +134,6 @@ public class Member {
 		});
 	}
 	
-	//寫入成績
-	public static boolean writeScore(String semester, String course, DefaultTableModel tableM){
-		String dataLocation = "data\\course\\" + semester + "\\" + course + ".txt";
-		try{
-			writeScore(dataLocation, tableM);
-		}catch(IOException e) {
-			System.err.println(e);
-			return false;
-		}
-		return true;
-	}
-    private static void writeScore(String dataLocation, DefaultTableModel tableM) throws IOException {
-		FileInputStream fr = new FileInputStream(dataLocation);
-		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
-		String title = br.readLine();
-		String writeText = title + "\n";
-		int count = 0;
-		while (br.ready()) {
-			String temp = br.readLine();
-			String[] info = temp.split(" ");
-			String id = (String) tableM.getValueAt(count, 0);
-			String score = (String) tableM.getValueAt(count++, 2);
-
-			if (!info[0].equals(id) || !info[2].equals(score)) {
-				temp = "";
-				info[2] = score;
-				for(int i = 0; i < info.length; i++) 
-					temp += info[i] + " ";
-			}
-			writeText += temp + "\n";
-		}
-		br.close();
-		FileOutputStream writerStream = new FileOutputStream(dataLocation);    
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
-		writer.write(writeText);
-		writer.close(); 
-    }
-
 	// 清空表單method
 	public static void cleanTable(DefaultTableModel table) {
 		while (table.getRowCount() > 0)

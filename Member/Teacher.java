@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
 
 public class Teacher extends Member{
 	//所有指導課程
@@ -37,111 +36,75 @@ public class Teacher extends Member{
 			}
 			reader.close();
 	}
-	//輸入學生成績
-	public boolean setScore(String subject, String studentId, String score){
+		
+	//列出課程學生成績
+	public Object[][] getCourseStudentScore(String year, String subjectName)  {
+		//建檔案路徑
+		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
 		try {
-			File f = new File("data\\course\\"+findSubject(subject).getYear()+"\\"+ subject +".txt");
-			InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"utf-8");
-			BufferedReader reader = new BufferedReader(reade);
-			String line,id,fileContent = "";
-			//第一行不動作
-			fileContent = fileContent.concat(reader.readLine() + "\n");
-			while((line = reader.readLine()) != null) {
-				id = line.split(" ")[0];
-				//寫入成績
-				if(id.equals(studentId)) {
-					fileContent = fileContent.concat(id +" "+ line.split(" ")[1] +" "+ score +"\n");
-				}else {
-					fileContent = fileContent.concat(line +"\n");
-				}
+			ArrayList<String> temp = getCourseStudentScore(dataLocation);
+			Object[][] data = new Object[temp.size()][];
+			for(int i = 0; i < data.length; i++){
+				data[i] = temp.get(i).split(" ");
 			}
-			reader.close();
-			//寫入更新資料
-			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
-			BufferedWriter writer = new BufferedWriter(write);
-			writer.write(fileContent);
-			writer.close();
+			return data;
+		}catch(FileNotFoundException e) {}
+		catch(IOException e) {
+			System.err.println(e);
+		}
+		return null;
+	}
+	private ArrayList<String> getCourseStudentScore(String dataLocation) throws IOException {
+		File f = new File(dataLocation);
+		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
+		BufferedReader reader = new BufferedReader(read);
+		String line;
+		//跳過第一行
+		reader.readLine();
+		ArrayList<String> temp = new ArrayList<String>();
+		//抓出每個學生學號與名字
+		while((line = reader.readLine()) != null) {
+			temp.add(line);
+		}
+		reader.close();
+		return temp;
+	}
+
+	//寫入成績
+	public boolean writeScore(String semester, String course, Object[][] data){
+		String dataLocation = "data\\course\\" + semester + "\\" + course + ".txt";
+		try{
+			writeScore(dataLocation, data);
 		}catch(IOException e) {
-			System.out.println("輸入學生成績 Error");
+			System.err.println(e);
 			return false;
 		}
 		return true;
 	}
-	private Subject findSubject(String subject) {
-		for(int i=0; i<subjects.size(); i++) {
-			if(subject.equals(subjects.get(i).getName())){
-				return subjects.get(i);
+    private void writeScore(String dataLocation, Object[][] data) throws IOException {
+		FileInputStream fr = new FileInputStream(dataLocation);
+		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
+		String title = br.readLine();
+		String writeText = title + "\n";
+		int count = 0;
+		while (br.ready()) {
+			String temp = br.readLine();
+			String[] info = temp.split(" ");
+			String id = (String) data[count][0];
+			String score = (String) data[count++][1];
+
+			if (!info[0].equals(id) || !info[2].equals(score)) {
+				temp = "";
+				info[2] = score;
+				for(int i = 0; i < info.length; i++) 
+					temp += info[i] + " ";
 			}
+			writeText += temp + "\n";
 		}
-		return null;
-	}
-	
-	//檢查課程路徑是否存在
-	private boolean checkSubjectExist(String year, String subject) {
-		File f = new File("data\\course");
-		//檢查學年是否存在
-		File[] listFile = f.listFiles();
-		f =  new File("data\\course\\"+ year);
-		for(int i=0; i<listFile.length ;i++) {
-			if(listFile[i].equals(f)) {
-				//檢查學年內課程是否存在
-				listFile = f.listFiles();
-				f =  new File("data\\course\\"+ year+ "\\"+ subject + ".txt");
-				for(int j=0; j<listFile.length; j++) {
-					if(listFile[j].equals(f)) {
-						//課程存在
-						return true;
-					}
-				}
-			}
-		}
-		//課程不存在
-		return false;
-	}
-	//取得課程資訊
-	public String getSubjectInformation(String year, String subject) {
-		if(checkSubjectExist(year, subject)) {
-			try {
-				File f = new File("data\\course\\"+ year + "\\"+ subject + ".txt");
-				InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"UTF-8");
-				BufferedReader reader = new BufferedReader(reade);
-				//跳過第一行課程敘述
-				String data = reader.readLine();
-				reader.close();
-				return data;
-			}catch(IOException e){
-				System.out.println("產生課程學生成績清單Error");
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "查無此課程");
-		}
-		return null;
-	}
-	//取得課程學生成績清單
-	public String[][] getSubjectScoresList(String year, String subject){
-		if(checkSubjectExist(year, subject)) {
-			try {
-				String[][] data = new String[99][3];
-				File f = new File("data\\course\\"+ year + "\\"+ subject + ".txt");
-				InputStreamReader reade = new InputStreamReader(new FileInputStream(f),"UTF-8");
-				BufferedReader reader = new BufferedReader(reade);
-				//跳過第一行課程敘述
-				reader.readLine();
-				String line;
-				//讀課程內每個學生
-				int countStudents = 0;
-				while((line = reader.readLine()) != null) {
-					//每一條學生
-					data[countStudents] = line.split(" ");
-				}
-				reader.close();
-				return data;
-			}catch(IOException e){
-				System.out.println("產生課程學生成績清單Error");
-			}
-		}else {
-			JOptionPane.showMessageDialog(null, "查無此課程");
-		}
-		return null;
-	}
+		br.close();
+		FileOutputStream writerStream = new FileOutputStream(dataLocation);    
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
+		writer.write(writeText);
+		writer.close(); 
+    }
 }//end class
