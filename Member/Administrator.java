@@ -468,6 +468,7 @@ public class Administrator extends Member {
 			// 建立新學生資料夾
 			//addStudentInfo(newId, newName, newStartSchool);
 			//copyFolder("data\\students\\" + id, "data\\students\\" + newId);
+			String oldName = "";
 			// 建立學生資料
 			File f = new File("data\\students\\" + newId + "\\學生資訊.txt");
 			// 建立新內容
@@ -475,7 +476,8 @@ public class Administrator extends Member {
 			BufferedReader reader = new BufferedReader(reade);
 			String line, fileContent = "";
 			// 捨棄舊資訊
-			reader.readLine();
+			line = reader.readLine();
+			oldName = line.split(" ")[1];
 			// 加入新資訊
 			fileContent = fileContent.concat(newId + " " + newName + " " + newStartSchool + "\n");
 			// 加入原有選修課
@@ -488,17 +490,72 @@ public class Administrator extends Member {
 			BufferedWriter writer = new BufferedWriter(write);
 			writer.write(fileContent);
 			writer.close();
+			
+			//更新學生帳戶的名稱
+			f = new File("data\\account\\studentAccount.txt");
+			reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+			reader = new BufferedReader(reade);
+			fileContent = "";
+			while((line = reader.readLine()) != null) {
+				if(line.split(" ")[2].equals(oldName)) {
+					fileContent = fileContent.concat(newId + " " + line.split(" ")[1] + " " + newName + " " + line.split(" ")[3] + "\n");
+				}else {
+					fileContent = fileContent.concat(line +"\n");
+				}
+			}
+			reader.close();
+			write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
+			writer = new BufferedWriter(write);
+			writer.write(fileContent);
+			writer.close();
+			
 			// 刪除舊檔案
 			deleteFile(new File("data\\students\\" + id));
 			//new File("data\\students\\" + id).delete();
 			JOptionPane.showMessageDialog(null, "修改完成");
-		} catch (IOException e) {
-			System.out.println("修改學生資訊Error");
+		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 		return true;
 	}
-	
+
+	//複製整個資料夾內容
+	private void copyFolder(String oldPath, String newPath) {
+		try {
+			(new File(newPath)).mkdirs(); // 如果資料夾不存在則建立新資料夾
+			File a = new File(oldPath);
+			String[] file = a.list();
+			File temp = null;
+			for (int i = 0; i < file.length; i++) {
+				if (oldPath.endsWith(File.separator)) {
+					temp = new File(oldPath + file[i]);
+				} else {
+					temp = new File(oldPath + File.separator + file[i]);
+				}
+
+				if (temp.isFile()) {
+					FileInputStream input = new FileInputStream(temp);
+					FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()).toString());
+					byte[] b = new byte[1024 * 5];
+					int len;
+					while ((len = input.read(b)) != -1) {
+						output.write(b, 0, len);
+					}
+					output.flush();
+					output.close();
+					input.close();
+				}
+				if (temp.isDirectory()) {// 如果是子資料夾
+					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("複製整個資料夾內容操作出錯");
+			e.printStackTrace();
+		}
+	}
+
 	//-------------------------------------------------------------------------------------
 	//檢查課程是否存在
 	private boolean checkSubjectExist(String year, String subject) {
@@ -524,31 +581,66 @@ public class Administrator extends Member {
 	}
 	//新增課程
 	public boolean addSubject(String year, String id, String subject, String credit, String type, String teacher) {
-		//課程不存在
-		if(!checkSubjectExist(year, subject)) {
-			try {
-				//建立 學年資料夾
-				File f = new File("data\\course\\"+ year);
-				f.mkdir();
-				//建立 課程檔案
-				f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
-				f.createNewFile();
-				//寫入課程資訊
-				String subjectInformation = id +" "+ subject +" "+ credit +" "+ type +" "+ teacher;
-				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
-				BufferedWriter writer = new BufferedWriter(write);
-				writer.write(subjectInformation);
-				writer.close();
-				//完成提示
-				JOptionPane.showMessageDialog(null, "新增完成");
-				return true;
-			}catch(IOException e) {
-				System.out.println("新增課程資訊Error");
+		try {
+			//檢查教授是否存在
+			boolean teacherExist = false;
+			String teacherNumber = "";
+			File f = new File("data\\account\\teacherAccount.txt");
+			InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
+			BufferedReader reader = new BufferedReader(read);
+			String line;
+			while((line = reader.readLine()) != null) {
+				if(teacher.equals(line.split(" ")[2])) {
+					teacherNumber = line.split(" ")[0];
+					break;
+				}
 			}
-		}else {
-			//課程已存在
-			JOptionPane.showMessageDialog(null, "課程資訊重複");
-			return false;
+			reader.close();
+			if(!teacherExist) {
+				JOptionPane.showMessageDialog(null, "教授不存在");
+				return false;
+			}
+			//課程不存在 可以新增
+			if(!checkSubjectExist(year, subject) && teacherExist) {
+				
+					//建立 學年資料夾
+					f = new File("data\\course\\"+ year);
+					f.mkdir();
+					//建立 課程檔案
+					f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
+					f.createNewFile();
+					//寫入課程資訊
+					String subjectInformation = id +" "+ subject +" "+ credit +" "+ type +" "+ teacher;
+					OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+					BufferedWriter writer = new BufferedWriter(write);
+					writer.write(subjectInformation);
+					writer.close();
+					
+					//更新 教授執導課程
+					f = new File("data\\teachers\\"+ teacherNumber + "\\執導課程.txt");
+					String fileContent = year + " " + subject;
+					read = new InputStreamReader(new FileInputStream(f),"UTF-8");
+					reader = new BufferedReader(read);
+					while((line = reader.readLine()) != null) {
+						fileContent = fileContent.concat(line + "\n");
+					}
+					reader.close();
+					write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
+					writer = new BufferedWriter(write);
+					writer.write(fileContent);
+					writer.close();
+					
+					//完成提示
+					JOptionPane.showMessageDialog(null, "新增完成");
+					return true;
+				
+			}else {
+				//課程已存在
+				JOptionPane.showMessageDialog(null, "課程資訊重複");
+				return false;
+			}
+		}catch(IOException e) {
+			System.out.println("新增課程資訊Error");
 		}
 		return false;
 	}
