@@ -4,9 +4,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import Member.Administrator;
-import Member.Member;
 import Member.Teacher;
+import Member.Member;
 
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -25,12 +24,14 @@ public class TeacherWriteScoreFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_course = new JLabel("課程：");
 	private JComboBox<String> jcb_course;
 	private JButton Jbtn_confirm = new JButton("確認");
+	private Teacher user;
 	
 	private DefaultTableModel tableM;
     public TeacherWriteScoreFrame(Teacher user)
     {
         super("高燕大課程平台 輸入成績");
 		Container c = getContentPane();
+		this.user = user;
         c.setLayout(null);
                 
         //設定學期標籤大小位置及顯示字型
@@ -94,8 +95,14 @@ public class TeacherWriteScoreFrame extends JFrame implements ActionListener {
         jcb_course.addItemListener(new ItemListener() {
     		@Override
     		public void itemStateChanged(ItemEvent e) {
-    			Member.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem(), tableM);
-    		}
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					Object[][] data = user.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem());
+					Member.cleanTable(tableM);
+					for(int i = 0; i < data.length; i++){
+						tableM.addRow(data[i]);
+					}
+				}
+			}
     	});
 		getContentPane().add(jcb_course);
 		
@@ -145,18 +152,25 @@ public class TeacherWriteScoreFrame extends JFrame implements ActionListener {
 	@Override
     public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == Jbtn_confirm) {
-			judge: {
-				for (int i = 0; i < tableM.getColumnCount() - 1; i++) {
-					String score = (String) tableM.getValueAt(i, 2);
-					if (!Numornot(score)) {
-						JOptionPane.showMessageDialog(new JFrame(), "成績必須為數字", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
-						break judge;
-					}
-					String selectedSemester = (String) jcb_semester.getSelectedItem();
-					String selectedCourse = (String) jcb_course.getSelectedItem();
-					Member.writeScore(selectedSemester, selectedCourse, tableM);
+			boolean flag = true;
+			for (int i = 0; i < tableM.getColumnCount() - 1; i++) {
+				String score = (String) tableM.getValueAt(i, 2);
+				if (!Numornot(score)) {
+					JOptionPane.showMessageDialog(new JFrame(), "成績必須為數字", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+					flag = false;
 				}
-				JOptionPane.showMessageDialog(new JFrame(), "成績已變更", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
+			}
+
+			if(flag){
+			String selectedSemester = (String) jcb_semester.getSelectedItem();
+			String selectedCourse = (String) jcb_course.getSelectedItem();
+			Object[][] scoreData = new Object[tableM.getRowCount()][2];
+			for(int i = 0; i < scoreData.length; i++){
+				scoreData[i][0] = tableM.getValueAt(i, 0);
+				scoreData[i][1] = tableM.getValueAt(i, 2);
+			}
+			user.writeScore(selectedSemester, selectedCourse, scoreData);
+			JOptionPane.showMessageDialog(new JFrame(), "成績已變更", "成績輸入", JOptionPane.INFORMATION_MESSAGE);
 			}
         }
 	}

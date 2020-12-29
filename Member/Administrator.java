@@ -1,8 +1,8 @@
 package Member;
 
-import javax.swing.JOptionPane;
 import java.io.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class Administrator extends Member {
 	//建立基本屬性
@@ -11,6 +11,77 @@ public class Administrator extends Member {
 	public Administrator(String id, char[] password, String name) {
 		super(id,new String(password),name);
 	}
+	//列出課程學生成績
+	public Object[][] getCourseStudentScore(String year, String subjectName)  {
+		//建檔案路徑
+		String dataLocation = "data\\course\\" + year + "\\" + subjectName + ".txt";
+		try {
+			ArrayList<String> temp = getCourseStudentScore(dataLocation);
+			Object[][] data = new Object[temp.size()][];
+			for(int i = 0; i < data.length; i++){
+				data[i] = temp.get(i).split(" ");
+			}
+			return data;
+		}catch(FileNotFoundException e) {}
+		catch(IOException e) {
+			System.err.println(e);
+		}
+		return null;
+	}
+	private ArrayList<String> getCourseStudentScore(String dataLocation) throws IOException {
+		File f = new File(dataLocation);
+		InputStreamReader read = new InputStreamReader(new FileInputStream(f), "utf-8");
+		BufferedReader reader = new BufferedReader(read);
+		String line;
+		//跳過第一行
+		reader.readLine();
+		ArrayList<String> temp = new ArrayList<String>();
+		//抓出每個學生學號與名字
+		while((line = reader.readLine()) != null) {
+			temp.add(line);
+		}
+		reader.close();
+		return temp;
+	}
+
+	//寫入成績
+	public boolean writeScore(String semester, String course, Object[][] data){
+		String dataLocation = "data\\course\\" + semester + "\\" + course + ".txt";
+		try{
+			writeScore(dataLocation, data);
+		}catch(IOException e) {
+			System.err.println(e);
+			return false;
+		}
+		return true;
+	}
+    private void writeScore(String dataLocation, Object[][] data) throws IOException {
+		FileInputStream fr = new FileInputStream(dataLocation);
+		BufferedReader br = new BufferedReader(new InputStreamReader(fr, "utf8"));
+		String title = br.readLine();
+		String writeText = title + "\n";
+		int count = 0;
+		while (br.ready()) {
+			String temp = br.readLine();
+			String[] info = temp.split(" ");
+			String id = (String) data[count][0];
+			String score = (String) data[count++][1];
+
+			if (!info[0].equals(id) || !info[2].equals(score)) {
+				temp = "";
+				info[2] = score;
+				for(int i = 0; i < info.length; i++) 
+					temp += info[i] + " ";
+			}
+			writeText += temp + "\n";
+		}
+		br.close();
+		FileOutputStream writerStream = new FileOutputStream(dataLocation);    
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8")); 
+		writer.write(writeText);
+		writer.close(); 
+    }
+	//--------------------------------------------------------------------------------------
 	//取得使用者清單
 	public String[][] getUserList() {
 		String[][] data = new String[100][100];
