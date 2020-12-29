@@ -1,12 +1,9 @@
 package Member;
 
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -100,44 +97,28 @@ public class Member {
 	}
 	
 	//列出學期課程清單
-	public static boolean outputCourseList(String year, DefaultTableModel tableM) {
+	public static Object[][] outputCourseList(String year) {
 		String dataLocation = "data\\course\\" + year;
 		try {
-			createCourseList(dataLocation, tableM, year);
+			Object[][] coursesData = createCourseList(year, dataLocation);
+			return coursesData;
 		}catch(IOException e) {
 			System.err.println(e);
-			return false;
 		}
-		return true;
+		return null;
 	}
-	private static void createCourseList(String dataLocation, DefaultTableModel tableM, String year) throws IOException {
+	private static Object[][] createCourseList(String year, String dataLocation) throws IOException {
 		File f = new File(dataLocation);
 		File[] fileList = f.listFiles();
-		cleanTable(tableM);
-		ListBtn btn = new ListBtn();
+		Object[][] data = new Object[fileList.length][];
 		//讀取每個課程第一行內容
 		for(int i=0; i<fileList.length; i++) {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(fileList[i]), "utf-8");
 			BufferedReader reader = new BufferedReader(read);
-			String[] line = reader.readLine().split(" ");
-			
-			Object[] temp = {line[0], line[1], line[2], line[3], line[4], btn};
-			tableM.addRow(temp);
+			data[i] = reader.readLine().split(" ");
 			reader.close();
 		}
-		
-		btn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent event) {
-				String subject = (String) tableM.getValueAt(ListBtnMouseListener.getRow(), 1);
-				outputClassmate(year, subject);
-			}
-		});
-	}
-	
-	// 清空表單method
-	public static void cleanTable(DefaultTableModel table) {
-		while (table.getRowCount() > 0)
-			table.removeRow(0);
+		return data;
 	}
 }// end class
 

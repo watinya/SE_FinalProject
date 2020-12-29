@@ -5,7 +5,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.Administrator;
-import Member.Member;
 
 import java.awt.event.*;
 import java.io.File;
@@ -92,7 +91,7 @@ public class AdministratorWriteScoreFrame extends JFrame implements ActionListen
     		public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					Object[][] data = user.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem());
-					Member.cleanTable(tableM);
+					cleanTable(tableM);
 					for(int i = 0; i < data.length; i++){
 						tableM.addRow(data[i]);
 					}
@@ -175,5 +174,10 @@ public class AdministratorWriteScoreFrame extends JFrame implements ActionListen
             Integer.parseInt(msg);
 			return true;
 		}catch(Exception e){return false;}
-    }
+	}
+	// 清空表單method
+	public static void cleanTable(DefaultTableModel table) {
+		while (table.getRowCount() > 0)
+			table.removeRow(0);
+	}
 }
