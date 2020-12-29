@@ -4,7 +4,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import Member.Member;
 import Member.Teacher;
 
 import java.awt.event.*;
@@ -94,7 +93,7 @@ public class generateScoreFrame extends JFrame {
     		public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED){
 					Object[][] data = user.getCourseStudentScore((String) jcb_semester.getSelectedItem(), (String) jcb_course.getSelectedItem());
-					Member.cleanTable(tableM);
+					cleanTable(tableM);
 					for(int i = 0; i < data.length; i++){
 						tableM.addRow(data[i]);
 					}
@@ -138,5 +137,11 @@ public class generateScoreFrame extends JFrame {
         setLocationRelativeTo(null);//視窗置中
         setResizable(false);//視窗放大按鈕無效
         setVisible(true);
-    }
+	}
+
+	// 清空表單method
+	public static void cleanTable(DefaultTableModel table) {
+		while (table.getRowCount() > 0)
+			table.removeRow(0);
+	}
 }

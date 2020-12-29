@@ -5,7 +5,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import Member.Administrator;
-import Member.Member;
 
 import java.awt.event.*;
 import java.io.File;
@@ -129,7 +128,7 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         if(e.getSource() == jcb_time) {
 			String selectedSemester = (String) jcb_time.getSelectedItem();
 			Object[][] courseList = user.getYearSubjectInformationList(selectedSemester);
-			Member.cleanTable(tableM);
+			cleanTable(tableM);
 			for(int i = 0; i < courseList.length; i++) {
 				tableM.addRow(courseList[i]);
 			}
@@ -147,5 +146,11 @@ public class courseInfoFrame extends JFrame implements ActionListener {
         else if(e.getSource() == btn_delete) {
         	new setRemoveCourseInfoFrame(user);
         }
-    }
+	}
+	
+    // 清空表單method
+	public static void cleanTable(DefaultTableModel table) {
+		while (table.getRowCount() > 0)
+			table.removeRow(0);
+	}
 }

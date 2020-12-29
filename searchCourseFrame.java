@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import Member.ListBtn;
 import Member.ListBtnEditor;
 import Member.ListBtnMouseListener;
 import Member.ListBtnRender;
@@ -97,9 +98,27 @@ public class searchCourseFrame extends JFrame implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+		String selectedSemester = (String) jcb_time.getSelectedItem();
+		ListBtn btn = new ListBtn();
         if(e.getSource() == jcb_time) {
-			String selectedSemester = (String) jcb_time.getSelectedItem();
-			Member.outputCourseList(selectedSemester, tableM);
-        }
-    }
+			Object[][] data = Member.outputCourseList(selectedSemester);
+			cleanTable(tableM);
+			for(int i = 0; i < data.length; i++){
+				tableM.addRow(data[i]);
+				tableM.setValueAt(btn, i, 5);
+			}
+		}
+		btn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				String subject = (String) tableM.getValueAt(ListBtnMouseListener.getRow(), 1);
+				Member.outputClassmate(selectedSemester, subject);
+			}
+		});
+	}
+
+	// 清空表單method
+	public static void cleanTable(DefaultTableModel table) {
+		while (table.getRowCount() > 0)
+			table.removeRow(0);
+	}
 }
