@@ -543,7 +543,7 @@ public class Administrator extends Member {
 	public boolean addSubject(String year, String id, String subject, String credit, String type, String teacher) {
 		try {
 			//檢查教授是否存在
-			boolean teacherExist = false;
+			boolean teacherNotExist = true;
 			String teacherNumber = "";
 			File f = new File("data\\account\\teacherAccount.txt");
 			InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
@@ -552,52 +552,50 @@ public class Administrator extends Member {
 			while((line = reader.readLine()) != null) {
 				if(teacher.equals(line.split(" ")[2])) {
 					teacherNumber = line.split(" ")[0];
+					teacherNotExist = false;
 					break;
 				}
 			}
 			reader.close();
-			if(!teacherExist) {
+			if(teacherNotExist) {
 				JOptionPane.showMessageDialog(null, "教授不存在");
 				return false;
 			}
-			//課程不存在 可以新增
-			if(!checkSubjectExist(year, subject) && teacherExist) {
-				
-					//建立 學年資料夾
-					f = new File("data\\course\\"+ year);
-					f.mkdir();
-					//建立 課程檔案
-					f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
-					f.createNewFile();
-					//寫入課程資訊
-					String subjectInformation = id +" "+ subject +" "+ credit +" "+ type +" "+ teacher;
-					OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
-					BufferedWriter writer = new BufferedWriter(write);
-					writer.write(subjectInformation);
-					writer.close();
-					
-					//更新 教授執導課程
-					f = new File("data\\teachers\\"+ teacherNumber + "\\執導課程.txt");
-					String fileContent = year + " " + subject;
-					read = new InputStreamReader(new FileInputStream(f),"UTF-8");
-					reader = new BufferedReader(read);
-					while((line = reader.readLine()) != null) {
-						fileContent = fileContent.concat(line + "\n");
-					}
-					reader.close();
-					write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
-					writer = new BufferedWriter(write);
-					writer.write(fileContent);
-					writer.close();
-					
-					//完成提示
-					JOptionPane.showMessageDialog(null, "新增完成");
-					return true;
-				
-			}else {
+			//課程存在 不可新增
+			else if(checkSubjectExist(year, subject)) {
 				//課程已存在
 				JOptionPane.showMessageDialog(null, "課程資訊重複");
 				return false;
+			}
+			else{
+				//建立 學年資料夾
+				f = new File("data\\course\\"+ year);
+				f.mkdir();
+				//建立 課程檔案
+				f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
+				f.createNewFile();
+				//寫入課程資訊
+				String subjectInformation = id +" "+ subject +" "+ credit +" "+ type +" "+ teacher;
+				OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+				BufferedWriter writer = new BufferedWriter(write);
+				writer.write(subjectInformation);
+				writer.close();
+				
+				//更新 教授執導課程
+				f = new File("data\\teachers\\"+ teacherNumber + "\\指導課程.txt");
+				String fileContent = year + " " + subject;
+				read = new InputStreamReader(new FileInputStream(f),"UTF-8");
+				reader = new BufferedReader(read);
+				while((line = reader.readLine()) != null) {
+					fileContent = fileContent.concat(line + "\n");
+				}
+				write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
+				writer = new BufferedWriter(write);
+				writer.write(fileContent);
+
+				//完成提示
+				JOptionPane.showMessageDialog(null, "新增完成");
+				return true;
 			}
 		}catch(IOException e) {
 			System.out.println("新增課程資訊Error");
@@ -674,9 +672,26 @@ public class Administrator extends Member {
 	} 
 	//修改 課程資訊
 	public boolean changeSubjectInformation(String year, String subject, String newYear, String newId, String newSubject,
-			String newCredit, String newType, String newTeacher) {
+			String newCredit, String newType, String newTeacher) throws IOException {
+		//檢查教授是否存在
+		boolean teacherNotExist = true;
+		File f = new File("data\\account\\teacherAccount.txt");
+		InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
+		BufferedReader reader = new BufferedReader(read);
+		String line;
+		while((line = reader.readLine()) != null) {
+			if(newTeacher.equals(line.split(" ")[2])) {
+				teacherNotExist = false;
+				break;
+			}
+		}
+		reader.close();
+		if(teacherNotExist) {
+			JOptionPane.showMessageDialog(null, "教授不存在");
+			return false;
+		}
 		// 課程存在
-		if (checkSubjectExist(year, subject)) {
+		else if (checkSubjectExist(year, subject)) {
 			// 更改目標已存在課程
 			if (!newYear.equals(year) && !newSubject.equals(subject) && checkSubjectExist(newYear, newSubject)) {
 				JOptionPane.showMessageDialog(null, "更改目標已存在課程\n請嘗試刪除更改目標課程");
@@ -690,11 +705,11 @@ public class Administrator extends Member {
 					
 					//課程資料變更
 					//開舊檔 記錄學生與成績
-					File f = new File("data\\course\\" + year + "\\" + subject + ".txt");
+					f = new File("data\\course\\" + year + "\\" + subject + ".txt");
 					InputStreamReader reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
-					BufferedReader reader = new BufferedReader(reade);
+					reader = new BufferedReader(reade);
 					
-					String line, fileContent = "";
+					String fileContent = "";
 					//紀錄 新資訊
 					fileContent = fileContent.concat(newId +" "+ newSubject +" "+ newCredit +" "+ newType +" "+ newTeacher +"\n");
 					//紀錄 舊老師,舊課名

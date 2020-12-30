@@ -37,7 +37,7 @@ public class studentCourseFrame extends JFrame implements ActionListener {
         c.add(Jlb_id);
         //設定帳號輸入框大小位置及顯示字型
         jid.setLocation(109,19);
-        jid.setSize(136,40);
+        jid.setSize(140,36);
         jid.setFont(new Font("微軟正黑體", Font.BOLD,24));
         jid.setText(id);
         c.add(jid);
