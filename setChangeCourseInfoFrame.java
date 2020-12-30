@@ -82,7 +82,7 @@ public class setChangeCourseInfoFrame extends JFrame implements ActionListener {
         c.add(Jlb_subject);
         //設定課程下拉式選單大小位置及顯示字型
         jcb_course = new JComboBox<String>();
-        jcb_course.setBounds(157, 120, 195, 32);
+        jcb_course.setBounds(157, 120, 220, 32);
         jcb_course.setFont(new Font("微軟正黑體",Font.BOLD,22));
 		c.add(jcb_course);
         

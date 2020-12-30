@@ -88,8 +88,11 @@ public class changePasswordFrame extends JFrame implements ActionListener {
         if(e.getSource() == Jbtn_Confirm) {
         	String oldPw = new String(joldPw.getPassword());
         	String newPw = new String(jnewPW.getPassword());
-			String checkedPw = new String(jcheckedPW.getPassword());
-			if (oldPw.equals(user.password) && newPw.equals(checkedPw)) {
+            String checkedPw = new String(jcheckedPW.getPassword());
+            if(oldPw.equals("") || newPw.equals("") || checkedPw.equals("")){
+                JOptionPane.showMessageDialog(new JFrame(), "欄位不可為空", "變更密碼", JOptionPane.ERROR_MESSAGE);
+            }
+			else if(oldPw.equals(user.password) && newPw.equals(checkedPw)) {
 				try {
 					Member.changePassword(user.id, oldPw, newPw);
 					user.password = newPw;
