@@ -12,7 +12,7 @@ public class removeStuCourseFrame extends JFrame implements ActionListener {
 	private JLabel Jlb_time = new JLabel("學期：");
 	private JComboBox<String> jcb_semester;
     private JLabel Jlb_subject = new JLabel("名稱：");
-    private JComboBox<String> jcb_course;
+    private JComboBox<Object> jcb_course;
     private JButton Jbtn_confirm = new JButton("確認");
 	public Administrator user;
 	public String id;
@@ -55,24 +55,10 @@ public class removeStuCourseFrame extends JFrame implements ActionListener {
     		@Override
     		public void itemStateChanged(ItemEvent e) {
 				String selectedSemester = (String) jcb_semester.getSelectedItem();
-    			File fileCourse = new File("data\\course\\"+selectedSemester);
 				jcb_course.removeAllItems();
-				String[] directories = fileCourse.list(new FilenameFilter() {
-					@Override
-					public boolean accept(File current, String name) {
-						 if(name.lastIndexOf('.')>0) {
-			                  int lastIndex = name.lastIndexOf('.');
-			                  String str = name.substring(lastIndex);
-			                  if(str.equals(".txt")) {
-			                	  return true;
-			                  }
-						 }
-			             return false;
-					}
-				  });
-				for(int i = 0; i < directories.length; i++) {
-					directories[i] = directories[i].replace(".txt", "");
-					jcb_course.addItem(directories[i]);
+				Object[][] data = user.getStudentCourseList(selectedSemester, id);
+				for(int i = 0; i < data.length; i++) {
+					jcb_course.addItem(data[i][1]);
 				}
     		}
     	});
@@ -84,7 +70,7 @@ public class removeStuCourseFrame extends JFrame implements ActionListener {
         Jlb_subject.setFont(new Font("微軟正黑體", Font.BOLD, 28));
         c.add(Jlb_subject);
         //設定課程下拉式選單大小位置及顯示字型
-        jcb_course = new JComboBox<String>();
+        jcb_course = new JComboBox<Object>();
         jcb_course.setBounds(157, 115, 238, 37);
         jcb_course.setFont(new Font("微軟正黑體",Font.BOLD,22));
 		c.add(jcb_course);
