@@ -261,6 +261,7 @@ public class Administrator extends Member {
 						return line;
 					}
 				}
+				reader.close();
 				JOptionPane.showMessageDialog(null, "帳號不存在");
 			}
 		}catch(IOException e) {
@@ -345,6 +346,7 @@ public class Administrator extends Member {
 				String line = reader.readLine();
 				String[] lineData = line.split(" ");
 				studentsInformationData[i] = lineData;
+				reader.close();
 			}
 			return studentsInformationData;
 
@@ -399,7 +401,6 @@ public class Administrator extends Member {
 		}
 		return true;
 	}
-
 	// 刪除學生資訊
 	public boolean removeStudent(String id) {
 		// 學生存在
@@ -416,26 +417,21 @@ public class Administrator extends Member {
 	}
 	// 執行檔案刪除
 	private void deleteFile(File file) {
-		// 判斷路徑是否存在
-		if (file.exists()) {
-			// 測試此抽象路徑名錶示的檔案是否是一個標準檔案
-			if (file.isFile()) {
-				file.delete();
-			} else {// 不是檔案
-					// 儲存 路徑下的所有的檔案和資料夾到listFiles陣列中
-				File[] listFiles = file.listFiles();
-				// 檔案路徑下所有檔案和資料夾的絕對路徑
-				for (File file2 : listFiles) {
-					// 遞迴作用:由外到內先一層一層刪除裡面的檔案 再從最內層 反過來刪除資料夾
-					deleteFile(file2);
-				}
-			}
+		// 測試此抽象路徑名錶示的檔案是否是一個標準檔案
+		if (file.isFile()) {
 			file.delete();
-		} else {
-			System.out.println("該file路徑不存在！！");
+		} else {// 不是檔案
+				// 儲存 路徑下的所有的檔案和資料夾到listFiles陣列中
+			File[] listFiles = file.listFiles();
+			// 檔案路徑下所有檔案和資料夾的絕對路徑
+			for (File file2 : listFiles) {
+				// 遞迴作用:由外到內先一層一層刪除裡面的檔案 再從最內層 反過來刪除資料夾
+				deleteFile(file2);
+			}
 		}
-	}
+		file.delete();
 
+	}
 	// 取得學生資訊
 	public String getStudentInformation(String id) {
 		String data = null;
@@ -539,24 +535,32 @@ public class Administrator extends Member {
 		//沒有課程
 		return false;
 	}
-	//新增課程
-	public boolean addSubject(String year, String id, String subject, String credit, String type, String teacher) {
+	//取得教授 ID
+	private String getTeacherNumber(String teacher) {
 		try {
-			//檢查教授是否存在
-			boolean teacherNotExist = true;
-			String teacherNumber = "";
 			File f = new File("data\\account\\teacherAccount.txt");
 			InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
 			BufferedReader reader = new BufferedReader(read);
 			String line;
 			while((line = reader.readLine()) != null) {
 				if(teacher.equals(line.split(" ")[2])) {
-					teacherNumber = line.split(" ")[0];
-					teacherNotExist = false;
-					break;
+					return line.split(" ")[0];
 				}
 			}
-			reader.close();
+		}catch(Exception e) {
+			System.err.println(e);
+		}
+		return null;
+	}
+	//新增課程
+	public boolean addSubject(String year, String id, String subject, String credit, String type, String teacher) {
+		try {
+			//檢查教授是否存在
+			boolean teacherNotExist = true;
+			String teacherNumber = getTeacherNumber(teacher);
+			if(teacherNumber != null) {
+				teacherNotExist = false;
+			}
 			if(teacherNotExist) {
 				JOptionPane.showMessageDialog(null, "教授不存在");
 				return false;
@@ -569,7 +573,7 @@ public class Administrator extends Member {
 			}
 			else{
 				//建立 學年資料夾
-				f = new File("data\\course\\"+ year);
+				File f = new File("data\\course\\"+ year);
 				f.mkdir();
 				//建立 課程檔案
 				f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
@@ -582,16 +586,18 @@ public class Administrator extends Member {
 				writer.close();
 				
 				//更新 教授執導課程
-				f = new File("data\\teachers\\"+ teacherNumber + "\\指導課程.txt");
-				String fileContent = year + " " + subject;
-				read = new InputStreamReader(new FileInputStream(f),"UTF-8");
-				reader = new BufferedReader(read);
-				while((line = reader.readLine()) != null) {
-					fileContent = fileContent.concat(line + "\n");
+				File file = new File("data\\teachers\\"+ teacherNumber + "\\指導課程.txt");
+				String fileContent = year + " " + subject + "\n";
+				InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8");
+				BufferedReader reader = new BufferedReader(read);
+				String lin;
+				while((lin = reader.readLine()) != null) {
+					fileContent = fileContent.concat(lin + "\n");
 				}
-				write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
+				write = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 				writer = new BufferedWriter(write);
 				writer.write(fileContent);
+				writer.close();
 
 				//完成提示
 				JOptionPane.showMessageDialog(null, "新增完成");
@@ -602,23 +608,47 @@ public class Administrator extends Member {
 		}
 		return false;
 	}
-	//刪除課程
+	//刪除課程*****************************************************************************************
 	public boolean removeSubject(String year, String subject) {
 		//課程存在
 		if(checkSubjectExist(year, subject)) {
-			//刪除課程
-			File f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
-			f.delete();
-			//如果 學年下沒有其他課程 刪除 學年資料夾
-			f = new File("data\\course\\"+ year);
-			f.delete();
-			JOptionPane.showMessageDialog(null, "刪除完成");
-			return true;
+			try {
+				//刪除課程
+				File f = new File("data\\course\\"+ year +"\\"+ subject +".txt");
+				InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
+				BufferedReader reader = new BufferedReader(read);
+				String teacher = reader.readLine().split(" ")[4];
+				reader.close();
+				f.delete();
+				//如果 學年下沒有其他課程 刪除 學年資料夾
+				f = new File("data\\course\\"+ year);
+				f.delete();
+				//取得教授ID
+				String teacherNumber = getTeacherNumber(teacher);
+				//更新教授資料
+				f = new File("data\\teachers\\" + teacherNumber + "\\指導課程.txt");
+				String[] fileContent = new ReadFile(f).toString().split("\n");
+				String subjectYear, subjectName, newFileContent = "";
+				for(int i=0; i<fileContent.length; i++) {
+					subjectYear = fileContent[i].split(" ")[0];
+					subjectName = fileContent[i].split(" ")[1];
+					if(!subjectYear.equals(year) && !subjectName.equals(subject)) {
+						newFileContent = newFileContent.concat(fileContent[i] + "\n");
+					}
+				}
+				new WriteFile(f,newFileContent);
+				
+				JOptionPane.showMessageDialog(null, "刪除完成");
+				return true;
+			}catch(Exception e) {
+				System.err.println(e);
+			}
 		}else {
 			//課程不存在
 			JOptionPane.showMessageDialog(null, "課程不存在");
 			return false;
 		}
+		return false;
 	}
 	//取得 課程資訊 "108-1 SM101 計算機概論 3 必修 葉道明"
 	public String getSubjectInformation(String year, String subject) {
