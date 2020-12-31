@@ -28,13 +28,6 @@ public class MemberTest {
 		boolean output = test.outputClassmate(year,sj);
 		assertEquals(true,output);
 	}
-	
-	@Test
-	public void outputCourseListTest() {
-		boolean output = test.outputCourseList(year,table);
-		assertEquals(true, output);
-	}
-	
 	/*
 	@Test
 	public void Test() {

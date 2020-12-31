@@ -702,6 +702,7 @@ public class Administrator extends Member {
 	public boolean changeSubjectInformation(String year, String subject, String newYear, String newId, String newSubject,
 			String newCredit, String newType, String newTeacher) throws IOException {
 		//檢查教授是否存在
+		String teacherNumber = "";
 		boolean teacherNotExist = true;
 		File f = new File("data\\account\\teacherAccount.txt");
 		InputStreamReader read = new InputStreamReader(new FileInputStream(f),"UTF-8");
@@ -709,6 +710,7 @@ public class Administrator extends Member {
 		String line;
 		while((line = reader.readLine()) != null) {
 			if(newTeacher.equals(line.split(" ")[2])) {
+				teacherNumber = line.split(" ")[0];
 				teacherNotExist = false;
 				break;
 			}
@@ -835,7 +837,7 @@ public class Administrator extends Member {
 						writer.close();
 					}// end Teacher change
 					
-					//************如果 課名變更 修改學生資料************
+					//************如果 課名變更 修改學生教授資料************
 					if(!oldSubject.equals(newSubject)) {
 						//更新 學生們的 選修課程資料
 						for(int i=0; i<students.size(); i++) {
@@ -854,12 +856,34 @@ public class Administrator extends Member {
 								}
 							}
 							reader.close();
-							//重新寫入 已新增 修改課程 的資料
+							//重新寫入 已刪除 舊課程 的資料
 							write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
 							writer = new BufferedWriter(write);
 							writer.write(fileContent);
 							writer.close();
 						}
+						
+						//************更新 導師 課程資料************
+						f = new File("data\\teachers\\" + teacherNumber + "\\指導課程.txt" );
+						reade = new InputStreamReader(new FileInputStream(f), "UTF-8");
+						reader = new BufferedReader(reade);
+						fileContent = "";
+						//紀錄 原有 指導課程
+						while((line = reader.readLine()) != null) {
+							if(line.split(" ")[0].equals(year) && line.split(" ")[1].equals(subject)) {
+								//不做任何紀錄
+							//紀錄其他指導課程
+							}else {
+								fileContent = fileContent.concat(line + "\n");
+							}
+						}
+						reader.close();
+						//重新寫入 已新增 修改課程 的資料
+						write = new OutputStreamWriter(new FileOutputStream(f), "UTF-8");
+						writer = new BufferedWriter(write);
+						writer.write(fileContent);
+						writer.close();
+						
 					}
 					JOptionPane.showMessageDialog(null, "變更完成");
 				} catch (IOException e) {

@@ -73,6 +73,8 @@ public class Teacher extends Member{
 	//寫入成績
 	public boolean writeScore(String semester, String course, Object[][] data){
 		String dataLocation = "data\\course\\" + semester + "\\" + course + ".txt";
+		
+		
 		try{
 			writeScore(dataLocation, data);
 		}catch(IOException e) {

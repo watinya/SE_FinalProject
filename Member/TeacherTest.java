@@ -14,20 +14,26 @@ public class TeacherTest {
 	String studentId = "410877033";
 
 	@Test
-	public void setScoreTest() {
-		boolean output = test.setScore(subject, studentId, "100");
+	public void writeScoreTest() {
+		Object[][] object = {{"410877019","90"},{"410877033","88"}};
+		boolean output = test.writeScore(year, subject, object);
 		assertEquals(true, true);
 	}
 	
-	@Test
-	public void getSubjectInformationTest() {
-		String output = test.getSubjectInformation(year, subject);
-		assertEquals("SM103 微積分 3 選修 孫培真", output);
-	}
+	
+	
 	/*
 	@Test
 	public void Test() {
 		fail("Not yet implemented");
+	}
+	*/
+	/*
+	for(int i=0; i<data.length; i++) {
+		for(int j=0; j<data[i].length; j++) {
+			System.out.print(data[i][j] + " ");
+		}
+		System.out.println();
 	}
 	*/
 }
