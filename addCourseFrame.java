@@ -144,6 +144,7 @@ public class addCourseFrame extends JFrame implements ActionListener{
     		}
     	    else {
     		    if(user.addSubject(year, id, subject, credit, type, teacher)){
+                    JOptionPane.showMessageDialog(null, "新增完成");
                     this.dispose();                
                 }
     		}

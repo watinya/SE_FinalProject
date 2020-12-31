@@ -184,7 +184,6 @@ public class Administrator extends Member {
 		file.close();
 		*/
 	}
-	
 	//刪除使用者
 	public boolean removeUser(String id) {
 		try {
@@ -585,7 +584,7 @@ public class Administrator extends Member {
 				writer.write(subjectInformation);
 				writer.close();
 				
-				//更新 教授執導課程
+				//更新 教授指導課程
 				File file = new File("data\\teachers\\"+ teacherNumber + "\\指導課程.txt");
 				String fileContent = year + " " + subject + "\n";
 				InputStreamReader read = new InputStreamReader(new FileInputStream(file),"UTF-8");
@@ -600,7 +599,6 @@ public class Administrator extends Member {
 				writer.close();
 
 				//完成提示
-				JOptionPane.showMessageDialog(null, "新增完成");
 				return true;
 			}
 		}catch(IOException e) {
@@ -632,7 +630,7 @@ public class Administrator extends Member {
 				for(int i=0; i<fileContent.length; i++) {
 					subjectYear = fileContent[i].split(" ")[0];
 					subjectName = fileContent[i].split(" ")[1];
-					if(!subjectYear.equals(year) && !subjectName.equals(subject)) {
+					if(!subjectYear.equals(year) || !subjectName.equals(subject)) {
 						newFileContent = newFileContent.concat(fileContent[i] + "\n");
 					}
 				}
@@ -1035,40 +1033,6 @@ public class Administrator extends Member {
 			reader.close();
 		}catch(IOException e) {
 			JOptionPane.showMessageDialog(null,"學號錯誤");
-		}
-	}
-	//修改 學生各學期的選修課程
-	public void changeStudentCourse(String oldYear, String oldSubject, String newYear, String newSubject, String studentId) {
-		
-		File fileStudent = new File("data\\students\\" + studentId + "\\選修課程.txt");
-		File fileNewSubject = new File("data\\course\\" + newYear + "\\" + newSubject + ".txt");
-		File fileOldSubject = new File("data\\course\\" + oldYear + "\\" + oldSubject + ".txt");
-		//檢查 學生 是否已在修改目標課程內
-		boolean check = true;
-		for(Subject i: subjects) {
-			if(i.getYear().equals(newYear) && i.getName().equals(newSubject)) {
-				check = false;
-			}
-		}
-		
-		//學生與科目 存在 執行變更
-		if(fileStudent.exists() && fileNewSubject.exists() && fileOldSubject.exists() && check) {
-			addStudentCourse(newYear,newSubject,studentId);
-			removeStudentCourse(oldYear,oldSubject,studentId);
-		}else {
-			//學生和課程 都不存在
-			if(!fileStudent.exists() && !fileNewSubject.exists() && !fileOldSubject.exists()) {
-				JOptionPane.showMessageDialog(null,"輸入錯誤");
-			//學生 不存在
-			}else if(!fileStudent.exists()) {
-				JOptionPane.showMessageDialog(null,"學生不存在");
-			//修改科目 不存在
-			}else if(!fileNewSubject.exists()) {
-				JOptionPane.showMessageDialog(null,"修改科目不存在");
-			}else if(!check) {
-			//科目 已選修
-				JOptionPane.showMessageDialog(null,"科目已選修");
-			}
 		}
 	}
 	//產生每個學生各學期成績單
